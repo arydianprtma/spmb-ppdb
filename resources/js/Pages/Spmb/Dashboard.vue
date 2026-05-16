@@ -97,21 +97,26 @@
 
                         <!-- Connector column -->
                         <div class="flex flex-col items-center w-10 flex-shrink-0">
-                            <div class="w-10 h-10 rounded-full flex items-center justify-center flex-shrink-0 border-2 transition-all duration-300"
+                            <div class="w-10 h-10 rounded-full flex items-center justify-center flex-shrink-0 border-2 transition-all duration-300 relative"
                                 :class="{
                                     'bg-emerald-500 border-emerald-500 text-white shadow-lg shadow-emerald-200': stageStatus(stage) === 'done',
                                     'bg-white border-emerald-500 text-emerald-600 ring-4 ring-emerald-100': stageStatus(stage) === 'active',
                                     'bg-white border-gray-200 text-gray-300': stageStatus(stage) === 'pending',
                                     'bg-red-100 border-red-300 text-red-500': stageStatus(stage) === 'rejected',
                                 }">
-                                <svg v-if="stageStatus(stage) === 'done'" class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M5 13l4 4L19 7"/>
-                                </svg>
-                                <svg v-else-if="stageStatus(stage) === 'rejected'" class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <span class="text-xs font-bold">{{ index + 1 }}</span>
+                                
+                                <!-- Checkmark badge for completed steps -->
+                                <div v-if="stageStatus(stage) === 'done'" class="absolute -top-1 -right-1 w-4 h-4 bg-white rounded-full flex items-center justify-center shadow-sm">
+                                    <svg class="w-3 h-3 text-emerald-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M5 13l4 4L19 7" />
+                                    </svg>
+                                </div>
+                                
+                                <svg v-if="stageStatus(stage) === 'rejected'" class="absolute inset-0 m-auto w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M6 18L18 6M6 6l12 12"/>
                                 </svg>
-                                <div v-else-if="stageStatus(stage) === 'active'" class="w-3 h-3 bg-emerald-500 rounded-full animate-pulse"></div>
-                                <span v-else class="text-xs font-bold">{{ index + 1 }}</span>
+                                <div v-if="stageStatus(stage) === 'active'" class="absolute -bottom-1 -right-1 w-3 h-3 bg-emerald-500 rounded-full border-2 border-white animate-pulse"></div>
                             </div>
                             <!-- Vertical connector line -->
                             <div v-if="index < registrationFlow.length - 1"

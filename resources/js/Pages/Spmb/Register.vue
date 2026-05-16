@@ -76,17 +76,20 @@
                             <!-- Step circle + label -->
                             <div class="flex flex-col items-center flex-shrink-0">
                                 <div
-                                    class="w-8 h-8 md:w-10 md:h-10 rounded-full flex items-center justify-center font-bold text-xs md:text-sm border-2 bg-white transition-all duration-300"
+                                    class="w-8 h-8 md:w-10 md:h-10 rounded-full flex items-center justify-center font-bold text-xs md:text-sm border-2 transition-all duration-300 relative"
                                     :class="step > s
-                                        ? 'bg-emerald-500 border-emerald-500 text-white'
+                                        ? 'bg-emerald-500 border-emerald-500 text-white shadow-lg shadow-emerald-200'
                                         : step === s
-                                            ? 'border-emerald-500 text-emerald-600'
-                                            : 'border-gray-300 text-gray-400'"
+                                            ? 'bg-white border-emerald-500 text-emerald-600 ring-4 ring-emerald-50'
+                                            : 'bg-white border-gray-300 text-gray-400'"
                                 >
-                                    <svg v-if="step > s" class="w-4 h-4 md:w-5 md:h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M5 13l4 4L19 7" />
-                                    </svg>
-                                    <span v-else>{{ s }}</span>
+                                    <span>{{ s }}</span>
+                                    <!-- Checkmark badge for completed steps -->
+                                    <div v-if="step > s" class="absolute -top-1 -right-1 w-4 h-4 bg-white rounded-full flex items-center justify-center shadow-sm">
+                                        <svg class="w-3 h-3 text-emerald-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M5 13l4 4L19 7" />
+                                        </svg>
+                                    </div>
                                 </div>
                                 <span
                                     class="mt-2 text-[10px] md:text-xs font-semibold tracking-wide text-center w-20 md:w-24"
