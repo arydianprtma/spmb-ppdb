@@ -68,17 +68,17 @@ const submit = () => {
                 <!-- Header -->
                 <h2 style="font-size:2rem;font-weight:700;color:#111;margin-bottom:4px;letter-spacing:-0.5px;">Buat Akun</h2>
                 <p style="font-size:0.88rem;color:#6b7280;line-height:1.6;margin-bottom:36px;">
-                    Bergabunglah dengan <span style="color:#059669;font-weight:00;">santri</span> lainnya untuk meraih masa depan <span style="color:#059669;font-weight:600;">gemilang</span>.
+                    Akun ini digunakan oleh <span style="color:#059669;font-weight:600;">calon santri</span> untuk proses pendaftaran. Orang tua tetap dapat memantau dengan login menggunakan email & password yang didaftarkan.
                 </p>
 
                 <form @submit.prevent="submit">
                     <!-- Name -->
                     <div style="margin-bottom:20px;">
-                        <label style="display:block;font-size:10px;font-weight:700;color:#4b5563;letter-spacing:0.12em;text-transform:uppercase;margin-bottom:6px;">Nama Lengkap Orang Tua / Wali</label>
+                        <label style="display:block;font-size:10px;font-weight:700;color:#4b5563;letter-spacing:0.12em;text-transform:uppercase;margin-bottom:6px;">Nama Lengkap Calon Santri</label>
                         <input
                             type="text"
                             v-model="form.name"
-                            placeholder="Contoh: Bpk. Abdullah"
+                            placeholder="Contoh: Ahmad Abdullah"
                             style="display:block;width:100%;padding:10px 14px;border:1px solid #e5e7eb;border-radius:8px;font-size:0.88rem;color:#111;background:#fff;outline:none;transition:border-color 0.15s;box-sizing:border-box;"
                             required autofocus
                         />
