@@ -34,6 +34,15 @@ class HandleInertiaRequests extends Middleware
             'auth' => [
                 'user' => $request->user(),
             ],
+            'flash' => [
+                'success' => fn () => $request->session()->get('success'),
+                'error' => fn () => $request->session()->get('error'),
+                'status' => fn () => $request->session()->get('status'),
+                'email' => fn () => $request->session()->get('email'),
+                'whatsapp_masked' => fn () => $request->session()->get('whatsapp_masked'),
+                'otp_verified' => fn () => $request->session()->get('otp_verified'),
+                'otp_code' => fn () => $request->session()->get('otp_code'),
+            ],
         ];
     }
 }

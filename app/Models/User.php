@@ -24,11 +24,14 @@ class User extends Authenticatable implements FilamentUser, HasAvatar
     protected $fillable = [
         'name',
         'email',
+        'whatsapp',
         'password',
         'avatar',
         'role',
         'permissions',
         'is_active',
+        'otp_code',
+        'otp_expires_at',
     ];
 
     /**

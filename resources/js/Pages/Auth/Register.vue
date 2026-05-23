@@ -5,6 +5,7 @@ import { ref } from 'vue';
 const form = useForm({
     name: '',
     email: '',
+    whatsapp: '',
     password: '',
     password_confirmation: '',
 });
@@ -96,6 +97,19 @@ const submit = () => {
                             required
                         />
                         <div v-if="form.errors.email" style="margin-top:4px;font-size:0.78rem;color:#ef4444;">{{ form.errors.email }}</div>
+                    </div>
+
+                    <!-- WhatsApp -->
+                    <div style="margin-bottom:20px;">
+                        <label style="display:block;font-size:10px;font-weight:700;color:#4b5563;letter-spacing:0.12em;text-transform:uppercase;margin-bottom:6px;">Nomor WhatsApp</label>
+                        <input
+                            type="text"
+                            v-model="form.whatsapp"
+                            placeholder="Contoh: 081234567890"
+                            style="display:block;width:100%;padding:10px 14px;border:1px solid #e5e7eb;border-radius:8px;font-size:0.88rem;color:#111;background:#fff;outline:none;transition:border-color 0.15s;box-sizing:border-box;"
+                            required
+                        />
+                        <div v-if="form.errors.whatsapp" style="margin-top:4px;font-size:0.78rem;color:#ef4444;">{{ form.errors.whatsapp }}</div>
                     </div>
 
                     <!-- Password Row -->

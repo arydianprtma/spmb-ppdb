@@ -46,10 +46,54 @@ class SpmbController extends Controller
             return back()->withErrors(['message' => 'Mohon maaf, pendaftaran saat ini sedang ditutup.']);
         }
 
+        $user_id = Auth::id();
+        $pendaftaran = SpmbPendaftaran::with('siswa')->where('user_id', $user_id)->first();
+        $siswaId = $pendaftaran?->siswa?->id;
+
         $request->validate([
             'siswa.nama_lengkap' => 'required|string|max:255',
-            'siswa.nik' => 'nullable|string|max:16',
-            'siswa.nisn' => 'nullable|string|max:10',
+            'siswa.nik' => [
+                'nullable',
+                'string',
+                'size:16',
+                \Illuminate\Validation\Rule::unique('spmb_siswa', 'nik')->ignore($siswaId),
+            ],
+            'siswa.nisn' => [
+                'nullable',
+                'string',
+                'size:10',
+                \Illuminate\Validation\Rule::unique('spmb_siswa', 'nisn')->ignore($siswaId),
+            ],
+            'siswa.no_ijazah' => [
+                'nullable',
+                'string',
+                \Illuminate\Validation\Rule::unique('spmb_siswa', 'no_ijazah')->ignore($siswaId),
+            ],
+            'siswa.no_skhun' => [
+                'nullable',
+                'string',
+                \Illuminate\Validation\Rule::unique('spmb_siswa', 'no_skhun')->ignore($siswaId),
+            ],
+            'siswa.no_un' => [
+                'nullable',
+                'string',
+                \Illuminate\Validation\Rule::unique('spmb_siswa', 'no_un')->ignore($siswaId),
+            ],
+            'siswa.no_registrasi_akta' => [
+                'nullable',
+                'string',
+                \Illuminate\Validation\Rule::unique('spmb_siswa', 'no_registrasi_akta')->ignore($siswaId),
+            ],
+            'siswa.no_kip' => [
+                'nullable',
+                'string',
+                \Illuminate\Validation\Rule::unique('spmb_siswa', 'no_kip')->ignore($siswaId),
+            ],
+            'siswa.email_pribadi' => [
+                'nullable',
+                'email',
+                \Illuminate\Validation\Rule::unique('spmb_siswa', 'email_pribadi')->ignore($siswaId),
+            ],
             'siswa.alamat' => 'required|string',
             'siswa.provinsi' => 'required|string',
             'siswa.kabupaten_kota' => 'required|string',
@@ -64,10 +108,26 @@ class SpmbController extends Controller
         ], [
             'required' => 'Kolom :attribute wajib diisi.',
             'max' => 'Kolom :attribute tidak boleh lebih dari :max karakter.',
+            'size' => 'Kolom :attribute harus terdiri dari :size karakter.',
+            'siswa.nik.unique' => 'NIK Siswa ini sudah terdaftar di sistem.',
+            'siswa.nisn.unique' => 'NISN ini sudah terdaftar di sistem.',
+            'siswa.no_ijazah.unique' => 'Nomor Seri Ijazah ini sudah terdaftar di sistem.',
+            'siswa.no_skhun.unique' => 'Nomor Seri SKHUN ini sudah terdaftar di sistem.',
+            'siswa.no_un.unique' => 'Nomor Ujian Nasional ini sudah terdaftar di sistem.',
+            'siswa.no_registrasi_akta.unique' => 'Nomor Registrasi Akta Kelahiran ini sudah terdaftar di sistem.',
+            'siswa.no_kip.unique' => 'Nomor KIP ini sudah terdaftar di sistem.',
+            'siswa.email_pribadi.unique' => 'Email pribadi ini sudah terdaftar di sistem.',
+            'siswa.email_pribadi.email' => 'Format email pribadi tidak valid.',
         ], [
             'siswa.nama_lengkap' => 'Nama Lengkap Siswa',
             'siswa.nik' => 'NIK Siswa',
             'siswa.nisn' => 'NISN',
+            'siswa.no_ijazah' => 'Nomor Seri Ijazah',
+            'siswa.no_skhun' => 'Nomor Seri SKHUN',
+            'siswa.no_un' => 'Nomor Ujian Nasional',
+            'siswa.no_registrasi_akta' => 'Nomor Registrasi Akta Kelahiran',
+            'siswa.no_kip' => 'Nomor KIP',
+            'siswa.email_pribadi' => 'Email Pribadi',
             'siswa.alamat' => 'Alamat Lengkap',
             'siswa.provinsi' => 'Provinsi',
             'siswa.kabupaten_kota' => 'Kabupaten/Kota',

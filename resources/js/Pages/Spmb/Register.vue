@@ -2,7 +2,7 @@
     <Head title="Pendaftaran Siswa Baru" />
 
     <!-- Minimal App Shell (no navbar/footer) -->
-    <div class="min-h-screen bg-gray-50 flex flex-col">
+    <div class="min-h-screen flex flex-col bg-gray-50">
 
         <!-- Top Bar -->
         <header class="bg-white border-b border-gray-100 sticky top-0 z-50">
@@ -78,28 +78,28 @@
                                 <div
                                     class="w-8 h-8 md:w-10 md:h-10 rounded-full flex items-center justify-center font-bold text-xs md:text-sm border-2 transition-all duration-300 relative"
                                     :class="step > s
-                                        ? 'bg-emerald-500 border-emerald-500 text-white shadow-lg shadow-emerald-200'
+                                        ? (form.tingkat === 'smp' ? 'bg-[#2E5FA3] border-[#2E5FA3] text-white shadow-lg shadow-[#2E5FA3]/30' : 'bg-slate-500 border-slate-500 text-white shadow-lg shadow-slate-200')
                                         : step === s
-                                            ? 'bg-white border-emerald-500 text-emerald-600 ring-4 ring-emerald-50'
+                                            ? (form.tingkat === 'smp' ? 'bg-white border-[#2E5FA3] text-[#2E5FA3] ring-4 ring-[#2E5FA3]/10' : 'bg-white border-slate-500 text-slate-600 ring-4 ring-slate-100')
                                             : 'bg-white border-gray-300 text-gray-400'"
                                 >
                                     <span>{{ s }}</span>
                                     <!-- Checkmark badge for completed steps -->
                                     <div v-if="step > s" class="absolute -top-1 -right-1 w-4 h-4 bg-white rounded-full flex items-center justify-center shadow-sm">
-                                        <svg class="w-3 h-3 text-emerald-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <svg class="w-3 h-3 transition-colors duration-500" :class="form.tingkat === 'smp' ? 'text-[#2E5FA3]' : 'text-slate-600'" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M5 13l4 4L19 7" />
                                         </svg>
                                     </div>
                                 </div>
                                 <span
-                                    class="mt-2 text-[10px] md:text-xs font-semibold tracking-wide text-center w-20 md:w-24"
-                                    :class="step >= s ? 'text-emerald-600' : 'text-gray-400'"
+                                    class="mt-2 text-[10px] md:text-xs font-semibold tracking-wide text-center w-20 md:w-24 transition-colors duration-500"
+                                    :class="step >= s ? (form.tingkat === 'smp' ? 'text-[#2E5FA3]' : 'text-slate-600') : 'text-gray-400'"
                                 >{{ stepLabels[s-1] }}</span>
                             </div>
                             <!-- Connector line between steps -->
                             <div v-if="s < totalSteps" class="flex-1 mt-4 md:mt-5 mx-1">
                                 <div class="h-0.5 w-full transition-all duration-500"
-                                    :class="step > s ? 'bg-emerald-500' : 'bg-gray-200'"
+                                    :class="step > s ? (form.tingkat === 'smp' ? 'bg-[#2E5FA3]' : 'bg-slate-500') : 'bg-gray-200'"
                                 ></div>
                             </div>
                         </template>
@@ -107,7 +107,7 @@
                 </div>
 
                 <!-- Form Content -->
-                <form @submit.prevent="submit" class="bg-white shadow-2xl rounded-2xl md:rounded-3xl border border-gray-100 mb-8">
+                <form @submit.prevent="submit" class="bg-white shadow-2xl rounded-2xl md:rounded-3xl mb-8 border border-gray-100">
                     <div class="p-5 sm:p-8 md:p-12">
                         
                         <!-- STEP 1: Registrasi & Identitas Siswa -->
@@ -119,18 +119,38 @@
 
                             <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
                                 <div class="col-span-1 lg:col-span-2">
-                                    <label class="block text-sm font-bold text-gray-700 mb-2">Tingkat Pendidikan</label>
-                                    <div class="grid grid-cols-2 gap-4 max-w-xs mx-auto md:mx-0">
+                                    <label class="block text-sm font-bold text-gray-700 mb-3">Tingkat Pendidikan</label>
+                                    <div class="grid grid-cols-2 gap-4 max-w-sm mx-auto md:mx-0">
+                                        <!-- SMP Button -->
                                         <button
-                                            v-for="t in ['smp', 'sma']"
-                                            :key="t"
                                             type="button"
-                                            @click="form.tingkat = t"
-                                            class="py-3 px-4 rounded-xl border-2 font-bold transition-all text-sm md:text-base"
-                                            :class="form.tingkat === t ? 'border-emerald-600 bg-emerald-50 text-emerald-700' : 'border-gray-100 bg-gray-50 text-gray-500 hover:border-emerald-200'"
+                                            @click="form.tingkat = 'smp'"
+                                            class="py-3.5 px-4 rounded-xl border-2 font-bold transition-all text-sm md:text-base flex flex-col items-center gap-1"
+                                            :class="form.tingkat === 'smp'
+                                                ? 'border-[#2E5FA3] bg-[#2E5FA3] text-white shadow-lg shadow-[#2E5FA3]/30'
+                                                : 'border-[#A8C4E5] bg-white text-[#4A7AC0] hover:border-[#2E5FA3] hover:bg-[#EBF0FB]'"
                                         >
-                                            {{ t.toUpperCase() }}
+                                            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 14l9-5-9-5-9 5 9 5z"/><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 14l6.16-3.422a12.083 12.083 0 01.665 6.479A11.952 11.952 0 0012 20.055a11.952 11.952 0 00-6.824-2.998 12.078 12.078 0 01.665-6.479L12 14z"/></svg>
+                                            SMP
                                         </button>
+                                        <!-- SMA Button -->
+                                        <button
+                                            type="button"
+                                            @click="form.tingkat = 'sma'"
+                                            class="py-3.5 px-4 rounded-xl border-2 font-bold transition-all text-sm md:text-base flex flex-col items-center gap-1"
+                                            :class="form.tingkat === 'sma'
+                                                ? 'border-slate-600 bg-slate-600 text-white shadow-lg shadow-slate-200'
+                                                : 'border-slate-300 bg-white text-slate-500 hover:border-slate-500 hover:bg-slate-50'"
+                                        >
+                                            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4"/></svg>
+                                            SMA
+                                        </button>
+                                    </div>
+                                    <!-- Badge informasi jenjang terpilih -->
+                                    <div class="mt-3 inline-flex items-center gap-2 px-4 py-2 rounded-full text-xs font-bold transition-all duration-500"
+                                        :class="form.tingkat === 'smp' ? 'bg-[#D6E4F5] text-[#1A4080]' : 'bg-slate-200 text-slate-700'">
+                                        <span class="w-2 h-2 rounded-full animate-pulse" :class="form.tingkat === 'smp' ? 'bg-[#2E5FA3]' : 'bg-slate-500'"></span>
+                                        Mendaftar untuk jenjang: <strong>{{ form.tingkat.toUpperCase() }}</strong>
                                     </div>
                                 </div>
 
@@ -171,6 +191,32 @@
                                 <div class="col-span-1">
                                     <label class="label-form">Agama</label>
                                     <input v-model="form.siswa.agama" type="text" class="input-form" placeholder="Islam">
+                                </div>
+
+                                <div class="col-span-1">
+                                     <div class="flex justify-between items-center mb-1">
+                                         <label class="label-form" style="margin-bottom: 0; display: inline-block;">No. Registrasi Akta Kelahiran</label>
+                                         <button type="button" @click="showAktaExample = true" class="text-xs text-emerald-600 hover:text-emerald-700 font-semibold flex items-center gap-1 focus:outline-none transition-colors duration-200">
+                                             <svg xmlns="http://www.w3.org/2000/svg" class="h-3.5 w-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+                                             </svg>
+                                             Lihat Contoh
+                                         </button>
+                                     </div>
+                                     <input v-model="form.siswa.no_registrasi_akta" type="text" class="input-form" placeholder="Nomor Registrasi Akta">
+                                </div>
+
+                                <div class="col-span-1">
+                                    <label class="label-form">Kewarganegaraan</label>
+                                    <select v-model="form.siswa.kewarganegaraan" class="input-form">
+                                        <option value="Indonesia">Indonesia (WNI)</option>
+                                        <option value="Asing">Asing (WNA)</option>
+                                    </select>
+                                </div>
+
+                                <div v-if="form.siswa.kewarganegaraan === 'Asing'" class="col-span-1">
+                                    <label class="label-form">Nama Negara Asal</label>
+                                    <input v-model="form.siswa.nama_negara" type="text" class="input-form" placeholder="Nama Negara">
                                 </div>
 
                                 <div class="col-span-1">
@@ -219,7 +265,7 @@
 
                                 <div class="col-span-1">
                                     <label class="label-form">Dusun/Kampung</label>
-                                    <input v-model="form.siswa.dusun" type="text" class="input-form">
+                                    <input v-model="form.siswa.dusun" type="text" class="input-form" placeholder="Nama Dusun / Kampung">
                                 </div>
 
                                 <div class="col-span-1 grid grid-cols-2 gap-4">
@@ -271,6 +317,38 @@
                                 </div>
 
                                 <div class="col-span-1">
+                                    <label class="label-form">No. Telpon Rumah</label>
+                                    <input v-model="form.siswa.no_telp_rumah" type="text" class="input-form" placeholder="Nomor Telepon Rumah">
+                                </div>
+
+                                <div class="col-span-1">
+                                    <label class="label-form">Alat Transportasi Ke Sekolah</label>
+                                    <select v-model="form.siswa.alat_transportasi" class="input-form">
+                                        <option value="">Pilih Transportasi...</option>
+                                        <option value="Jalan kaki">Jalan kaki</option>
+                                        <option value="Sepeda">Sepeda</option>
+                                        <option value="Motor">Motor</option>
+                                        <option value="Mobil pribadi">Mobil pribadi</option>
+                                        <option value="Antar jemput">Antar jemput</option>
+                                        <option value="Angkutan umum">Angkutan umum</option>
+                                        <option value="Lainnya">Lainnya</option>
+                                    </select>
+                                </div>
+
+                                <div class="col-span-1">
+                                    <label class="label-form">Jenis Tempat Tinggal</label>
+                                    <select v-model="form.siswa.jenis_tinggal" class="input-form">
+                                        <option value="">Pilih Tempat Tinggal...</option>
+                                        <option value="Bersama Orangtua">Bersama Orangtua</option>
+                                        <option value="Wali">Wali</option>
+                                        <option value="Kos">Kos</option>
+                                        <option value="Asrama">Asrama</option>
+                                        <option value="Panti Asuhan">Panti Asuhan</option>
+                                        <option value="Lainnya">Lainnya</option>
+                                    </select>
+                                </div>
+
+                                <div class="col-span-1">
                                     <label class="label-form">Kode Pos</label>
                                     <input v-model="form.siswa.kode_pos" type="text" class="input-form" placeholder="41234" maxlength="10">
                                 </div>
@@ -292,11 +370,11 @@
                                 <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
                                     <div class="col-span-1 lg:col-span-2">
                                         <label class="label-form">Nama Lengkap Ayah</label>
-                                        <input v-model="form.ayah.nama" type="text" class="input-form" required>
+                                        <input v-model="form.ayah.nama" type="text" class="input-form" placeholder="Nama Lengkap Ayah Kandung" required>
                                     </div>
                                     <div class="col-span-1">
                                         <label class="label-form">NIK Ayah</label>
-                                        <input v-model="form.ayah.nik" type="text" class="input-form">
+                                        <input v-model="form.ayah.nik" type="text" class="input-form" placeholder="16 Digit NIK Ayah">
                                     </div>
                                     <div class="col-span-1">
                                         <label class="label-form">Tahun Lahir</label>
@@ -307,11 +385,36 @@
                                     </div>
                                     <div class="col-span-1">
                                         <label class="label-form">Pendidikan</label>
-                                        <input v-model="form.ayah.pendidikan" type="text" class="input-form">
+                                        <input v-model="form.ayah.pendidikan" type="text" class="input-form" placeholder="Contoh: S1, SMA, SMP">
                                     </div>
                                     <div class="col-span-1">
                                         <label class="label-form">Pekerjaan</label>
-                                        <input v-model="form.ayah.pekerjaan" type="text" class="input-form">
+                                        <input v-model="form.ayah.pekerjaan" type="text" class="input-form" placeholder="Contoh: Petani, Wiraswasta">
+                                    </div>
+                                    <div class="col-span-1">
+                                        <label class="label-form">Penghasilan Bulanan</label>
+                                        <select v-model="form.ayah.penghasilan_bulanan" class="input-form">
+                                            <option value="">Pilih Penghasilan...</option>
+                                            <option value="Kurang dari Rp 1.000.000">Kurang dari Rp 1.000.000</option>
+                                            <option value="Rp 1.000.000 - Rp 2.000.000">Rp 1.000.000 - Rp 2.000.000</option>
+                                            <option value="Rp 2.000.000 - Rp 5.000.000">Rp 2.000.000 - Rp 5.000.000</option>
+                                            <option value="Rp 5.000.000 - Rp 10.000.000">Rp 5.000.000 - Rp 10.000.000</option>
+                                            <option value="Lebih dari Rp 10.000.000">Lebih dari Rp 10.000.000</option>
+                                            <option value="Tidak berpenghasilan">Tidak berpenghasilan</option>
+                                        </select>
+                                    </div>
+                                    <div class="col-span-1">
+                                        <label class="label-form">Berkebutuhan Khusus</label>
+                                        <select v-model="form.ayah.berkebutuhan_khusus" class="input-form">
+                                            <option value="">Tidak Ada</option>
+                                            <option value="Tunanetra">Tunanetra</option>
+                                            <option value="Tunarungu">Tunarungu</option>
+                                            <option value="Tunawicara">Tunawicara</option>
+                                            <option value="Tunadaksa">Tunadaksa</option>
+                                            <option value="Tunagrahita">Tunagrahita</option>
+                                            <option value="Autis">Autis</option>
+                                            <option value="Lainnya">Lainnya</option>
+                                        </select>
                                     </div>
                                 </div>
                             </div>
@@ -324,11 +427,11 @@
                                 <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
                                     <div class="col-span-1 lg:col-span-2">
                                         <label class="label-form">Nama Lengkap Ibu</label>
-                                        <input v-model="form.ibu.nama" type="text" class="input-form" required>
+                                        <input v-model="form.ibu.nama" type="text" class="input-form" placeholder="Nama Lengkap Ibu Kandung" required>
                                     </div>
                                     <div class="col-span-1">
                                         <label class="label-form">NIK Ibu</label>
-                                        <input v-model="form.ibu.nik" type="text" class="input-form">
+                                        <input v-model="form.ibu.nik" type="text" class="input-form" placeholder="16 Digit NIK Ibu">
                                     </div>
                                     <div class="col-span-1">
                                         <label class="label-form">Tahun Lahir</label>
@@ -338,8 +441,82 @@
                                         </select>
                                     </div>
                                     <div class="col-span-1">
+                                        <label class="label-form">Pendidikan</label>
+                                        <input v-model="form.ibu.pendidikan" type="text" class="input-form" placeholder="Contoh: S1, SMA, SMP">
+                                    </div>
+                                    <div class="col-span-1">
                                         <label class="label-form">Pekerjaan</label>
-                                        <input v-model="form.ibu.pekerjaan" type="text" class="input-form">
+                                        <input v-model="form.ibu.pekerjaan" type="text" class="input-form" placeholder="Contoh: Ibu Rumah Tangga, Guru">
+                                    </div>
+                                    <div class="col-span-1">
+                                        <label class="label-form">Penghasilan Bulanan</label>
+                                        <select v-model="form.ibu.penghasilan_bulanan" class="input-form">
+                                            <option value="">Pilih Penghasilan...</option>
+                                            <option value="Kurang dari Rp 1.000.000">Kurang dari Rp 1.000.000</option>
+                                            <option value="Rp 1.000.000 - Rp 2.000.000">Rp 1.000.000 - Rp 2.000.000</option>
+                                            <option value="Rp 2.000.000 - Rp 5.000.000">Rp 2.000.000 - Rp 5.000.000</option>
+                                            <option value="Rp 5.000.000 - Rp 10.000.000">Rp 5.000.000 - Rp 10.000.000</option>
+                                            <option value="Lebih dari Rp 10.000.000">Lebih dari Rp 10.000.000</option>
+                                            <option value="Tidak berpenghasilan">Tidak berpenghasilan</option>
+                                        </select>
+                                    </div>
+                                    <div class="col-span-1">
+                                        <label class="label-form">Berkebutuhan Khusus</label>
+                                        <select v-model="form.ibu.berkebutuhan_khusus" class="input-form">
+                                            <option value="">Tidak Ada</option>
+                                            <option value="Tunanetra">Tunanetra</option>
+                                            <option value="Tunarungu">Tunarungu</option>
+                                            <option value="Tunawicara">Tunawicara</option>
+                                            <option value="Tunadaksa">Tunadaksa</option>
+                                            <option value="Tunagrahita">Tunagrahita</option>
+                                            <option value="Autis">Autis</option>
+                                            <option value="Lainnya">Lainnya</option>
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- WALI (OPSIONAL) -->
+                            <div class="space-y-6">
+                                <div class="border-b border-gray-100 pb-4">
+                                    <h2 class="text-xl md:text-2xl font-bold text-gray-800 text-center md:text-left">Data Wali Siswa (Opsional)</h2>
+                                    <p class="text-gray-500 text-sm">Lengkapi jika calon santri tidak tinggal bersama orang tua kandung.</p>
+                                </div>
+                                <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+                                    <div class="col-span-1 lg:col-span-2">
+                                        <label class="label-form">Nama Lengkap Wali</label>
+                                        <input v-model="form.wali.nama" type="text" class="input-form" placeholder="Nama Lengkap Wali">
+                                    </div>
+                                    <div class="col-span-1">
+                                        <label class="label-form">NIK Wali</label>
+                                        <input v-model="form.wali.nik" type="text" class="input-form" placeholder="16 Digit NIK Wali" maxlength="16">
+                                    </div>
+                                    <div class="col-span-1">
+                                        <label class="label-form">Tahun Lahir</label>
+                                        <select v-model="form.wali.tahun_lahir" class="input-form">
+                                            <option value="">Pilih Tahun</option>
+                                            <option v-for="year in years" :key="year" :value="year">{{ year }}</option>
+                                        </select>
+                                    </div>
+                                    <div class="col-span-1">
+                                        <label class="label-form">Pendidikan</label>
+                                        <input v-model="form.wali.pendidikan" type="text" class="input-form" placeholder="SD/SMP/SMA/S1">
+                                    </div>
+                                    <div class="col-span-1">
+                                        <label class="label-form">Pekerjaan</label>
+                                        <input v-model="form.wali.pekerjaan" type="text" class="input-form" placeholder="Pekerjaan Wali">
+                                    </div>
+                                    <div class="col-span-1">
+                                        <label class="label-form">Penghasilan Bulanan</label>
+                                        <select v-model="form.wali.penghasilan_bulanan" class="input-form">
+                                            <option value="">Pilih Penghasilan...</option>
+                                            <option value="Kurang dari Rp 1.000.000">Kurang dari Rp 1.000.000</option>
+                                            <option value="Rp 1.000.000 - Rp 2.000.000">Rp 1.000.000 - Rp 2.000.000</option>
+                                            <option value="Rp 2.000.000 - Rp 5.000.000">Rp 2.000.000 - Rp 5.000.000</option>
+                                            <option value="Rp 5.000.000 - Rp 10.000.000">Rp 5.000.000 - Rp 10.000.000</option>
+                                            <option value="Lebih dari Rp 10.000.000">Lebih dari Rp 10.000.000</option>
+                                            <option value="Tidak berpenghasilan">Tidak berpenghasilan</option>
+                                        </select>
                                     </div>
                                 </div>
                             </div>
@@ -355,17 +532,22 @@
                                 <div class="col-span-1 grid grid-cols-2 gap-4">
                                     <div>
                                         <label class="label-form">Tinggi (cm)</label>
-                                        <input v-model="form.periodik.tinggi_badan" type="number" class="input-form">
+                                        <input v-model="form.periodik.tinggi_badan" type="number" class="input-form" placeholder="150">
                                     </div>
                                     <div>
                                         <label class="label-form">Berat (kg)</label>
-                                        <input v-model="form.periodik.berat_badan" type="number" class="input-form">
+                                        <input v-model="form.periodik.berat_badan" type="number" class="input-form" placeholder="45">
                                     </div>
                                 </div>
 
-                                <div class="col-span-1">
+                                <div class="col-span-1 text-center md:text-left">
                                     <label class="label-form">Jumlah Saudara Kandung</label>
-                                    <input v-model="form.periodik.jumlah_saudara_kandung" type="number" class="input-form">
+                                    <input v-model="form.periodik.jumlah_saudara_kandung" type="number" class="input-form" placeholder="Contoh: 2">
+                                </div>
+
+                                <div class="col-span-1">
+                                    <label class="label-form">Anak Keberapa</label>
+                                    <input v-model="form.siswa.anak_keberapa" type="number" class="input-form" placeholder="Contoh: 1">
                                 </div>
 
                                 <div class="col-span-1">
@@ -384,6 +566,34 @@
                                 <div class="col-span-1">
                                     <label class="label-form">No. Kopiyah</label>
                                     <input v-model="form.siswa.no_kopiyah" type="text" class="input-form" placeholder="Contoh: 56">
+                                </div>
+
+                                <div class="col-span-1">
+                                    <label class="label-form">Jarak Tempat Tinggal ke Sekolah</label>
+                                    <select v-model="form.periodik.jarak_ke_sekolah" class="input-form">
+                                        <option value="">Pilih Jarak...</option>
+                                        <option value="Kurang dari 1 km">Kurang dari 1 km</option>
+                                        <option value="Lebih dari 1 km">Lebih dari 1 km</option>
+                                    </select>
+                                </div>
+
+                                <div v-if="form.periodik.jarak_ke_sekolah === 'Lebih dari 1 km'" class="col-span-1">
+                                    <label class="label-form">Sebutkan Jarak (km)</label>
+                                    <input v-model="form.periodik.jarak_km" type="number" class="input-form" placeholder="Jarak dalam Kilometer">
+                                </div>
+
+                                <div class="col-span-1">
+                                    <label class="label-form">Waktu Tempuh Berangkat ke Sekolah</label>
+                                    <select v-model="form.periodik.waktu_tempuh" class="input-form">
+                                        <option value="">Pilih Waktu...</option>
+                                        <option value="Kurang dari 60 menit">Kurang dari 60 menit</option>
+                                        <option value="Lebih dari 60 menit">Lebih dari 60 menit</option>
+                                    </select>
+                                </div>
+
+                                <div v-if="form.periodik.waktu_tempuh === 'Lebih dari 60 menit'" class="col-span-1">
+                                    <label class="label-form">Sebutkan Waktu (menit)</label>
+                                    <input v-model="form.periodik.waktu_menit" type="number" class="input-form" placeholder="Waktu dalam Menit">
                                 </div>
                             </div>
 
@@ -405,11 +615,11 @@
                                         </div>
                                         <div v-if="form.siswa.penerima_kps_pkh">
                                             <label class="label-form">No. KPS/PKH</label>
-                                            <input v-model="form.siswa.no_kps_pkh" type="text" class="input-form">
+                                            <input v-model="form.siswa.no_kps_pkh" type="text" class="input-form" placeholder="Nomor KPS/PKH">
                                         </div>
                                         <div v-if="form.siswa.penerima_kps_pkh">
                                             <label class="label-form">No. KKS</label>
-                                            <input v-model="form.siswa.no_kks" type="text" class="input-form">
+                                            <input v-model="form.siswa.no_kks" type="text" class="input-form" placeholder="Nomor Kartu Keluarga Sejahtera">
                                         </div>
                                         <div v-if="form.siswa.penerima_kps_pkh" class="pt-2">
                                             <label class="label-form text-xs">Upload Kartu KPS/PKH (Opsional)</label>
@@ -430,11 +640,18 @@
                                         </div>
                                         <div v-if="form.siswa.penerima_kip">
                                             <label class="label-form">No. KIP</label>
-                                            <input v-model="form.siswa.no_kip" type="text" class="input-form">
+                                            <input v-model="form.siswa.no_kip" type="text" class="input-form" placeholder="Nomor Kartu Indonesia Pintar">
                                         </div>
                                         <div v-if="form.siswa.penerima_kip">
                                             <label class="label-form">Nama di KIP</label>
-                                            <input v-model="form.siswa.nama_tertera_kip" type="text" class="input-form">
+                                            <input v-model="form.siswa.nama_tertera_kip" type="text" class="input-form" placeholder="Nama tertera di kartu KIP">
+                                        </div>
+                                        <div v-if="form.siswa.penerima_kip">
+                                            <label class="label-form">Terima Fisik Kartu KIP?</label>
+                                            <select v-model="form.siswa.terima_fisik_kip" class="input-form">
+                                                <option :value="false">Tidak</option>
+                                                <option :value="true">Ya</option>
+                                            </select>
                                         </div>
                                         <div v-if="form.siswa.penerima_kip" class="pt-2">
                                             <label class="label-form text-xs">Upload Kartu KIP (Opsional)</label>
@@ -455,7 +672,16 @@
                                         </div>
                                         <div v-if="form.siswa.layak_pip">
                                             <label class="label-form">Alasan PIP</label>
-                                            <input v-model="form.siswa.alasan_layak_pip" type="text" class="input-form">
+                                            <select v-model="form.siswa.alasan_layak_pip" class="input-form">
+                                                <option value="">Pilih Alasan...</option>
+                                                <option value="Pemegang PKH/KPS/KIP">Pemegang PKH/KPS/KIP</option>
+                                                <option value="Penerima BSM 2014">Penerima BSM 2014</option>
+                                                <option value="Yatim Piatu / Panti Asuhan / Panti Sosial">Yatim Piatu / Panti Asuhan / Panti Sosial</option>
+                                                <option value="Pernah DO (Drop Out)">Pernah DO (Drop Out)</option>
+                                                <option value="Siswa Miskin / Rentan Miskin">Siswa Miskin / Rentan Miskin</option>
+                                                <option value="Daerah Konflik">Daerah Konflik</option>
+                                                <option value="Keluarga Terpidana">Keluarga Terpidana</option>
+                                            </select>
                                         </div>
                                     </div>
 
@@ -468,11 +694,11 @@
                                         </div>
                                         <div>
                                             <label class="label-form">No. Rekening</label>
-                                            <input v-model="form.siswa.no_rek_bank" type="text" class="input-form">
+                                            <input v-model="form.siswa.no_rek_bank" type="text" class="input-form" placeholder="Nomor rekening bank">
                                         </div>
                                         <div>
                                             <label class="label-form">Rekening Atas Nama</label>
-                                            <input v-model="form.siswa.rekening_atas_nama" type="text" class="input-form">
+                                            <input v-model="form.siswa.rekening_atas_nama" type="text" class="input-form" placeholder="Nama pemilik rekening">
                                         </div>
                                     </div>
                                 </div>
@@ -687,7 +913,8 @@
                             v-if="step > 1" 
                             type="button" 
                             @click="step--"
-                            class="px-3 md:px-6 py-2.5 md:py-3 text-emerald-700 text-sm md:text-base font-bold hover:bg-emerald-50 rounded-xl transition-colors flex items-center gap-1 md:gap-2"
+                            class="px-3 md:px-6 py-2.5 md:py-3 text-sm md:text-base font-bold rounded-xl transition-colors flex items-center gap-1 md:gap-2"
+                            :class="form.tingkat === 'smp' ? 'text-[#1A4080] hover:bg-[#D6E4F5]' : 'text-slate-700 hover:bg-slate-200'"
                         >
                             <svg class="w-4 h-4 md:w-5 md:h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7" />
@@ -700,7 +927,8 @@
                             v-if="step < totalSteps" 
                             type="button" 
                             @click="step++"
-                            class="bg-emerald-600 text-white px-4 md:px-8 py-2.5 md:py-3 rounded-xl text-sm md:text-base font-bold hover:bg-emerald-700 transition-all shadow-lg shadow-emerald-200 flex items-center gap-1 md:gap-2"
+                            class="text-white px-4 md:px-8 py-2.5 md:py-3 rounded-xl text-sm md:text-base font-bold transition-all shadow-lg flex items-center gap-1 md:gap-2"
+                            :class="form.tingkat === 'smp' ? 'bg-[#2E5FA3] hover:bg-[#245090] shadow-[#2E5FA3]/40' : 'bg-slate-600 hover:bg-slate-700 shadow-slate-200'"
                         >
                             Selanjutnya
                             <svg class="w-4 h-4 md:w-5 md:h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -712,7 +940,8 @@
                             v-if="step === totalSteps"
                             type="submit"
                             :disabled="form.processing"
-                            class="relative bg-emerald-600 text-white px-5 md:px-10 py-2.5 md:py-3 rounded-xl text-sm md:text-base font-bold hover:bg-emerald-700 active:scale-95 transition-all shadow-lg shadow-emerald-200 disabled:opacity-60 disabled:cursor-not-allowed flex items-center gap-1 md:gap-2"
+                            class="relative text-white px-5 md:px-10 py-2.5 md:py-3 rounded-xl text-sm md:text-base font-bold active:scale-95 transition-all shadow-lg disabled:opacity-60 disabled:cursor-not-allowed flex items-center gap-1 md:gap-2"
+                            :class="form.tingkat === 'smp' ? 'bg-[#2E5FA3] hover:bg-[#245090] shadow-[#2E5FA3]/40' : 'bg-slate-600 hover:bg-slate-700 shadow-slate-200'"
                         >
                             <svg v-if="form.processing" class="animate-spin h-4 w-4 md:h-5 md:w-5" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
                                 <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
@@ -725,6 +954,57 @@
             </div>
         </div>
     </div>
+
+    <!-- Modal Contoh No. Registrasi Akta Kelahiran -->
+    <transition name="fade">
+        <div v-if="showAktaExample" class="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/60 backdrop-blur-sm" @click.self="showAktaExample = false">
+            <div class="relative w-full max-w-2xl bg-white rounded-2xl shadow-2xl overflow-hidden border border-gray-100 transform transition-all animate-scaleUp">
+                <!-- Header -->
+                <div class="flex items-center justify-between px-6 py-4 bg-gradient-to-r from-emerald-600 to-teal-600 text-white">
+                    <h3 class="text-lg font-bold flex items-center gap-2">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+                        </svg>
+                        Posisi Nomor Registrasi Akta Kelahiran
+                    </h3>
+                    <button type="button" @click="showAktaExample = false" class="text-white/80 hover:text-white hover:bg-white/10 rounded-full p-1 transition-colors">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+                        </svg>
+                    </button>
+                </div>
+                
+                <!-- Body -->
+                <div class="p-6">
+                    <div class="bg-amber-50 border-l-4 border-amber-500 p-4 mb-4 rounded-r-lg">
+                        <div class="flex">
+                            <div class="flex-shrink-0">
+                                <svg class="h-5 w-5 text-amber-500" viewBox="0 0 20 20" fill="currentColor">
+                                    <path fill-rule="evenodd" d="M8.257 3.099c.765-1.36 2.722-1.36 3.486 0l5.58 9.92c.75 1.334-.213 2.98-1.742 2.98H4.42c-1.53 0-2.493-1.646-1.743-2.98l5.58-9.92zM11 13a1 1 0 11-2 0 1 1 0 012 0zm-1-8a1 1 0 00-1 1v3a1 1 0 002 0V6a1 1 0 00-1-1z" clip-rule="evenodd" />
+                                </svg>
+                            </div>
+                            <div class="ml-3">
+                                <p class="text-sm text-amber-800 font-medium">
+                                    Perhatian: Masukkan nomor registrasi resmi yang tertera di bagian kanan atas atau tengah lembar kutipan akta kelahiran Anda (bukan NIK).
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="flex justify-center border border-gray-200 rounded-xl overflow-hidden shadow-inner bg-gray-50 p-2">
+                        <img src="/No Registrasi Akta Kelahiran.jpg" alt="Contoh No Registrasi Akta Kelahiran" class="max-h-[60vh] object-contain rounded-lg">
+                    </div>
+                </div>
+                
+                <!-- Footer -->
+                <div class="px-6 py-4 bg-gray-50 flex justify-end border-t border-gray-100">
+                    <button type="button" @click="showAktaExample = false" class="px-5 py-2.5 bg-gray-800 hover:bg-gray-900 text-white text-sm font-semibold rounded-xl shadow-md transition-all">
+                        Mengerti, Tutup
+                    </button>
+                </div>
+            </div>
+        </div>
+    </transition>
 </template>
 
 <script setup>
@@ -746,6 +1026,7 @@ const props = defineProps({
 });
 
 const step = ref(1);
+const showAktaExample = ref(false);
 const totalSteps = 5;
 const stepLabels = ['Data Diri', 'Alamat', 'Orang Tua', 'Tambahan', 'Berkas'];
 
@@ -810,6 +1091,9 @@ const form = useForm({
         tempat_lahir:    ex?.siswa?.tempat_lahir    ?? draft?.siswa?.tempat_lahir    ?? '',
         tanggal_lahir:   ex?.siswa?.tanggal_lahir   ?? draft?.siswa?.tanggal_lahir   ?? '',
         agama:           ex?.siswa?.agama           ?? draft?.siswa?.agama           ?? 'Islam',
+        no_registrasi_akta: ex?.siswa?.no_registrasi_akta ?? draft?.siswa?.no_registrasi_akta ?? '',
+        kewarganegaraan: ex?.siswa?.kewarganegaraan ?? draft?.siswa?.kewarganegaraan ?? 'Indonesia',
+        nama_negara:     ex?.siswa?.nama_negara     ?? draft?.siswa?.nama_negara     ?? '',
         alamat:          ex?.siswa?.alamat          ?? draft?.siswa?.alamat          ?? '',
         dusun:           ex?.siswa?.dusun           ?? draft?.siswa?.dusun           ?? '',
         rt:              ex?.siswa?.rt              ?? draft?.siswa?.rt              ?? '',
@@ -819,6 +1103,7 @@ const form = useForm({
         kabupaten_kota:  ex?.siswa?.kabupaten_kota  ?? draft?.siswa?.kabupaten_kota  ?? '',
         provinsi:        ex?.siswa?.provinsi        ?? draft?.siswa?.provinsi        ?? '',
         no_hp:              ex?.siswa?.no_hp           ?? draft?.siswa?.no_hp           ?? '',
+        no_telp_rumah:      ex?.siswa?.no_telp_rumah   ?? draft?.siswa?.no_telp_rumah   ?? '',
         email_pribadi:      ex?.siswa?.email_pribadi   ?? draft?.siswa?.email_pribadi   ?? '',
         kode_pos:           ex?.siswa?.kode_pos        ?? draft?.siswa?.kode_pos        ?? '',
         no_ijazah:          ex?.siswa?.no_ijazah       ?? draft?.siswa?.no_ijazah       ?? '',
@@ -828,6 +1113,9 @@ const form = useForm({
         ukuran_pakaian:     ex?.siswa?.ukuran_pakaian  ?? draft?.siswa?.ukuran_pakaian  ?? '',
         no_sepatu:          ex?.siswa?.no_sepatu       ?? draft?.siswa?.no_sepatu       ?? '',
         no_kopiyah:         ex?.siswa?.no_kopiyah      ?? draft?.siswa?.no_kopiyah      ?? '',
+        alat_transportasi:  ex?.siswa?.alat_transportasi ?? draft?.siswa?.alat_transportasi ?? '',
+        jenis_tinggal:      ex?.siswa?.jenis_tinggal   ?? draft?.siswa?.jenis_tinggal   ?? '',
+        anak_keberapa:      ex?.siswa?.anak_keberapa   ?? draft?.siswa?.anak_keberapa   ?? '',
         
         penerima_kps_pkh:   ex?.siswa?.penerima_kps_pkh ?? draft?.siswa?.penerima_kps_pkh ?? false,
         no_kps_pkh:         ex?.siswa?.no_kps_pkh       ?? draft?.siswa?.no_kps_pkh       ?? '',
@@ -836,6 +1124,7 @@ const form = useForm({
         penerima_kip:       ex?.siswa?.penerima_kip     ?? draft?.siswa?.penerima_kip     ?? false,
         no_kip:             ex?.siswa?.no_kip           ?? draft?.siswa?.no_kip           ?? '',
         nama_tertera_kip:   ex?.siswa?.nama_tertera_kip ?? draft?.siswa?.nama_tertera_kip ?? '',
+        terima_fisik_kip:   ex?.siswa?.terima_fisik_kip ?? draft?.siswa?.terima_fisik_kip ?? false,
         
         layak_pip:          ex?.siswa?.layak_pip        ?? draft?.siswa?.layak_pip        ?? false,
         alasan_layak_pip:   ex?.siswa?.alasan_layak_pip ?? draft?.siswa?.alasan_layak_pip ?? '',
@@ -850,6 +1139,8 @@ const form = useForm({
         tahun_lahir: ex?.ayah?.tahun_lahir ?? draft?.ayah?.tahun_lahir ?? '',
         pekerjaan:   ex?.ayah?.pekerjaan   ?? draft?.ayah?.pekerjaan   ?? '',
         pendidikan:  ex?.ayah?.pendidikan  ?? draft?.ayah?.pendidikan  ?? '',
+        penghasilan_bulanan: ex?.ayah?.penghasilan_bulanan ?? draft?.ayah?.penghasilan_bulanan ?? '',
+        berkebutuhan_khusus: ex?.ayah?.berkebutuhan_khusus ?? draft?.ayah?.berkebutuhan_khusus ?? '',
     },
     ibu: {
         nama:        ex?.ibu?.nama        ?? draft?.ibu?.nama        ?? '',
@@ -857,16 +1148,25 @@ const form = useForm({
         tahun_lahir: ex?.ibu?.tahun_lahir ?? draft?.ibu?.tahun_lahir ?? '',
         pekerjaan:   ex?.ibu?.pekerjaan   ?? draft?.ibu?.pekerjaan   ?? '',
         pendidikan:  ex?.ibu?.pendidikan  ?? draft?.ibu?.pendidikan  ?? '',
+        penghasilan_bulanan: ex?.ibu?.penghasilan_bulanan ?? draft?.ibu?.penghasilan_bulanan ?? '',
+        berkebutuhan_khusus: ex?.ibu?.berkebutuhan_khusus ?? draft?.ibu?.berkebutuhan_khusus ?? '',
     },
     wali: {
         nama:      ex?.wali?.nama      ?? draft?.wali?.nama      ?? '',
         nik:       ex?.wali?.nik       ?? draft?.wali?.nik       ?? '',
+        tahun_lahir: ex?.wali?.tahun_lahir ?? draft?.wali?.tahun_lahir ?? '',
+        pendidikan:  ex?.wali?.pendidikan  ?? draft?.wali?.pendidikan  ?? '',
         pekerjaan: ex?.wali?.pekerjaan ?? draft?.wali?.pekerjaan ?? '',
+        penghasilan_bulanan: ex?.wali?.penghasilan_bulanan ?? draft?.wali?.penghasilan_bulanan ?? '',
     },
     periodik: {
         tinggi_badan:           ex?.periodik?.tinggi_badan           ?? draft?.periodik?.tinggi_badan           ?? '',
         berat_badan:            ex?.periodik?.berat_badan            ?? draft?.periodik?.berat_badan            ?? '',
         jumlah_saudara_kandung: ex?.periodik?.jumlah_saudara_kandung ?? draft?.periodik?.jumlah_saudara_kandung ?? '',
+        jarak_ke_sekolah:       ex?.periodik?.jarak_ke_sekolah       ?? draft?.periodik?.jarak_ke_sekolah       ?? '',
+        jarak_km:               ex?.periodik?.jarak_km               ?? draft?.periodik?.jarak_km               ?? '',
+        waktu_tempuh:           ex?.periodik?.waktu_tempuh           ?? draft?.periodik?.waktu_tempuh           ?? '',
+        waktu_menit:            ex?.periodik?.waktu_menit            ?? draft?.periodik?.waktu_menit            ?? '',
     },
     prestasi:  ex?.prestasi  ?? draft?.prestasi  ?? [],
     beasiswa:  ex?.beasiswa  ?? draft?.beasiswa  ?? [],
@@ -1132,5 +1432,27 @@ const removeBeasiswa = (index) => { form.beasiswa.splice(index, 1); };
 @keyframes fadeIn {
     from { opacity: 0; transform: translateY(10px); }
     to { opacity: 1; transform: translateY(0); }
+}
+
+/* Modal Animations */
+.fade-enter-active, .fade-leave-active {
+    transition: opacity 0.3s ease;
+}
+.fade-enter-from, .fade-leave-to {
+    opacity: 0;
+}
+
+@keyframes scaleUp {
+    from {
+        opacity: 0;
+        transform: scale(0.95);
+    }
+    to {
+        opacity: 1;
+        transform: scale(1);
+    }
+}
+.animate-scaleUp {
+    animation: scaleUp 0.3s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
 }
 </style>

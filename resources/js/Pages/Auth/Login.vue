@@ -69,6 +69,11 @@ const submit = () => {
                     Silakan masuk menggunakan email dan kata sandi Anda.
                 </p>
 
+                <!-- Success Flash Alert -->
+                <div v-if="$page.props.flash?.success" style="margin-bottom: 24px; padding: 12px 16px; background: #e6fcf5; border-left: 4px solid #059669; border-radius: 6px; color: #065f46; font-size: 0.85rem; line-height: 1.5; font-weight: 500;">
+                    {{ $page.props.flash.success }}
+                </div>
+
                 <form @submit.prevent="submit">
                     <!-- Email -->
                     <div style="margin-bottom:20px;">
@@ -102,10 +107,13 @@ const submit = () => {
                         <div v-if="form.errors.password" style="margin-top:4px;font-size:0.78rem;color:#ef4444;">{{ form.errors.password }}</div>
                     </div>
 
-                    <!-- Remember Me -->
-                    <div style="margin-bottom:28px;display:flex;align-items:center;gap:8px;">
-                        <input type="checkbox" id="remember" v-model="form.remember" style="width:13px;height:13px;accent-color:#059669;cursor:pointer;" />
-                        <label for="remember" style="font-size:0.8rem;color:#6b7280;cursor:pointer;">Ingat Saya</label>
+                    <!-- Remember Me & Forgot Password -->
+                    <div style="margin-bottom:28px;display:flex;align-items:center;justify-content:space-between;width:100%;">
+                        <div style="display:flex;align-items:center;gap:8px;">
+                            <input type="checkbox" id="remember" v-model="form.remember" style="width:13px;height:13px;accent-color:#059669;cursor:pointer;" />
+                            <label for="remember" style="font-size:0.8rem;color:#6b7280;cursor:pointer;">Ingat Saya</label>
+                        </div>
+                        <Link :href="route('password.request')" style="font-size:0.8rem;color:#059669;font-weight:600;text-decoration:none;">Lupa Kata Sandi?</Link>
                     </div>
 
                     <!-- Submit Button with glow -->
