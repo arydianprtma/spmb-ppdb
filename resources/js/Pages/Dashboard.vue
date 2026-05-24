@@ -34,7 +34,7 @@ const status = props.pendaftaran ? (statusConfig[props.pendaftaran.status] || st
 </script>
 
 <template>
-    <Head title="Dashboard - SPMB Riyadussalikin" />
+    <Head title="Dashboard" />
 
     <div style="min-height:100vh;background:#f8fafc;font-family:'Figtree',sans-serif;">
 

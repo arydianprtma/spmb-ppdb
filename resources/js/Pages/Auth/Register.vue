@@ -1,6 +1,7 @@
 <script setup>
 import { Head, Link, useForm } from '@inertiajs/vue3';
 import { ref } from 'vue';
+import logoUrl from '../../../assets/logo/logo_pondok.png';
 
 const form = useForm({
     name: '',
@@ -21,7 +22,7 @@ const submit = () => {
 </script>
 
 <template>
-    <Head title="Register - SPMB Riyadussalikin" />
+    <Head title="Daftar Akun" />
 
     <div style="min-height:100vh;display:flex;flex-direction:row;background:#fff;font-family:'Figtree',sans-serif;">
 
@@ -35,7 +36,7 @@ const submit = () => {
             <!-- Content -->
             <div style="position:relative;z-index:3;display:flex;flex-direction:column;align-items:center;text-align:center;padding:0 64px;width:100%;">
                 <!-- Logo -->
-                <img src="/logo.png" alt="Logo Riyadussalikin" style="width:120px;height:120px;object-fit:contain;margin-bottom:32px;filter:drop-shadow(0 4px 24px rgba(0,0,0,0.5));" />
+                <img :src="logoUrl" alt="Logo Riyadussalikin" style="width:120px;height:120px;object-fit:contain;margin-bottom:32px;filter:drop-shadow(0 4px 24px rgba(0,0,0,0.5));" />
 
                 <h1 style="font-size:2rem;font-weight:800;color:#fff;line-height:1.3;margin-bottom:8px;">
                     Mulai Perjalanan Suci di<br/>

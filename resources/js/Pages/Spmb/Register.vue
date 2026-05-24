@@ -992,7 +992,7 @@
                     </div>
                     
                     <div class="flex justify-center border border-gray-200 rounded-xl overflow-hidden shadow-inner bg-gray-50 p-2">
-                        <img src="/No Registrasi Akta Kelahiran.jpg" alt="Contoh No Registrasi Akta Kelahiran" class="max-h-[60vh] object-contain rounded-lg">
+                        <img src="/No Registrasi Akta Kelahiran.jpg" alt="Contoh No Registrasi Akta Kelahiran" loading="lazy" class="max-h-[60vh] object-contain rounded-lg">
                     </div>
                 </div>
                 

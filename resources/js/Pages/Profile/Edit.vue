@@ -96,7 +96,7 @@ const initials = computed(() => {
                         <!-- Avatar -->
                         <div class="relative flex-shrink-0">
                             <div class="w-24 h-24 rounded-2xl border-4 border-white shadow-lg overflow-hidden bg-emerald-100 flex items-center justify-center">
-                                <img v-if="avatarPreview" :src="avatarPreview" class="w-full h-full object-cover" alt="Foto Profil" />
+                                <img v-if="avatarPreview" :src="avatarPreview" loading="lazy" class="w-full h-full object-cover" alt="Foto Profil" />
                                 <span v-else class="text-3xl font-bold text-emerald-600">{{ initials }}</span>
                             </div>
                             <button @click="fileInput.click()"
@@ -160,7 +160,7 @@ const initials = computed(() => {
                             <label class="block text-xs font-semibold text-gray-600 mb-1.5">Foto Profil</label>
                             <div class="flex items-center gap-3">
                                 <div class="w-14 h-14 rounded-xl border border-gray-200 overflow-hidden bg-emerald-50 flex items-center justify-center flex-shrink-0">
-                                    <img v-if="avatarPreview" :src="avatarPreview" class="w-full h-full object-cover" />
+                                    <img v-if="avatarPreview" :src="avatarPreview" loading="lazy" class="w-full h-full object-cover" />
                                     <span v-else class="text-lg font-bold text-emerald-400">{{ initials }}</span>
                                 </div>
                                 <button type="button" @click="fileInput.click()"

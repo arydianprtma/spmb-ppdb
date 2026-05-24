@@ -17,3 +17,12 @@ auth.json
 .php-cs-fixer.cache
 .php-cs-fixer.dist.php
 /.pnpm-debug.log*
+/storage/app/public/*
+/storage/framework/sessions/*
+/storage/framework/views/*
+/storage/logs/*
+!/storage/app/public/.gitignore
+!/storage/framework/sessions/.gitignore
+!/storage/framework/views/.gitignore
+!/storage/logs/.gitignore
+

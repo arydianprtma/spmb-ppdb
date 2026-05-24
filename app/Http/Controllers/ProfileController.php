@@ -30,13 +30,13 @@ class ProfileController extends Controller
         $validated = $request->validate([
             'name'   => 'required|string|max:255',
             'email'  => 'required|email|max:255|unique:users,email,' . $user->id,
-            'avatar' => 'nullable|image|mimes:jpg,jpeg,png,webp|max:2048',
+            'avatar' => 'nullable|image|mimes:jpg,jpeg,png,webp|max:4096',
         ], [
             'name.required'  => 'Nama wajib diisi.',
             'email.required' => 'Email wajib diisi.',
             'email.unique'   => 'Email sudah digunakan.',
             'avatar.image'   => 'File harus berupa gambar.',
-            'avatar.max'     => 'Ukuran foto maksimal 2MB.',
+            'avatar.max'     => 'Ukuran foto maksimal 4MB.',
         ]);
 
         if ($request->hasFile('avatar')) {

@@ -9,7 +9,8 @@
     <title inertia>{{ config('app.name', 'Portal SPMB - Pesantren Riyadussalikin') }}</title>
     <meta name="description" content="Portal Pendaftaran Santri Baru (SPMB) Pondok Pesantren Riyadussalikin Padaherang. Daftar sekarang dan bergabunglah menjadi bagian dari generasi Qurani.">
     <meta name="keywords" content="spmb pesantren, pendaftaran santri baru, ppdb pesantren, riyadussalikin padaherang">
-    <link rel="icon" href="/Logo Riyad.png" type="image/png">
+    <link rel="icon" href="/favicon.ico" type="image/x-icon">
+    <link rel="shortcut icon" href="/favicon.ico" type="image/x-icon">
 
     <!-- Open Graph / Facebook -->
     <meta property="og:type" content="website">
