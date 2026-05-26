@@ -66,11 +66,12 @@ class BeritaForm
                     ->columnSpanFull(),
                 FileUpload::make('gambar')
                     ->image()
-                    ->imageResizeTargetWidth('1200')
-                    ->imageQuality(80)
                     ->directory('berita-images')
-                    ->maxSize(5120) // 5MB
-                    ->helperText('Maksimal ukuran file: 5MB. Gambar akan dioptimalkan otomatis.'),
+                    ->saveUploadedFileUsing(function ($file) {
+                        return \App\Services\ImageService::processUpload($file, 'berita-images');
+                    })
+                    ->maxSize(2048)
+                    ->helperText('Maksimal 2MB. Gambar akan di-resize dan dikonversi otomatis ke format WebP.'),
                 Select::make('kategori')
                     ->options([
                         'pengumuman' => 'Pengumuman',

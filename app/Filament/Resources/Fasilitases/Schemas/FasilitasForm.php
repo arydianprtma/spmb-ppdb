@@ -58,12 +58,11 @@ class FasilitasForm
                     FileUpload::make('gambar')
                         ->label('Foto Fasilitas')
                         ->image()
-                        ->imageResizeTargetWidth('1200')
-                        ->imageQuality(80)
+                        ->saveUploadedFileUsing(fn ($file) => \App\Services\ImageService::processUpload($file, 'fasilitas'))
                         ->directory('fasilitas')
-                        ->maxSize(3072) // 3MB
+                        ->maxSize(2048)
                         ->columnSpanFull()
-                        ->helperText('Format: JPG, PNG, WEBP (Maksimal 3MB). Gambar akan dioptimalkan otomatis.'),
+                        ->helperText('Maksimal 2MB. Gambar akan di-resize dan dikonversi otomatis ke format WebP.'),
 
                     Textarea::make('deskripsi')
                         ->label('Deskripsi')

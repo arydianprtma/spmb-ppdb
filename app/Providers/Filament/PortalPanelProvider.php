@@ -28,6 +28,11 @@ class PortalPanelProvider extends PanelProvider
             ->id('portal')
             ->path('portal')
             ->login()
+            ->passwordReset()
+            ->emailVerification()
+            ->profile()
+            ->spa()
+            ->databaseNotifications()
             ->colors([
                 'primary' => Color::Emerald,
                 'gray' => Color::Slate,
@@ -62,6 +67,42 @@ class PortalPanelProvider extends PanelProvider
                 DisableBladeIconComponents::class,
                 DispatchServingFilamentEvent::class,
             ])
+            ->renderHook(
+                'panels::body.start',
+                fn (): string => config('app.debug') && config('app.env') !== 'local'
+                    ? \Illuminate\Support\Facades\Blade::render('<div class="bg-danger-600 text-white text-center py-2 px-4 font-bold">WARNING: APP_DEBUG is enabled in a non-local environment! Disable it in .env for security.</div>')
+                    : ''
+            )
+            ->renderHook(
+                'panels::body.end',
+                fn (): string => \Illuminate\Support\Facades\Blade::render("
+                    <script>
+                        let isFormDirty = false;
+                        document.addEventListener('input', () => { isFormDirty = true; });
+                        document.addEventListener('change', () => { isFormDirty = true; });
+                        document.addEventListener('click', (e) => {
+                            if (e.target.closest('button[type=\"submit\"]')) { isFormDirty = false; }
+                        });
+
+                        document.addEventListener('livewire:navigate', (event) => {
+                            if (isFormDirty) {
+                                event.preventDefault();
+                                window.dispatchEvent(new CustomEvent('open-modal', { detail: { id: 'confirm-leave-modal' } }));
+                                window.pendingNavigationUrl = event.detail.url;
+                            }
+                        });
+                    </script>
+
+                    <x-filament::modal id=\"confirm-leave-modal\" icon=\"heroicon-o-exclamation-triangle\" icon-color=\"warning\" alignment=\"center\">
+                        <x-slot name=\"heading\">Perubahan Belum Disimpan</x-slot>
+                        <x-slot name=\"description\">Apakah Anda yakin ingin meninggalkan halaman ini? Semua perubahan yang belum disimpan akan hilang.</x-slot>
+                        <div class=\"flex justify-center gap-3\">
+                            <x-filament::button color=\"gray\" x-on:click=\"close()\">Batal</x-filament::button>
+                            <x-filament::button color=\"warning\" x-on:click=\"window.location.href = window.pendingNavigationUrl\">Tinggalkan</x-filament::button>
+                        </div>
+                    </x-filament::modal>
+                ")
+            )
             ->authMiddleware([
                 Authenticate::class,
             ])

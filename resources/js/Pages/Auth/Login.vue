@@ -1,6 +1,6 @@
 <script setup>
-import { Head, Link, useForm } from '@inertiajs/vue3';
-import { ref } from 'vue';
+import { Head, Link, useForm, router } from '@inertiajs/vue3';
+import { ref, onMounted, onUnmounted } from 'vue';
 import logoUrl from '../../../assets/logo/logo_pondok.png';
 
 const form = useForm({
@@ -10,10 +10,50 @@ const form = useForm({
 });
 
 const showPassword = ref(false);
+const isRefreshing = ref(false);
+const errorMessage = ref('');
+
+// Refresh CSRF Token proactively
+const refreshCsrf = async () => {
+    try {
+        isRefreshing.value = true;
+        const response = await fetch(route('refresh-csrf'));
+        const data = await response.json();
+        
+        // Update meta tag and axios default header
+        const meta = document.querySelector('meta[name="csrf-token"]');
+        if (meta) meta.setAttribute('content', data.token);
+        window.axios.defaults.headers.common['X-CSRF-TOKEN'] = data.token;
+        
+        console.log('CSRF Token refreshed successfully');
+    } catch (e) {
+        console.error('Failed to refresh CSRF token', e);
+    } finally {
+        isRefreshing.value = false;
+    }
+};
+
+// Auto-refresh token every 25 minutes
+let refreshInterval;
+onMounted(() => {
+    refreshInterval = setInterval(refreshCsrf, 25 * 60 * 1000);
+});
+
+onUnmounted(() => {
+    clearInterval(refreshInterval);
+});
 
 const submit = () => {
+    errorMessage.value = '';
+    
     form.post(route('login'), {
         onFinish: () => form.reset('password'),
+        onError: (errors) => {
+            if (errors.status === 419) {
+                errorMessage.value = 'Sesi Anda telah berakhir. Halaman akan diperbarui otomatis...';
+                setTimeout(() => window.location.reload(), 2000);
+            }
+        }
     });
 };
 </script>
@@ -69,6 +109,11 @@ const submit = () => {
                 <p style="font-size:0.88rem;color:#6b7280;line-height:1.6;margin-bottom:36px;">
                     Silakan masuk menggunakan email dan kata sandi Anda.
                 </p>
+
+                <!-- 419 Error Alert -->
+                <div v-if="errorMessage" style="margin-bottom: 24px; padding: 12px 16px; background: #fff5f5; border-left: 4px solid #ef4444; border-radius: 6px; color: #991b1b; font-size: 0.85rem; line-height: 1.5; font-weight: 500;">
+                    {{ errorMessage }}
+                </div>
 
                 <!-- Success Flash Alert -->
                 <div v-if="$page.props.flash?.success" style="margin-bottom: 24px; padding: 12px 16px; background: #e6fcf5; border-left: 4px solid #059669; border-radius: 6px; color: #065f46; font-size: 0.85rem; line-height: 1.5; font-weight: 500;">

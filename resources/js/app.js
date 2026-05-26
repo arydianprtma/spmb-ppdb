@@ -2,12 +2,20 @@ import '../css/app.css';
 import './bootstrap';
 import './echo';
 
-import { createInertiaApp } from '@inertiajs/vue3';
+import { createInertiaApp, router } from '@inertiajs/vue3';
 import { resolvePageComponent } from 'laravel-vite-plugin/inertia-helpers';
 import { createApp, h } from 'vue';
 import { ZiggyVue } from '../../vendor/tightenco/ziggy';
 
 const appName = import.meta.env.VITE_APP_NAME || 'SPMB Riyadussalikin';
+
+// Global 419 Page Expired Handling
+router.on('error', (event) => {
+    if (event.detail.errors?.status === 419 || event.detail.error?.status === 419) {
+        // Refresh page automatically on 419
+        window.location.reload();
+    }
+});
 
 createInertiaApp({
     title: (title) => `${title} - ${appName}`,

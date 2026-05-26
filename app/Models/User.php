@@ -11,10 +11,25 @@ use Filament\Models\Contracts\FilamentUser;
 use Filament\Models\Contracts\HasAvatar;
 use Illuminate\Support\Facades\Storage;
 
+use Spatie\Permission\Traits\HasRoles;
+
 class User extends Authenticatable implements FilamentUser, HasAvatar
 {
     /** @use HasFactory<\Database\Factories\UserFactory> */
-    use HasFactory, Notifiable;
+    use HasFactory, Notifiable, HasRoles;
+
+    /**
+     * Ninja Fix: Mencegah konflik kolom 'permissions' dengan Spatie
+     */
+    protected static function booted()
+    {
+        static::retrieved(function ($model) {
+            if (array_key_exists('permissions', $model->attributes)) {
+                $model->attributes['custom_permissions'] = $model->attributes['permissions'];
+                unset($model->attributes['permissions']);
+            }
+        });
+    }
 
     /**
      * The attributes that are mass assignable.
@@ -28,7 +43,7 @@ class User extends Authenticatable implements FilamentUser, HasAvatar
         'password',
         'avatar',
         'role',
-        'permissions',
+        'custom_permissions',
         'is_active',
         'otp_code',
         'otp_expires_at',
@@ -54,7 +69,7 @@ class User extends Authenticatable implements FilamentUser, HasAvatar
         return [
             'email_verified_at' => 'datetime',
             'password' => 'hashed',
-            'permissions' => 'array',
+            'custom_permissions' => 'array',
             'is_active' => 'boolean',
         ];
     }
@@ -77,6 +92,15 @@ class User extends Authenticatable implements FilamentUser, HasAvatar
     public function beritas(): HasMany
     {
         return $this->hasMany(Berita::class);
+    }
+
+    /**
+     * Get the custom permissions attribute.
+     * Mencegah konflik dengan sistem Spatie Permission.
+     */
+    public function getCustomPermissionsAttribute()
+    {
+        return $this->attributes['custom_permissions'] ?? $this->attributes['permissions'] ?? null;
     }
 
     /**

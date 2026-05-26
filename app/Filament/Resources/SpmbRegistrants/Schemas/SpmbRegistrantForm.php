@@ -134,28 +134,28 @@ class SpmbRegistrantForm
                                     ->schema([
                                         FileUpload::make('ijazah_skhu')
                                             ->image()
-                                            ->imageResizeTargetWidth('1200')
-                                            ->imageQuality(80)
-                                            ->disk('public')
-                                            ->directory('Spmb/ijazah'),
+                                            ->disk('local')
+                                            ->visibility('private')
+                                            ->saveUploadedFileUsing(fn ($file) => \App\Services\ImageService::processUpload($file, 'Spmb/ijazah'))
+                                            ->maxSize(2048),
                                         FileUpload::make('akte_kelahiran')
                                             ->image()
-                                            ->imageResizeTargetWidth('1200')
-                                            ->imageQuality(80)
-                                            ->disk('public')
-                                            ->directory('Spmb/akte'),
+                                            ->disk('local')
+                                            ->visibility('private')
+                                            ->saveUploadedFileUsing(fn ($file) => \App\Services\ImageService::processUpload($file, 'Spmb/akte'))
+                                            ->maxSize(2048),
                                         FileUpload::make('kartu_keluarga')
                                             ->image()
-                                            ->imageResizeTargetWidth('1200')
-                                            ->imageQuality(80)
-                                            ->disk('public')
-                                            ->directory('Spmb/kk'),
+                                            ->disk('local')
+                                            ->visibility('private')
+                                            ->saveUploadedFileUsing(fn ($file) => \App\Services\ImageService::processUpload($file, 'Spmb/kk'))
+                                            ->maxSize(2048),
                                         FileUpload::make('kartu_kip')
                                             ->image()
-                                            ->imageResizeTargetWidth('1200')
-                                            ->imageQuality(80)
-                                            ->disk('public')
-                                            ->directory('Spmb/kip'),
+                                            ->disk('local')
+                                            ->visibility('private')
+                                            ->saveUploadedFileUsing(fn ($file) => \App\Services\ImageService::processUpload($file, 'Spmb/kip'))
+                                            ->maxSize(2048),
                                     ])->columns(2),
                             ]),
 

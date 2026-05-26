@@ -37,6 +37,11 @@ Route::middleware('guest')->group(function () {
     Route::post('/forgot-password/reset-password', [AuthController::class, 'resetPassword'])->name('password.reset-submit');
 });
 
+// Refresh CSRF Token
+Route::get('/refresh-csrf', function() {
+    return response()->json(['token' => csrf_token()]);
+})->name('refresh-csrf');
+
 Route::post('/logout', [AuthController::class, 'logout'])->name('logout')->middleware('auth');
 
 // Berita Routes

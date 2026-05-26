@@ -44,14 +44,13 @@ class PrestasiForm
                     ->label('Tahun'),
                 \Filament\Forms\Components\FileUpload::make('gambar')
                     ->image()
-                    ->imageResizeTargetWidth('1200')
-                    ->imageQuality(80)
+                    ->saveUploadedFileUsing(fn ($file) => \App\Services\ImageService::processUpload($file, 'prestasi'))
                     ->disk('public')
                     ->visibility('public')
                     ->directory('prestasi')
-                    ->maxSize(5120) // 5MB
+                    ->maxSize(2048)
                     ->label('Foto Dokumentasi')
-                    ->helperText('Maksimal ukuran file: 5MB. Gambar akan dioptimalkan otomatis.')
+                    ->helperText('Maksimal 2MB. Gambar akan di-resize dan dikonversi otomatis ke format WebP.')
                     ->columnSpanFull(),
                 Textarea::make('deskripsi')
                     ->columnSpanFull()
