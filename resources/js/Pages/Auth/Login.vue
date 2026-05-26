@@ -13,27 +13,29 @@ const showPassword = ref(false);
 const isRefreshing = ref(false);
 const errorMessage = ref('');
 
-// Refresh CSRF Token proactively
 const refreshCsrf = async () => {
     try {
         isRefreshing.value = true;
-        const response = await fetch(route('refresh-csrf'));
+        const response = await fetch(`${route('refresh-csrf')}?t=${Date.now()}`, {
+            cache: 'no-store',
+            credentials: 'same-origin',
+            headers: {
+                'X-Requested-With': 'XMLHttpRequest',
+            },
+        });
         const data = await response.json();
         
-        // Update meta tag and axios default header
         const meta = document.querySelector('meta[name="csrf-token"]');
         if (meta) meta.setAttribute('content', data.token);
-        window.axios.defaults.headers.common['X-CSRF-TOKEN'] = data.token;
-        
-        console.log('CSRF Token refreshed successfully');
+        if (window.axios) {
+            window.axios.defaults.headers.common['X-CSRF-TOKEN'] = data.token;
+        }
     } catch (e) {
-        console.error('Failed to refresh CSRF token', e);
     } finally {
         isRefreshing.value = false;
     }
 };
 
-// Auto-refresh token every 25 minutes
 let refreshInterval;
 onMounted(() => {
     refreshInterval = setInterval(refreshCsrf, 25 * 60 * 1000);
@@ -45,15 +47,18 @@ onUnmounted(() => {
 
 const submit = () => {
     errorMessage.value = '';
+    if (form.processing || isRefreshing.value) return;
     
-    form.post(route('login'), {
-        onFinish: () => form.reset('password'),
-        onError: (errors) => {
-            if (errors.status === 419) {
-                errorMessage.value = 'Sesi Anda telah berakhir. Halaman akan diperbarui otomatis...';
-                setTimeout(() => window.location.reload(), 2000);
+    refreshCsrf().finally(() => {
+        form.post(route('login'), {
+            onFinish: () => form.reset('password'),
+            onError: (errors) => {
+                if (errors.status === 419) {
+                    errorMessage.value = 'Sesi Anda telah berakhir. Halaman akan diperbarui otomatis...';
+                    setTimeout(() => window.location.reload(), 2000);
+                }
             }
-        }
+        });
     });
 };
 </script>
@@ -167,7 +172,7 @@ const submit = () => {
                         <div style="position:absolute;inset:-4px;background:rgba(52,211,153,0.18);border-radius:10px;filter:blur(12px);transform:translateY(6px);pointer-events:none;"></div>
                         <button
                             type="submit"
-                            :disabled="form.processing"
+                            :disabled="form.processing || isRefreshing"
                             style="position:relative;width:100%;background:#059669;color:#fff;font-weight:700;font-size:11px;letter-spacing:0.15em;padding:14px;border-radius:8px;border:none;cursor:pointer;transition:background 0.2s;"
                             @mouseover="e => e.target.style.background='#047857'"
                             @mouseout="e => e.target.style.background='#059669'"

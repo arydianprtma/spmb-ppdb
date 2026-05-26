@@ -3,6 +3,7 @@
 namespace App\Http\Middleware;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
 use Inertia\Middleware;
 
 class HandleInertiaRequests extends Middleware
@@ -32,7 +33,32 @@ class HandleInertiaRequests extends Middleware
         return [
             ...parent::share($request),
             'auth' => [
-                'user' => $request->user(),
+                'user' => function () use ($request): ?array {
+                    $user = $request->user();
+
+                    if (!$user) {
+                        return null;
+                    }
+
+                    $avatarPath = $user->avatar;
+                    $avatarUrl = null;
+
+                    if ($avatarPath) {
+                        if (filter_var($avatarPath, FILTER_VALIDATE_URL)) {
+                            $avatarUrl = $avatarPath;
+                        } elseif (Storage::disk('public')->exists($avatarPath)) {
+                            $avatarUrl = Storage::disk('public')->url($avatarPath);
+                        }
+                    }
+
+                    return [
+                        'id' => $user->id,
+                        'name' => $user->name,
+                        'email' => $user->email,
+                        'avatar' => $avatarPath,
+                        'avatar_url' => $avatarUrl,
+                    ];
+                },
             ],
             'flash' => [
                 'success' => fn () => $request->session()->get('success'),

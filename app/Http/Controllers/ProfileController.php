@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Storage;
 use Illuminate\Validation\Rules\Password;
 use Inertia\Inertia;
 
@@ -13,12 +14,24 @@ class ProfileController extends Controller
     public function edit()
     {
         $user = Auth::user();
+
+        $avatarPath = $user->avatar;
+        $avatarUrl = null;
+
+        if ($avatarPath) {
+            if (filter_var($avatarPath, FILTER_VALIDATE_URL)) {
+                $avatarUrl = $avatarPath;
+            } elseif (Storage::disk('public')->exists($avatarPath)) {
+                $avatarUrl = Storage::disk('public')->url($avatarPath);
+            }
+        }
+
         return Inertia::render('Profile/Edit', [
             'user' => [
                 'id'     => $user->id,
                 'name'   => $user->name,
                 'email'  => $user->email,
-                'avatar' => $user->avatar ? asset('storage/' . $user->avatar) : null,
+                'avatar' => $avatarUrl,
             ],
         ]);
     }

@@ -15,7 +15,7 @@
                 <div class="flex items-center gap-3">
                     <Link :href="route('profile.edit')" class="flex items-center gap-2 hover:bg-gray-50 px-3 py-1.5 rounded-xl transition-colors">
                         <div class="w-8 h-8 rounded-full overflow-hidden bg-emerald-100 border border-emerald-200 flex items-center justify-center flex-shrink-0">
-                            <img v-if="$page.props.auth.user.avatar" :src="'/storage/' + $page.props.auth.user.avatar" loading="lazy" class="w-full h-full object-cover" />
+                            <img v-if="$page.props.auth.user.avatar_url" :src="$page.props.auth.user.avatar_url" loading="lazy" class="w-full h-full object-cover" />
                             <span v-else class="text-emerald-600 font-bold text-xs">{{ $page.props.auth.user.name.charAt(0).toUpperCase() }}</span>
                         </div>
                         <span class="text-gray-700 text-sm font-semibold hidden sm:block">{{ $page.props.auth.user.name }}</span>
