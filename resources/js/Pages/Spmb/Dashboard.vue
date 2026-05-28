@@ -1,7 +1,7 @@
 <template>
     <Head title="Dashboard Pendaftaran" />
 
-    <div class="min-h-screen bg-gradient-to-br from-slate-50 via-white to-emerald-50">
+    <div class="min-h-screen bg-gradient-to-br from-slate-50 via-white to-emerald-50 print:hidden">
         <!-- Top Bar -->
         <header class="bg-white border-b border-gray-100 sticky top-0 z-50 shadow-sm">
             <div class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
@@ -308,7 +308,7 @@
                     <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 113.536 3.536L6.5 21.036H3v-3.572L16.732 3.732z"/></svg>
                     Edit / Perbarui Data
                 </Link>
-                <button @click="window.print()"
+                <button @click="printCard"
                     class="flex-1 sm:flex-none flex items-center justify-center gap-2 bg-white text-gray-700 border-2 border-gray-200 px-6 py-3 rounded-2xl font-bold hover:bg-gray-50 transition-all">
                     <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 17h2a2 2 0 002-2v-4a2 2 0 00-2-2H5a2 2 0 00-2 2v4a2 2 0 002 2h2m2 4h6a2 2 0 002-2v-4a2 2 0 00-2-2H9a2 2 0 00-2 2v4a2 2 0 002 2zm8-12V5a2 2 0 00-2-2H9a2 2 0 00-2 2v4h10z"/></svg>
                     Cetak Bukti
@@ -317,11 +317,100 @@
 
         </div>
     </div>
+
+    <!-- Printable Registration Card (Visible ONLY on Print) -->
+    <div class="hidden print:block p-8 max-w-2xl mx-auto border-4 border-double border-gray-800 rounded-xl bg-white text-black font-sans">
+        <!-- Kop Surat -->
+        <div class="flex items-center justify-between border-b-2 border-black pb-4 mb-4">
+            <img src="/Logo Riyad.png" alt="Logo" class="h-16 w-16" />
+            <div class="text-center flex-1 mx-4">
+                <h2 class="text-sm font-extrabold tracking-wide uppercase">{{ spmbSetting?.kartuHeader1 || 'Panitia Penerimaan Santri Baru (PSB)' }}</h2>
+                <h1 class="text-base font-black tracking-wider uppercase text-emerald-800">{{ spmbSetting?.kartuHeader2 || 'Pondok Pesantren Riyadussalikin' }}</h1>
+                <p class="text-[9px] text-gray-500 mt-0.5">{{ spmbSetting?.kartuAlamat || 'Padaherang, Kabupaten Pangandaran, Jawa Barat' }}</p>
+            </div>
+            <div class="h-16 w-16"></div> <!-- Spacer to center the text -->
+        </div>
+
+        <h3 class="text-center text-xs font-extrabold tracking-widest uppercase border-b border-gray-300 pb-2 mb-6">
+            KARTU BUKTI PENDAFTARAN
+        </h3>
+
+        <!-- Card Content -->
+        <div class="flex gap-6 items-start">
+            <!-- Student Details -->
+            <div class="flex-1 space-y-3.5 text-[11px]">
+                <div class="grid grid-cols-3 gap-2">
+                    <span class="text-gray-600 font-medium">No. Registrasi</span>
+                    <span class="col-span-2 font-black text-sm tracking-wider">: {{ pendaftaran?.no_reg }}</span>
+                </div>
+                <div class="grid grid-cols-3 gap-2">
+                    <span class="text-gray-600 font-medium">Nama Lengkap</span>
+                    <span class="col-span-2 font-bold text-gray-900">: {{ pendaftaran?.siswa?.nama_lengkap }}</span>
+                </div>
+                <div class="grid grid-cols-3 gap-2">
+                    <span class="text-gray-600 font-medium">Tingkat Sekolah</span>
+                    <span class="col-span-2 font-bold uppercase">: {{ pendaftaran?.tingkat }}</span>
+                </div>
+                <div class="grid grid-cols-3 gap-2">
+                    <span class="text-gray-600 font-medium">Tempat, Tgl Lahir</span>
+                    <span class="col-span-2 font-bold">: {{ pendaftaran?.siswa?.tempat_lahir }}, {{ pendaftaran?.siswa?.tanggal_lahir }}</span>
+                </div>
+                <div class="grid grid-cols-3 gap-2">
+                    <span class="text-gray-600 font-medium">Jenis Kelamin</span>
+                    <span class="col-span-2 font-bold">: {{ pendaftaran?.siswa?.jenis_kelamin === 'L' ? 'Laki-laki' : 'Perempuan' }}</span>
+                </div>
+                <div class="grid grid-cols-3 gap-2">
+                    <span class="text-gray-600 font-medium">NISN / NIK</span>
+                    <span class="col-span-2 font-bold">: {{ pendaftaran?.siswa?.nisn ?? '-' }} / {{ pendaftaran?.siswa?.nik ?? '-' }}</span>
+                </div>
+                <div class="grid grid-cols-3 gap-2">
+                    <span class="text-gray-600 font-medium">Tanggal Daftar</span>
+                    <span class="col-span-2 font-bold">: {{ formatTanggal(pendaftaran?.tanggal_daftar) }}</span>
+                </div>
+            </div>
+
+            <!-- Student Photo / Stamp placeholder -->
+            <div class="flex flex-col items-center gap-3">
+                <div class="w-28 h-36 border-2 border-gray-300 rounded-lg overflow-hidden bg-gray-50 flex items-center justify-center flex-shrink-0">
+                    <img v-if="$page.props.auth.user.avatar_url" :src="$page.props.auth.user.avatar_url" class="w-full h-full object-cover" />
+                    <div v-else class="text-center p-3 text-[9px] text-gray-400 font-medium uppercase leading-tight">
+                        Foto 3x4
+                    </div>
+                </div>
+                <span class="text-[8px] font-bold text-gray-400 border border-dashed border-gray-300 px-2 py-0.5 rounded">PANITIA PSB</span>
+            </div>
+        </div>
+
+        <!-- Footer / Signature -->
+        <div class="grid grid-cols-2 gap-4 mt-10 text-[9px]">
+            <div class="space-y-1 text-gray-500">
+                <p class="font-bold text-gray-700">Catatan:</p>
+                <p>1. Kartu ini harus dibawa saat tes/ujian masuk.</p>
+                <p>2. Kenakan pakaian rapi dan sopan saat ujian.</p>
+                <p>3. Patuhi tata tertib yang ditentukan panitia.</p>
+            </div>
+            <div class="text-right space-y-12">
+                <div>
+                    <p class="font-bold">Pangandaran, {{ formatTanggal(new Date()) }}</p>
+                    <p class="text-gray-600">Panitia PSB Riyadussalikin</p>
+                </div>
+                <div>
+                    <div class="inline-block border-t border-black w-36 pt-1 font-bold">
+                        Tanda Tangan Panitia
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 </template>
 
 <script setup>
 import { computed, onMounted, onUnmounted } from 'vue';
 import { Head, Link, router } from '@inertiajs/vue3';
+
+const printCard = () => {
+    window.print();
+};
 
 const props = defineProps({
     pendaftaran: Object,
