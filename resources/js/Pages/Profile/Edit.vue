@@ -42,7 +42,7 @@ const onAvatarChange = (e) => {
 };
 
 const submitProfile = () => {
-    profileForm.patch(route('profile.update'), {
+    profileForm.post(route('profile.update'), {
         forceFormData: true,
         preserveScroll: true,
         onSuccess: () => showSuccess('Profil berhasil diperbarui.'),

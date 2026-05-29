@@ -55,6 +55,8 @@ class ProfileController extends Controller
         if ($request->hasFile('avatar')) {
             $path = $request->file('avatar')->store('profile', 'public');
             $validated['avatar'] = $path;
+        } else {
+            unset($validated['avatar']);
         }
 
         $user->update($validated);
