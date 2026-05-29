@@ -8,9 +8,10 @@ return new class extends Migration
 {
     public function up(): void
     {
-        Schema::create('spmb_berkas', function (Blueprint $table) {
+        if (Schema::hasTable('ppdb_berkas')) return;
+        Schema::create('ppdb_berkas', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('pendaftaran_id')->constrained('spmb_pendaftaran')->onDelete('cascade');
+            $table->foreignId('pendaftaran_id')->constrained('ppdb_pendaftaran')->onDelete('cascade');
 
             // Wajib
             $table->string('ijazah_skhu')->nullable()->comment('Ijazah/SKHU dilegalisir');
@@ -33,6 +34,6 @@ return new class extends Migration
 
     public function down(): void
     {
-        Schema::dropIfExists('spmb_berkas');
+        Schema::dropIfExists('ppdb_berkas');
     }
 };

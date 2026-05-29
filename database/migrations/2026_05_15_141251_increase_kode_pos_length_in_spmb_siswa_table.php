@@ -11,7 +11,8 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::table('spmb_siswa', function (Blueprint $table) {
+        if (!Schema::hasTable('ppdb_siswa')) return;
+        Schema::table('ppdb_siswa', function (Blueprint $table) {
             $table->string('kode_pos', 10)->nullable()->change();
         });
     }
@@ -21,7 +22,7 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::table('spmb_siswa', function (Blueprint $table) {
+        Schema::table('ppdb_siswa', function (Blueprint $table) {
             $table->string('kode_pos', 5)->nullable()->change();
         });
     }
