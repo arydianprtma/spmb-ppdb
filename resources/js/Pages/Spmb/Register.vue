@@ -926,7 +926,7 @@
                         <button 
                             v-if="step < totalSteps" 
                             type="button" 
-                            @click="step++"
+                            @click="nextStep"
                             class="text-white px-4 md:px-8 py-2.5 md:py-3 rounded-xl text-sm md:text-base font-bold transition-all shadow-lg flex items-center gap-1 md:gap-2"
                             :class="form.tingkat === 'smp' ? 'bg-[#2E5FA3] hover:bg-[#245090] shadow-[#2E5FA3]/40' : 'bg-slate-600 hover:bg-slate-700 shadow-slate-200'"
                         >
@@ -1360,6 +1360,73 @@ const addBeasiswa = () => {
     form.beasiswa.push({ jenis_beasiswa: '', penyelenggara_sumber: '', tahun_mulai: '', tahun_selesai: '' });
 };
 const removeBeasiswa = (index) => { form.beasiswa.splice(index, 1); };
+
+const nextStep = () => {
+    if (step.value === 1) {
+        if (!form.siswa.nama_lengkap || !form.siswa.nama_lengkap.trim()) {
+            showValidationError('Nama Lengkap Siswa wajib diisi.');
+            return;
+        }
+        if (!form.siswa.jenis_kelamin) {
+            showValidationError('Jenis Kelamin wajib dipilih.');
+            return;
+        }
+        if (!form.siswa.tempat_lahir || !form.siswa.tempat_lahir.trim()) {
+            showValidationError('Tempat Lahir wajib diisi.');
+            return;
+        }
+        if (!form.siswa.tanggal_lahir) {
+            showValidationError('Tanggal Lahir wajib diisi.');
+            return;
+        }
+    } else if (step.value === 2) {
+        if (!form.siswa.alamat || !form.siswa.alamat.trim()) {
+            showValidationError('Alamat Lengkap wajib diisi.');
+            return;
+        }
+        if (!selectedProvId.value || !form.siswa.provinsi) {
+            showValidationError('Provinsi wajib dipilih.');
+            return;
+        }
+        if (!selectedRegId.value || !form.siswa.kabupaten_kota) {
+            showValidationError('Kabupaten/Kota wajib dipilih.');
+            return;
+        }
+        if (!selectedDistId.value || !form.siswa.kecamatan) {
+            showValidationError('Kecamatan wajib dipilih.');
+            return;
+        }
+        if (!selectedVillId.value || !form.siswa.kelurahan_desa) {
+            showValidationError('Kelurahan/Desa wajib dipilih.');
+            return;
+        }
+        if (!form.siswa.no_hp || !form.siswa.no_hp.trim()) {
+            showValidationError('Nomor HP (WhatsApp) wajib diisi.');
+            return;
+        }
+    } else if (step.value === 3) {
+        if (!form.ayah.nama || !form.ayah.nama.trim()) {
+            showValidationError('Nama Lengkap Ayah Kandung wajib diisi.');
+            return;
+        }
+        if (!form.ibu.nama || !form.ibu.nama.trim()) {
+            showValidationError('Nama Lengkap Ibu Kandung wajib diisi.');
+            return;
+        }
+    }
+
+    step.value++;
+};
+
+const showValidationError = (message) => {
+    Swal.fire({
+        icon: 'warning',
+        title: 'Data Belum Lengkap',
+        text: message,
+        confirmButtonText: 'Lengkapi Sekarang',
+        confirmButtonColor: form.tingkat === 'smp' ? '#2E5FA3' : '#475569',
+    });
+};
 </script>
 
 <style scoped>
