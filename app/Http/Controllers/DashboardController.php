@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use App\Models\SpmbPendaftaran;
 use App\Models\SpmbSetting;
+use App\Http\Controllers\VerificationController;
 use Inertia\Inertia;
 
 class DashboardController extends Controller
@@ -19,6 +20,11 @@ class DashboardController extends Controller
             ->latest()
             ->first();
 
+        $qrCodeUrl = null;
+        if ($pendaftaran) {
+            $qrCodeUrl = VerificationController::getQrCodeUrl($pendaftaran);
+        }
+
         // Statistik global untuk dashboard
         $stats = [
             'total_smp' => SpmbPendaftaran::where('tingkat', 'smp')->count(),
@@ -29,6 +35,7 @@ class DashboardController extends Controller
 
         return Inertia::render('Spmb/Dashboard', [
             'pendaftaran' => $pendaftaran,
+            'qrCodeUrl' => $qrCodeUrl,
             'stats' => $stats,
             'spmbSetting' => [
                 'isOpen' => SpmbSetting::isOpen(),

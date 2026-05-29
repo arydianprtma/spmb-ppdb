@@ -12,10 +12,17 @@ use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
 
+use App\Http\Controllers\VerificationController;
+
 // Public Routes
 Route::get('/', function () {
     return redirect('/login');
 })->name('home');
+
+// Verification Route (Hanya Admin/Super Admin yang bisa akses)
+Route::get('/verifikasi/{no_reg}', [VerificationController::class, 'verify'])
+    ->name('verifikasi.publik')
+    ->middleware(['auth']);
 
 // Dummy routes for MainLayout navbar links to avoid Ziggy errors
 Route::get('/tentang-pondok', function() { return redirect(env('APP_URL', 'http://localhost:8080').'/tentang-pondok'); })->name('tentang-pondok');

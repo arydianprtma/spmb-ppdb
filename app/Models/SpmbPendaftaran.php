@@ -3,11 +3,23 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Str;
 
 class SpmbPendaftaran extends Model
 {
     protected $table = 'ppdb_pendaftaran';
     protected $guarded = [];
+
+    protected static function boot()
+    {
+        parent::boot();
+
+        static::creating(function ($model) {
+            if (empty($model->verification_token)) {
+                $model->verification_token = Str::random(32);
+            }
+        });
+    }
 
     protected $casts = [
         'jadwal_tes_jenis' => 'array',

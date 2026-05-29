@@ -95,9 +95,11 @@ return [
     |
     */
 
-    'cipher' => 'AES-256-CBC',
-
     'key' => env('APP_KEY'),
+
+    'portal_url' => env('PORTAL_URL', 'http://localhost:8000'),
+
+    'cipher' => 'AES-256-CBC',
 
     'previous_keys' => [
         ...array_filter(
