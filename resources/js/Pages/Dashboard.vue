@@ -67,7 +67,7 @@ const status = props.pendaftaran ? (statusConfig[props.pendaftaran.status] || st
                 <div style="position:absolute;bottom:-60px;right:80px;width:140px;height:140px;background:rgba(255,255,255,0.04);border-radius:50%;"></div>
                 <p style="font-size:13px;color:rgba(255,255,255,0.7);margin-bottom:6px;font-weight:500;">Selamat Datang,</p>
                 <h1 style="font-size:1.75rem;font-weight:800;margin-bottom:8px;">{{ $page.props.auth.user.name }}</h1>
-                <p style="font-size:14px;color:rgba(255,255,255,0.75);">Sistem Penerimaan Murid Baru · Pondok Pesantren Riyadussalikin</p>
+                <p style="font-size:14px;color:rgba(255,255,255,0.75);">Sistem Penerimaan Peserta Didik Baru · Pondok Pesantren Riyadussalikin</p>
             </div>
 
             <!-- NO PENDAFTARAN YET -->
@@ -79,7 +79,7 @@ const status = props.pendaftaran ? (statusConfig[props.pendaftaran.status] || st
                 </div>
                 <h2 style="font-size:1.25rem;font-weight:700;color:#111827;margin-bottom:8px;">Belum Ada Pendaftaran</h2>
                 <p style="color:#6b7280;font-size:14px;margin-bottom:28px;line-height:1.6;">Anda belum mengisi formulir pendaftaran. Silakan isi formulir untuk melanjutkan proses seleksi.</p>
-                <Link :href="route('spmb.register')"
+                <Link :href="route('ppdb.register')"
                     style="display:inline-block;background:#059669;color:#fff;padding:12px 32px;border-radius:10px;font-weight:700;font-size:14px;text-decoration:none;transition:background 0.2s;">
                     Isi Formulir Pendaftaran
                 </Link>

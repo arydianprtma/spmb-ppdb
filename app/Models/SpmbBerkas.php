@@ -6,6 +6,6 @@ use Illuminate\Database\Eloquent\Model;
 
 class SpmbBerkas extends Model
 {
-    protected $table = 'spmb_berkas';
+    protected $table = 'ppdb_berkas';
     protected $guarded = [];
 }

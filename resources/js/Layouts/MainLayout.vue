@@ -47,7 +47,7 @@
                         </Link>
 
                         <Link 
-                            :href="route('spmb.register')"
+                            :href="route('ppdb.register')"
                             class="btn-primary"
                         >
                             Pendaftaran
@@ -78,7 +78,7 @@
                         <Link :href="route('kontak')" :class="isActive('kontak') ? 'navbar-link-active' : 'navbar-link'">
                             Kontak Panitia
                         </Link>
-                        <Link :href="route('spmb.register')" class="btn-primary text-center">
+                        <Link :href="route('ppdb.register')" class="btn-primary text-center">
                             Pendaftaran
                         </Link>
                     </div>
@@ -105,10 +105,10 @@
 
                     <!-- Quick Links -->
                     <div>
-                        <h3 class="text-xl font-bold mb-4">SPMB Online</h3>
+                        <h3 class="text-xl font-bold mb-4">PPDB Online</h3>
                         <div class="flex flex-col space-y-2">
                             <Link :href="route('dashboard')" class="text-emerald-100 hover:text-white transition-colors">Dashboard</Link>
-                            <Link :href="route('spmb.register')" class="text-emerald-100 hover:text-white transition-colors">Formulir Pendaftaran</Link>
+                            <Link :href="route('ppdb.register')" class="text-emerald-100 hover:text-white transition-colors">Formulir Pendaftaran</Link>
                             <Link :href="route('berita')" class="text-emerald-100 hover:text-white transition-colors">Informasi & Pengumuman</Link>
                             <Link :href="route('kontak')" class="text-emerald-100 hover:text-white transition-colors">Kontak Panitia</Link>
                             <a href="/" class="text-emerald-100 hover:text-white transition-colors pt-4 border-t border-emerald-800">Beranda Utama Website</a>

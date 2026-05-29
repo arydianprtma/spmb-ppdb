@@ -63,10 +63,10 @@ Route::post('/kontak', [ContactController::class, 'store'])->name('kontak.store'
 Route::middleware('auth')->group(function () {
     // Dashboard
     Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
-    // SPMB (PPDB) Routes
-    Route::get('/spmb', [SpmbController::class, 'create'])->name('spmb.register');
-    Route::post('/spmb', [SpmbController::class, 'store'])->name('spmb.store');
-    Route::get('/spmb/success/{no_reg}', [SpmbController::class, 'success'])->name('spmb.success');
+    // PPDB Routes
+    Route::get('/ppdb', [SpmbController::class, 'create'])->name('ppdb.register');
+    Route::post('/ppdb', [SpmbController::class, 'store'])->name('ppdb.store');
+    Route::get('/ppdb/success/{no_reg}', [SpmbController::class, 'success'])->name('ppdb.success');
     // Profile Routes
     Route::get('/profile', [\App\Http\Controllers\ProfileController::class, 'edit'])->name('profile.edit');
     Route::match(['post', 'patch'], '/profile', [\App\Http\Controllers\ProfileController::class, 'update'])->name('profile.update');

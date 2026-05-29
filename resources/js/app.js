@@ -7,7 +7,7 @@ import { resolvePageComponent } from 'laravel-vite-plugin/inertia-helpers';
 import { createApp, h } from 'vue';
 import { ZiggyVue } from '../../vendor/tightenco/ziggy';
 
-const appName = import.meta.env.VITE_APP_NAME || 'SPMB Riyadussalikin';
+const appName = import.meta.env.VITE_APP_NAME || 'PPDB Riyadussalikin';
 
 // Global 419 Page Expired Handling
 router.on('error', (event) => {

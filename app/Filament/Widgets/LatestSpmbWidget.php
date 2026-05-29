@@ -15,7 +15,7 @@ class LatestSpmbWidget extends BaseWidget
 
     protected int|string|array $columnSpan = 'full';
 
-    protected static ?string $heading = 'Pendaftar Spmb Terbaru';
+    protected static ?string $heading = 'Pendaftar PPDB Terbaru';
 
     public function table(Table $table): Table
     {

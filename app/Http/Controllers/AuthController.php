@@ -113,7 +113,7 @@ class AuthController extends Controller
 
         // Send OTP via WhatsappService
         $whatsappService = new WhatsappService();
-        $message = "Kode OTP untuk atur ulang kata sandi Anda di SPMB Pondok Pesantren Riyadussalikin adalah: *{$otp}*.\n\nKode ini berlaku selama 10 menit. Jangan sebarkan kode ini kepada siapa pun.";
+        $message = "Kode OTP untuk atur ulang kata sandi Anda di PPDB Pondok Pesantren Riyadussalikin adalah: *{$otp}*.\n\nKode ini berlaku selama 10 menit. Jangan sebarkan kode ini kepada siapa pun.";
         
         $whatsappService->sendMessage($user->whatsapp, $message);
 

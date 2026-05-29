@@ -21,14 +21,14 @@ class SpmbRegistrantObserver
         }
 
         Notification::make()
-            ->title('Pendaftaran SPMB Baru')
+            ->title('Pendaftaran PPDB Baru')
             ->body("Siswa Baru: {$registrant->nama_lengkap} telah mendaftar.")
             ->icon('heroicon-o-user-plus')
             ->iconColor('success')
             ->actions([
                 Action::make('lihat')
                     ->label('Cek Pendaftar')
-                    ->url(route('filament.portal.resources.spmb.index'))
+                    ->url(route('filament.portal.resources.ppdb.index'))
                     ->button(),
             ])
             ->sendToDatabase($admins)

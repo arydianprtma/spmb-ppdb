@@ -6,6 +6,8 @@ use Illuminate\Database\Eloquent\Model;
 
 class SpmbSetting extends Model
 {
+    protected $table = 'ppdb_settings';
+
     protected $fillable = [
         'tahun_ajaran',
         'tgl_buka',
