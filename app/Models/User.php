@@ -81,9 +81,11 @@ class User extends Authenticatable implements FilamentUser, HasAvatar
     {
         if (!$this->avatar) return null;
 
-        // Avatar disimpan di storage portal, arahkan ke portal URL
-        $portalUrl = rtrim(env('PORTAL_URL', config('app.url')), '/');
-        return $portalUrl . '/storage/' . ltrim($this->avatar, '/');
+        if (filter_var($this->avatar, FILTER_VALIDATE_URL)) {
+            return $this->avatar;
+        }
+
+        return '/storage/' . ltrim($this->avatar, '/');
     }
 
     /**

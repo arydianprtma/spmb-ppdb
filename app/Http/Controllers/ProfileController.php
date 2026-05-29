@@ -21,8 +21,8 @@ class ProfileController extends Controller
         if ($avatarPath) {
             if (filter_var($avatarPath, FILTER_VALIDATE_URL)) {
                 $avatarUrl = $avatarPath;
-            } elseif (Storage::disk('public')->exists($avatarPath)) {
-                $avatarUrl = Storage::disk('public')->url($avatarPath);
+            } else {
+                $avatarUrl = '/storage/' . ltrim($avatarPath, '/');
             }
         }
 
