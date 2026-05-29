@@ -19,9 +19,9 @@
                         Membentuk Generasi Qur'ani yang Berakhlak Mulia, Berilmu, dan Mandiri
                     </p>
                     <div class="flex flex-col sm:flex-row gap-4 justify-center">
-                        <a href="#" class="btn-primary inline-block">
-                            SPMB
-                        </a>
+                        <Link :href="route('ppdb.register')" class="btn-primary inline-block text-center">
+                            PPDB
+                        </Link>
                         <Link :href="route('kontak')" class="btn-secondary inline-block">
                             Hubungi Kami
                         </Link>

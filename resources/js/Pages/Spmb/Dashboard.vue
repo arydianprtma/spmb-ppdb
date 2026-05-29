@@ -5,16 +5,16 @@
         <!-- Top Bar -->
         <header class="bg-white border-b border-gray-100 sticky top-0 z-50 shadow-sm">
             <div class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
-                <div class="flex items-center gap-3">
-                    <img src="/Logo Riyad.png" alt="Logo" class="h-10 w-10" />
+                <div class="flex items-center gap-2 sm:gap-3">
+                    <img src="/Logo Riyad.png" alt="Logo" class="h-8 w-8 sm:h-10 sm:w-10 flex-shrink-0" />
                     <div>
-                        <div class="text-emerald-700 font-bold text-sm leading-tight">Pondok Pesantren</div>
-                        <div class="text-emerald-600 text-xs">Riyadussalikin Padaherang</div>
+                        <div class="text-emerald-700 font-bold text-xs sm:text-sm leading-tight">Pondok Pesantren</div>
+                        <div class="text-emerald-600 text-[10px] sm:text-xs">Riyadussalikin Padaherang</div>
                     </div>
                 </div>
-                <div class="flex items-center gap-3">
-                    <Link :href="route('profile.edit')" class="flex items-center gap-2 hover:bg-gray-50 px-3 py-1.5 rounded-xl transition-colors">
-                        <div class="w-8 h-8 rounded-full overflow-hidden bg-emerald-100 border border-emerald-200 flex items-center justify-center flex-shrink-0">
+                <div class="flex items-center gap-2 sm:gap-3">
+                    <Link :href="route('profile.edit')" class="flex items-center gap-1 sm:gap-2 hover:bg-gray-50 px-2 sm:px-3 py-1 sm:py-1.5 rounded-xl transition-colors">
+                        <div class="w-7 h-7 sm:w-8 sm:h-8 rounded-full overflow-hidden bg-emerald-100 border border-emerald-200 flex items-center justify-center flex-shrink-0">
                             <img v-if="$page.props.auth.user.avatar_url" :src="$page.props.auth.user.avatar_url" loading="lazy" class="w-full h-full object-cover" />
                             <span v-else class="text-emerald-600 font-bold text-xs">{{ $page.props.auth.user.name.charAt(0).toUpperCase() }}</span>
                         </div>
@@ -22,7 +22,7 @@
                     </Link>
                     <div class="h-5 w-px bg-gray-200 hidden sm:block"></div>
                     <Link :href="route('logout')" method="post" as="button"
-                        class="text-sm font-semibold text-red-500 hover:text-red-700 transition-colors px-2">
+                        class="text-xs sm:text-sm font-semibold text-red-500 hover:text-red-700 transition-colors px-2">
                         Keluar
                     </Link>
                 </div>
@@ -56,8 +56,8 @@
             </div>
 
             <!-- Statistik Pendaftar -->
-            <div class="grid grid-cols-2 gap-4 sm:gap-6">
-                <div class="bg-white rounded-3xl p-5 border border-emerald-100 shadow-sm flex items-center gap-4">
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 sm:gap-6">
+                <div class="bg-white rounded-3xl p-4 sm:p-5 border border-emerald-100 shadow-sm flex items-center gap-3 sm:gap-4">
                     <div class="w-12 h-12 rounded-2xl bg-emerald-100 flex items-center justify-center flex-shrink-0 text-emerald-600">
                         <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253"/></svg>
                     </div>
@@ -66,7 +66,7 @@
                         <p class="text-2xl font-black text-gray-800">{{ stats.total_smp }} <span class="text-sm font-medium text-gray-400">Siswa</span></p>
                     </div>
                 </div>
-                <div class="bg-white rounded-3xl p-5 border border-blue-100 shadow-sm flex items-center gap-4">
+                <div class="bg-white rounded-3xl p-4 sm:p-5 border border-blue-100 shadow-sm flex items-center gap-3 sm:gap-4">
                     <div class="w-12 h-12 rounded-2xl bg-blue-100 flex items-center justify-center flex-shrink-0 text-blue-600">
                         <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4"/></svg>
                     </div>
@@ -247,7 +247,7 @@
                 </div>
                 <h3 class="text-xl font-bold text-gray-800 mb-2">Belum Ada Pendaftaran</h3>
                 <p class="text-gray-500 mb-6">Anda belum mengisi formulir pendaftaran. Silakan lengkapi data Anda sekarang.</p>
-                <Link :href="route('spmb.register')" class="inline-flex items-center gap-2 bg-emerald-600 text-white px-8 py-3 rounded-2xl font-bold hover:bg-emerald-700 transition-all shadow-lg shadow-emerald-200">
+                <Link :href="route('ppdb.register')" class="inline-flex items-center gap-2 bg-emerald-600 text-white px-8 py-3 rounded-2xl font-bold hover:bg-emerald-700 transition-all shadow-lg shadow-emerald-200">
                     <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"/></svg>
                     Isi Formulir Sekarang
                 </Link>
@@ -303,7 +303,8 @@
 
             <!-- Action Buttons -->
             <div v-if="pendaftaran" class="flex flex-wrap gap-4">
-                <Link :href="route('spmb.register')"
+                <Link :href="route('ppdb.register')"
+
                     class="flex-1 sm:flex-none flex items-center justify-center gap-2 bg-emerald-600 text-white px-6 py-3 rounded-2xl font-bold hover:bg-emerald-700 transition-all shadow-lg shadow-emerald-200">
                     <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 113.536 3.536L6.5 21.036H3v-3.572L16.732 3.732z"/></svg>
                     Edit / Perbarui Data

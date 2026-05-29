@@ -1315,7 +1315,7 @@ const berkasOpsional = [
 ];
 
 const submit = () => {
-    form.post(route('spmb.store'), {
+    form.post(route('ppdb.store'), {
         forceFormData: true,
         onSuccess: () => {
             if (STORAGE_KEY.value) {
