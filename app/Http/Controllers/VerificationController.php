@@ -52,7 +52,8 @@ class VerificationController extends Controller
         $filename = "qr_{$pendaftaran->no_reg}.svg";
         $path = "{$directory}/{$filename}";
         
-        $url = "http://192.168.1.8:8000/verifikasi/{$pendaftaran->no_reg}?token={$pendaftaran->verification_token}";
+        $portalUrl = rtrim(config('app.portal_url'), '/');
+        $url = "{$portalUrl}/verifikasi/{$pendaftaran->no_reg}?token={$pendaftaran->verification_token}";
 
         // Generate ulang jika file tidak ada ATAU jika URL di dalam QR lama mengandung 'localhost'
         // Namun karena kita ingin memastikan QR selalu up-to-date dengan IP, kita generate ulang saja.
