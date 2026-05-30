@@ -464,10 +464,10 @@
         <div class="flex justify-between items-end mt-8 text-[11px]">
             <!-- QR Verification -->
             <div class="flex flex-col items-center gap-1">
-                <div class="w-36 h-36 border-2 border-black p-1 bg-white rounded">
+                <div class="border-2 border-black p-1 bg-white rounded" style="width: 3cm; height: 3cm;">
                     <div class="w-full h-full bg-white flex items-center justify-center border border-dashed border-gray-300 rounded overflow-hidden">
                         <img v-if="qrCodeUrl" :src="qrCodeUrl" class="w-full h-full object-contain" />
-                        <div v-else class="grid grid-cols-4 gap-1 w-20 h-20 opacity-30">
+                        <div v-else class="grid grid-cols-4 gap-1 w-14 h-14 opacity-30">
                             <div v-for="i in 16" :key="i" class="bg-emerald-900" :style="{ opacity: Math.random() > 0.4 ? 1 : 0.1 }"></div>
                         </div>
                     </div>
