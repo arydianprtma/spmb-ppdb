@@ -454,7 +454,7 @@
         <div class="flex justify-between items-end mt-8 text-[11px]">
             <!-- QR Verification (Modifikasi) -->
             <div class="flex flex-col items-center gap-1.5">
-                <div class="w-24 h-24 border-4 border-gray-100 p-1.5 bg-white shadow-md rounded-xl">
+                <div class="w-32 h-32 border-4 border-gray-100 p-1.5 bg-white shadow-md rounded-xl">
                     <div class="w-full h-full bg-emerald-50 flex items-center justify-center border-2 border-dashed border-emerald-200 rounded-lg overflow-hidden">
                         <img v-if="qrCodeUrl" :src="qrCodeUrl" class="w-full h-full object-contain" />
                         <div v-else class="grid grid-cols-4 gap-1 w-16 h-16 opacity-30">
