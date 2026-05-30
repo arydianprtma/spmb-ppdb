@@ -347,16 +347,16 @@
     <!-- Printable Registration Card (Visible ONLY on Print) -->
     <!-- MODIFIKASI VERSI ATM (AMATI TIRU MODIFIKASI) -->
     <div class="hidden print:block print-container bg-white text-black font-sans">
-        <!-- 1. AMATI: Header dengan dua logo dan garis pemisah tegas -->
+        <!-- 1. Kop Surat dinamis dari settings -->
         <div class="flex items-center justify-between border-b-4 border-double border-black pb-3 mb-4">
-            <img src="/Logo Riyad.png" alt="Logo Kiri" class="h-16 w-16 object-contain" />
+            <img :src="spmbSetting?.kartuLogo || '/Logo Riyad.png'" alt="Logo Kiri" class="h-16 w-16 object-contain" />
             <div class="text-center flex-1 mx-6">
                 <h2 class="text-[10px] font-bold tracking-widest uppercase text-gray-800">KARTU TANDA PESERTA</h2>
                 <h1 class="text-lg font-black tracking-tight uppercase text-emerald-900 leading-tight">PPDB ONLINE {{ spmbSetting?.tahunAjaran || '2024/2025' }}</h1>
-                <p class="text-xs font-bold text-emerald-700 mt-0.5 uppercase">Pondok Pesantren Riyadussalikin Padaherang</p>
-                <p class="text-[8px] text-gray-500 mt-0.5 italic">{{ spmbSetting?.kartuAlamat || 'Jl. Raya Padaherang, Kab. Pangandaran, Jawa Barat' }}</p>
+                <p class="text-xs font-bold text-emerald-700 mt-0.5 uppercase">{{ spmbSetting?.kartuHeader2 || 'Pondok Pesantren Riyadussalikin Padaherang' }}</p>
+                <p class="text-[8px] text-gray-600 mt-0.5 italic">{{ spmbSetting?.kartuAlamat || 'Jl. Raya Padaherang, Kab. Pangandaran, Jawa Barat' }}</p>
             </div>
-            <img src="/logo_pondok.png" alt="Logo Kanan" class="h-16 w-16 object-contain" />
+            <img :src="spmbSetting?.kartuLogo || '/Logo Riyad.png'" alt="Logo Kanan" class="h-16 w-16 object-contain" />
         </div>
 
         <!-- 2. TIRU: Judul dengan garis bawah -->
@@ -366,30 +366,30 @@
 
         <!-- 3. MODIFIKASI: Layout Grid untuk Data dan Foto -->
         <div class="grid grid-cols-12 gap-6 items-start mb-6">
-            <!-- Details (Tiru Image 1 & 2) -->
-            <div class="col-span-8 space-y-2 text-[11px] border-2 border-gray-100 p-3 rounded-xl">
-                <div class="grid grid-cols-12 gap-2 border-b border-gray-50 pb-1.5">
-                    <span class="col-span-4 text-gray-500 font-semibold uppercase tracking-tighter">Nomor Registrasi</span>
+            <!-- Details -->
+            <div class="col-span-8 space-y-2 text-[11px] border-2 border-black p-3 rounded-xl">
+                <div class="grid grid-cols-12 gap-2 border-b border-gray-200 pb-1.5">
+                    <span class="col-span-4 text-gray-800 font-semibold uppercase tracking-tighter">Nomor Registrasi</span>
                     <span class="col-span-8 font-black text-emerald-800 text-xs tracking-widest">: {{ pendaftaran?.no_reg }}</span>
                 </div>
-                <div class="grid grid-cols-12 gap-2 border-b border-gray-50 pb-1.5">
-                    <span class="col-span-4 text-gray-500 font-semibold uppercase tracking-tighter">Nama Lengkap</span>
+                <div class="grid grid-cols-12 gap-2 border-b border-gray-200 pb-1.5">
+                    <span class="col-span-4 text-gray-800 font-semibold uppercase tracking-tighter">Nama Lengkap</span>
                     <span class="col-span-8 font-bold uppercase">: {{ pendaftaran?.siswa?.nama_lengkap }}</span>
                 </div>
-                <div class="grid grid-cols-12 gap-2 border-b border-gray-50 pb-1.5">
-                    <span class="col-span-4 text-gray-500 font-semibold uppercase tracking-tighter">Tempat, Tgl Lahir</span>
+                <div class="grid grid-cols-12 gap-2 border-b border-gray-200 pb-1.5">
+                    <span class="col-span-4 text-gray-800 font-semibold uppercase tracking-tighter">Tempat, Tgl Lahir</span>
                     <span class="col-span-8 font-bold">: {{ pendaftaran?.siswa?.tempat_lahir }}, {{ formatTanggal(pendaftaran?.siswa?.tanggal_lahir) }}</span>
                 </div>
-                <div class="grid grid-cols-12 gap-2 border-b border-gray-50 pb-1.5">
-                    <span class="col-span-4 text-gray-500 font-semibold uppercase tracking-tighter">NISN / NIK</span>
+                <div class="grid grid-cols-12 gap-2 border-b border-gray-200 pb-1.5">
+                    <span class="col-span-4 text-gray-800 font-semibold uppercase tracking-tighter">NISN / NIK</span>
                     <span class="col-span-8 font-bold">: {{ pendaftaran?.siswa?.nisn ?? '-' }} / {{ pendaftaran?.siswa?.nik ?? '-' }}</span>
                 </div>
-                <div class="grid grid-cols-12 gap-2 border-b border-gray-50 pb-1.5">
-                    <span class="col-span-4 text-gray-500 font-semibold uppercase tracking-tighter">Asal Sekolah</span>
+                <div class="grid grid-cols-12 gap-2 border-b border-gray-200 pb-1.5">
+                    <span class="col-span-4 text-gray-800 font-semibold uppercase tracking-tighter">Asal Sekolah</span>
                     <span class="col-span-8 font-bold">: {{ pendaftaran?.siswa?.asal_sekolah ?? '-' }}</span>
                 </div>
                 <div class="grid grid-cols-12 gap-2">
-                    <span class="col-span-4 text-gray-500 font-semibold uppercase tracking-tighter">Tingkat Sekolah</span>
+                    <span class="col-span-4 text-gray-800 font-semibold uppercase tracking-tighter">Tingkat Sekolah</span>
                     <span class="col-span-8 font-black text-emerald-700 uppercase">: {{ pendaftaran?.tingkat }}</span>
                 </div>
             </div>
@@ -406,27 +406,27 @@
             </div>
         </div>
 
-        <!-- 4. TIRU: Tabel Status (Tiru Image 1 & 2) -->
+        <!-- 4. Tabel Status dengan border hitam -->
         <div class="mb-6">
-            <table class="w-full border-collapse border border-gray-400 text-[10px]">
+            <table class="w-full border-collapse border border-black text-[10px]">
                 <thead class="bg-emerald-700 text-white">
                     <tr>
-                        <th class="border border-gray-400 p-2 text-left uppercase tracking-widest font-black w-1/4">Pendaftaran</th>
-                        <th class="border border-gray-400 p-2 text-left uppercase tracking-widest font-black">Pilihan Sekolah / Tingkat</th>
-                        <th class="border border-gray-400 p-2 text-left uppercase tracking-widest font-black w-1/4 text-center">Status</th>
+                        <th class="border border-black p-2 text-left uppercase tracking-widest font-black w-1/4">Pendaftaran</th>
+                        <th class="border border-black p-2 text-left uppercase tracking-widest font-black">Pilihan Sekolah / Tingkat</th>
+                        <th class="border border-black p-2 text-left uppercase tracking-widest font-black w-1/4 text-center">Status</th>
                     </tr>
                 </thead>
                 <tbody class="bg-white">
                     <tr class="font-medium">
-                        <td class="border border-gray-400 p-3">
+                        <td class="border border-black p-3">
                             <p class="font-black text-emerald-800 uppercase">Gelombang I</p>
-                            <p class="text-[9px] text-gray-500 mt-0.5 italic">{{ formatTanggal(pendaftaran?.tanggal_daftar) }}</p>
+                            <p class="text-[9px] text-gray-700 mt-0.5 italic">{{ formatTanggal(pendaftaran?.tanggal_daftar) }}</p>
                         </td>
-                        <td class="border border-gray-400 p-3">
-                            <p class="font-black uppercase text-gray-800 text-[11px]">PP. RIYADUSSALIKIN PADAHERANG</p>
-                            <p class="text-[9px] text-gray-500 mt-0.5">Jenjang Pendidikan: <span class="uppercase font-black text-emerald-700">{{ pendaftaran?.tingkat }}</span></p>
+                        <td class="border border-black p-3">
+                            <p class="font-black uppercase text-gray-800 text-[11px]">{{ spmbSetting?.kartuHeader2 || 'PP. RIYADUSSALIKIN PADAHERANG' }}</p>
+                            <p class="text-[9px] text-gray-700 mt-0.5">Jenjang Pendidikan: <span class="uppercase font-black text-emerald-700">{{ pendaftaran?.tingkat }}</span></p>
                         </td>
-                        <td class="border border-gray-400 p-3 text-center">
+                        <td class="border border-black p-3 text-center">
                             <div class="inline-block px-3 py-0.5 rounded-full bg-emerald-100 text-emerald-800 font-black uppercase tracking-tighter text-[9px]">
                                 {{ stageStatusLabel(pendaftaran?.status) }}
                             </div>
@@ -450,29 +450,31 @@
             </ol>
         </div>
 
-        <!-- 6. MODIFIKASI: QR Code dan Tanda Tangan Ganda (ATM Image 1 & 2) -->
+        <!-- 6. QR Code (lebih besar) dan Tanda Tangan Ganda -->
         <div class="flex justify-between items-end mt-8 text-[11px]">
-            <!-- QR Verification (Modifikasi) -->
+            <!-- QR Verification (diperbesar) -->
             <div class="flex flex-col items-center gap-1.5">
-                <div class="w-32 h-32 border-4 border-gray-100 p-1.5 bg-white shadow-md rounded-xl">
-                    <div class="w-full h-full bg-emerald-50 flex items-center justify-center border-2 border-dashed border-emerald-200 rounded-lg overflow-hidden">
+                <div class="w-48 h-48 border-2 border-black p-1 bg-white rounded-lg">
+                    <div class="w-full h-full bg-white flex items-center justify-center border border-dashed border-gray-400 rounded overflow-hidden">
                         <img v-if="qrCodeUrl" :src="qrCodeUrl" class="w-full h-full object-contain" />
-                        <div v-else class="grid grid-cols-4 gap-1 w-16 h-16 opacity-30">
+                        <div v-else class="grid grid-cols-4 gap-1 w-24 h-24 opacity-30">
                             <div v-for="i in 16" :key="i" class="bg-emerald-900" :style="{ opacity: Math.random() > 0.4 ? 1 : 0.1 }"></div>
                         </div>
                     </div>
                 </div>
-                <p class="text-[7px] font-black text-emerald-700 tracking-widest uppercase">E-VERIFICATION QR</p>
+                <p class="text-[8px] font-black text-emerald-700 tracking-widest uppercase">E-VERIFICATION QR</p>
+                <p class="text-[7px] text-gray-600 font-semibold">Scan untuk verifikasi data</p>
             </div>
 
-            <!-- Double Signature (Tiru Image 2) -->
+            <!-- Double Signature -->
             <div class="flex gap-12 text-center">
                 <div class="min-w-[140px]">
-                    <p class="mb-16 font-bold text-gray-700 uppercase tracking-tighter">Mengetahui,<br><span class="text-[9px] text-gray-500 font-medium">Orang Tua / Wali</span></p>
+                    <p class="mb-1 font-bold text-gray-800 uppercase tracking-tighter">Mengetahui,<br><span class="text-[9px] text-gray-600 font-medium">Orang Tua / Wali</span></p>
+                    <p class="text-[10px] font-semibold text-gray-800 mb-14">{{ namaOrtuWali }}</p>
                     <p class="font-black border-t border-gray-400 pt-1 text-gray-800 text-[10px]">( __________________________ )</p>
                 </div>
                 <div class="min-w-[140px]">
-                    <p class="mb-16 font-bold text-gray-700 uppercase tracking-tighter">Pangandaran, {{ formatTanggal(new Date()) }}<br><span class="text-[9px] text-gray-500 font-medium">Calon Peserta</span></p>
+                    <p class="mb-16 font-bold text-gray-800 uppercase tracking-tighter">Pangandaran, {{ formatTanggal(new Date()) }}<br><span class="text-[9px] text-gray-600 font-medium">Calon Peserta</span></p>
                     <p class="font-black border-t border-gray-400 pt-1 text-emerald-900 uppercase underline decoration-emerald-200 decoration-2 text-[10px]">{{ pendaftaran?.siswa?.nama_lengkap }}</p>
                 </div>
             </div>
@@ -586,6 +588,19 @@ const klasifikasiLabel = computed(() => {
         diterima: 'Diterima',
     };
     return map[props.pendaftaran?.status] ?? '';
+});
+
+// Nama orang tua/wali: prioritas ayah (jika ada), lalu ibu (jika ada), lalu wali
+const namaOrtuWali = computed(() => {
+    const ortu = props.pendaftaran?.orange_tua ?? props.pendaftaran?.orangTua ?? [];
+    const ayah = Array.isArray(ortu) ? ortu.find(o => o.jenis === 'ayah') : null;
+    const ibu  = Array.isArray(ortu) ? ortu.find(o => o.jenis === 'ibu')  : null;
+    const wali = props.pendaftaran?.wali;
+
+    if (ayah?.nama) return ayah.nama;
+    if (ibu?.nama)  return ibu.nama;
+    if (wali?.nama) return wali.nama;
+    return '';
 });
 
 const stageStatusLabel = (status) => {

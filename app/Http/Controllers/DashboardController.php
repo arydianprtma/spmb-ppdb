@@ -15,7 +15,7 @@ class DashboardController extends Controller
     {
         $user = Auth::user();
 
-        $pendaftaran = SpmbPendaftaran::with(['siswa', 'berkas'])
+        $pendaftaran = SpmbPendaftaran::with(['siswa', 'berkas', 'orangTua', 'wali'])
             ->where('user_id', $user->id)
             ->latest()
             ->first();
@@ -44,6 +44,7 @@ class DashboardController extends Controller
                 'kartuHeader1' => $setting?->kartu_header_1,
                 'kartuHeader2' => $setting?->kartu_header_2,
                 'kartuAlamat' => $setting?->kartu_alamat,
+                'kartuLogo' => $setting?->kartu_logo ? \Illuminate\Support\Facades\Storage::url($setting->kartu_logo) : null,
             ],
         ]);
     }
