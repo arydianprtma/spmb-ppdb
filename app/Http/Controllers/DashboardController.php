@@ -44,7 +44,10 @@ class DashboardController extends Controller
                 'kartuHeader1' => $setting?->kartu_header_1,
                 'kartuHeader2' => $setting?->kartu_header_2,
                 'kartuAlamat' => $setting?->kartu_alamat,
-                'kartuLogo' => $setting?->kartu_logo ? \Illuminate\Support\Facades\Storage::url($setting->kartu_logo) : null,
+                // Logo disimpan di storage admin (ppdb), bangun URL absolut agar bisa diakses dari portal SPMB
+                'kartuLogo' => $setting?->kartu_logo
+                    ? rtrim(env('PPDB_ADMIN_URL', config('app.url')), '/') . '/storage/' . $setting->kartu_logo
+                    : null,
             ],
         ]);
     }

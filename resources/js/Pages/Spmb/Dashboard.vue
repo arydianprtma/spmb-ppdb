@@ -349,14 +349,24 @@
     <div class="hidden print:block print-container bg-white text-black font-sans">
         <!-- 1. Kop Surat dinamis dari settings -->
         <div class="flex items-center justify-between border-b-4 border-double border-black pb-3 mb-4">
-            <img :src="spmbSetting?.kartuLogo || '/Logo Riyad.png'" alt="Logo Kiri" class="h-16 w-16 object-contain" />
+            <img
+                :src="logoUrl"
+                alt="Logo Pesantren"
+                class="h-16 w-16 object-contain"
+                @error="onLogoError"
+            />
             <div class="text-center flex-1 mx-6">
                 <h2 class="text-[10px] font-bold tracking-widest uppercase text-gray-800">KARTU TANDA PESERTA</h2>
                 <h1 class="text-lg font-black tracking-tight uppercase text-emerald-900 leading-tight">PPDB ONLINE {{ spmbSetting?.tahunAjaran || '2024/2025' }}</h1>
                 <p class="text-xs font-bold text-emerald-700 mt-0.5 uppercase">{{ spmbSetting?.kartuHeader2 || 'Pondok Pesantren Riyadussalikin Padaherang' }}</p>
                 <p class="text-[8px] text-gray-600 mt-0.5 italic">{{ spmbSetting?.kartuAlamat || 'Jl. Raya Padaherang, Kab. Pangandaran, Jawa Barat' }}</p>
             </div>
-            <img :src="spmbSetting?.kartuLogo || '/Logo Riyad.png'" alt="Logo Kanan" class="h-16 w-16 object-contain" />
+            <img
+                :src="logoUrl"
+                alt="Logo Pesantren"
+                class="h-16 w-16 object-contain"
+                @error="onLogoError"
+            />
         </div>
 
         <!-- 2. TIRU: Judul dengan garis bawah -->
@@ -452,18 +462,18 @@
 
         <!-- 6. QR Code (lebih besar) dan Tanda Tangan Ganda -->
         <div class="flex justify-between items-end mt-8 text-[11px]">
-            <!-- QR Verification (diperbesar) -->
-            <div class="flex flex-col items-center gap-1.5">
-                <div class="w-48 h-48 border-2 border-black p-1 bg-white rounded-lg">
-                    <div class="w-full h-full bg-white flex items-center justify-center border border-dashed border-gray-400 rounded overflow-hidden">
+            <!-- QR Verification -->
+            <div class="flex flex-col items-center gap-1">
+                <div class="w-36 h-36 border-2 border-black p-1 bg-white rounded">
+                    <div class="w-full h-full bg-white flex items-center justify-center border border-dashed border-gray-300 rounded overflow-hidden">
                         <img v-if="qrCodeUrl" :src="qrCodeUrl" class="w-full h-full object-contain" />
-                        <div v-else class="grid grid-cols-4 gap-1 w-24 h-24 opacity-30">
+                        <div v-else class="grid grid-cols-4 gap-1 w-20 h-20 opacity-30">
                             <div v-for="i in 16" :key="i" class="bg-emerald-900" :style="{ opacity: Math.random() > 0.4 ? 1 : 0.1 }"></div>
                         </div>
                     </div>
                 </div>
                 <p class="text-[8px] font-black text-emerald-700 tracking-widest uppercase">E-VERIFICATION QR</p>
-                <p class="text-[7px] text-gray-600 font-semibold">Scan untuk verifikasi data</p>
+                <p class="text-[7px] text-gray-600 font-semibold">Scan untuk verifikasi</p>
             </div>
 
             <!-- Double Signature -->
@@ -493,7 +503,7 @@
 </template>
 
 <script setup>
-import { computed, onMounted, onUnmounted } from 'vue';
+import { computed, ref, onMounted, onUnmounted } from 'vue';
 import { Head, Link, router } from '@inertiajs/vue3';
 
 const printCard = () => {
@@ -506,6 +516,10 @@ const props = defineProps({
     stats: Object,
     spmbSetting: Object,
 });
+
+// Logo: pakai dari settings jika ada, fallback ke default
+const logoUrl = computed(() => props.spmbSetting?.kartuLogo || '/Logo Riyad.png');
+const onLogoError = (e) => { e.target.src = '/Logo Riyad.png'; };
 
 onMounted(() => {
     if (props.pendaftaran?.id) {
