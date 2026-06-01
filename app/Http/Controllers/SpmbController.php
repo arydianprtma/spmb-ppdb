@@ -52,6 +52,7 @@ class SpmbController extends Controller
 
         $request->validate([
             'siswa.nama_lengkap' => 'required|string|max:255',
+            'siswa.asal_sekolah' => 'required|string|max:255',
             'siswa.nik' => [
                 'nullable',
                 'string',
@@ -144,6 +145,7 @@ class SpmbController extends Controller
             'berkas.kartu_nisn.max' => 'Berkas Kartu NISN maksimal 4MB.',
         ], [
             'siswa.nama_lengkap' => 'Nama Lengkap Siswa',
+            'siswa.asal_sekolah' => 'Asal Sekolah',
             'siswa.nik' => 'NIK Siswa',
             'siswa.nisn' => 'NISN',
             'siswa.no_ijazah' => 'Nomor Seri Ijazah',

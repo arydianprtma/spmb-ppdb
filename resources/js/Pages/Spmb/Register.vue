@@ -159,6 +159,11 @@
                                     <input v-model="form.siswa.nama_lengkap" type="text" class="input-form" placeholder="Contoh: Ahmad Abdullah" required>
                                 </div>
 
+                                <div class="col-span-1 lg:col-span-2">
+                                    <label class="label-form">Asal Sekolah</label>
+                                    <input v-model="form.siswa.asal_sekolah" type="text" class="input-form" placeholder="Contoh: SD Negeri 1 Padaherang" required>
+                                </div>
+
                                 <div class="col-span-1">
                                     <label class="label-form">Jenis Kelamin</label>
                                     <select v-model="form.siswa.jenis_kelamin" class="input-form" required>
@@ -1085,6 +1090,7 @@ const form = useForm({
     tingkat: ex?.tingkat ?? draft?.tingkat ?? 'smp',
     siswa: {
         nama_lengkap:    ex?.siswa?.nama_lengkap    ?? draft?.siswa?.nama_lengkap    ?? '',
+        asal_sekolah:    ex?.siswa?.asal_sekolah    ?? draft?.siswa?.asal_sekolah    ?? '',
         jenis_kelamin:   ex?.siswa?.jenis_kelamin   ?? draft?.siswa?.jenis_kelamin   ?? '',
         nisn:            ex?.siswa?.nisn            ?? draft?.siswa?.nisn            ?? '',
         nik:             ex?.siswa?.nik             ?? draft?.siswa?.nik             ?? '',
@@ -1365,6 +1371,10 @@ const nextStep = () => {
     if (step.value === 1) {
         if (!form.siswa.nama_lengkap || !form.siswa.nama_lengkap.trim()) {
             showValidationError('Nama Lengkap Siswa wajib diisi.');
+            return;
+        }
+        if (!form.siswa.asal_sekolah || !form.siswa.asal_sekolah.trim()) {
+            showValidationError('Asal Sekolah wajib diisi.');
             return;
         }
         if (!form.siswa.jenis_kelamin) {
