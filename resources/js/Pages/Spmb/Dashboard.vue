@@ -352,13 +352,16 @@
     <!-- Printable Registration Card (Visible ONLY on Print) -->
     <!-- MODIFIKASI VERSI ATM (AMATI TIRU MODIFIKASI) -->
     <div class="hidden print:block print-container bg-white text-black" style="font-family: 'Times New Roman', Times, serif;">
-        <div class="flex items-start justify-between">
+        <div class="flex items-start justify-between animate-fadeIn">
+            <!-- Logo Kiri -->
             <img
                 loading="eager"
                 :src="isSma ? '/logo_provinsi.png' : '/Logo_Kabupaten.png'"
                 :alt="isSma ? 'Logo Provinsi' : 'Logo Kabupaten'"
                 class="h-24 w-24 object-contain"
             />
+            
+            <!-- Teks Tengah (Header Instansi) -->
             <div class="text-center flex-1 mx-4" style="font-family: 'Times New Roman', Times, serif; color: black;">
                 <template v-if="isSma">
                     <div style="font-size: 12pt; font-weight: bold; line-height: 1.25;">
@@ -377,6 +380,8 @@
                     </div>
                 </template>
             </div>
+            
+            <!-- Logo Kanan -->
             <img
                 loading="eager"
                 :src="isSma ? '/assets/Logo_Sekolah/sma_ksatria_nusantara.png' : '/assets/Logo_Sekolah/smp_dharma_ksatria.png'"
@@ -385,25 +390,27 @@
             />
         </div>
 
-        <div class="text-center w-full pb-2" style="font-family: 'Times New Roman', Times, serif; color: black; margin-top: 4px;">
+        <!-- Teks Alamat Bawah (Full-Width, ditarik naik dengan margin negatif agar rapat tanpa space) -->
+        <div class="text-center w-full pb-2" style="font-family: 'Times New Roman', Times, serif; color: black; margin-top: -14px; position: relative; z-index: 10;">
             <template v-if="isSma">
-                <div style="font-size: 11pt; line-height: 1.25;">
-                    <div>No Izin Operasional : 421.3/0442-Disdikbudpora/2016 NPSN : 69935515</div>
+                <div style="font-size: 11pt; line-height: 1.25; font-weight: normal;">
+                    <div>No Izin Operasional : 421.3/0442-Disdikbudpora/2016 &nbsp; NPSN : 69935515</div>
                     <div>Jalan Paledah Dusun Patinggen II RT 020 / RW 005 Desa Karangpawitan Kecamatan Padaherang</div>
                     <div>Kabupaten Pangandaran Kode Pos 46384 No HP 087725807558*</div>
                     <div>email: <span class="text-blue-600 underline">smaksatrianusantara01@gmail.com</span></div>
                 </div>
             </template>
             <template v-else>
-                <div style="font-size: 11pt; line-height: 1.25;">
-                    <div>No Izin Operasional : 421/3143/Disdikbudpora/2016 NPSN : 69950605</div>
+                <div style="font-size: 11pt; line-height: 1.25; font-weight: normal;">
+                    <div>No Izin Operasional : 421/3143/Disdikbudpora/2016 &nbsp; NPSN : 69950605</div>
                     <div>Jalan Paledah Dusun Patinggen II RT 020 / RW 005 Desa Karangpawitan Kecamatan Padaherang</div>
                     <div>Kabupaten Pangandaran Kode Pos 46384 No HP 087725807558</div>
                     <div>email: <span class="text-blue-600 underline">smpdharmaksatria@gmail.com</span></div>
                 </div>
             </template>
         </div>
-        <div class="space-y-[1px] mb-4">
+
+        <div class="space-y-[1px] mb-4 w-full">
             <div class="border-t border-black"></div>
             <div class="border-t-[3px] border-black"></div>
         </div>
