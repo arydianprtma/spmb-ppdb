@@ -353,6 +353,7 @@
     <div class="hidden print:block print-container bg-white text-black font-sans">
         <div class="flex items-center justify-between pb-2">
             <img
+                loading="eager"
                 :src="isSma ? '/logo_provinsi.png' : '/Logo_Kabupaten.png'"
                 :alt="isSma ? 'Logo Provinsi' : 'Logo Kabupaten'"
                 class="h-20 w-20 object-contain"
@@ -380,6 +381,7 @@
                 </template>
             </div>
             <img
+                loading="eager"
                 :src="isSma ? '/assets/Logo_Sekolah/sma_ksatria_nusantara.png' : '/assets/Logo_Sekolah/smp_dharma_ksatria.png'"
                 :alt="isSma ? 'Logo SMA' : 'Logo SMP'"
                 class="h-20 w-20 object-contain"
@@ -428,7 +430,7 @@
             <!-- Photo (Tiru Image 1) -->
             <div class="col-span-4 flex flex-col items-center gap-2">
                 <div class="w-32 h-40 border-4 border-gray-200 rounded-lg overflow-hidden bg-gray-50 flex items-center justify-center p-1 shadow-inner">
-                    <img v-if="$page.props.auth.user.avatar_url" :src="$page.props.auth.user.avatar_url" class="w-full h-full object-cover rounded" />
+                    <img v-if="$page.props.auth.user.avatar_url" :src="$page.props.auth.user.avatar_url" loading="eager" class="w-full h-full object-cover rounded" />
                     <div v-else class="text-center p-4 text-[10px] text-gray-300 font-black uppercase leading-tight border-2 border-dashed border-gray-200 w-full h-full flex items-center justify-center">
                         PAS FOTO<br>3 X 4
                     </div>
@@ -487,7 +489,7 @@
             <div class="flex flex-col items-center gap-1">
                 <div class="border-2 border-black p-1 bg-white rounded" style="width: 3cm; height: 3cm;">
                     <div class="w-full h-full bg-white flex items-center justify-center border border-dashed border-gray-300 rounded overflow-hidden">
-                        <img v-if="qrCodeUrl" :src="qrCodeUrl" class="w-full h-full object-contain" />
+                        <img v-if="qrCodeUrl" :src="qrCodeUrl" loading="eager" class="w-full h-full object-contain" />
                         <div v-else class="grid grid-cols-4 gap-1 w-14 h-14 opacity-30">
                             <div v-for="i in 16" :key="i" class="bg-emerald-900" :style="{ opacity: Math.random() > 0.4 ? 1 : 0.1 }"></div>
                         </div>
@@ -526,6 +528,7 @@
 <script setup>
 import { computed, ref, onMounted, onUnmounted } from 'vue';
 import { Head, Link, router } from '@inertiajs/vue3';
+import html2pdf from 'html2pdf.js';
 
 const isDownloading = ref(false);
 
@@ -543,19 +546,14 @@ const printCard = async () => {
         isDownloading.value = true;
         
         try {
-            if (!window.html2pdf) {
-                await new Promise((resolve) => {
-                    const script = document.createElement('script');
-                    script.src = 'https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js';
-                    script.onload = resolve;
-                    document.head.appendChild(script);
-                });
-            }
-            
             const element = document.querySelector('.print-container');
             const originalClass = element.className;
             
+            // Render visible
             element.className = 'block bg-white text-black font-sans p-6 w-[790px]';
+            
+            // Force browser to load non-lazy images in the print layout before rendering
+            await new Promise(resolve => setTimeout(resolve, 300));
             
             const opt = {
                 margin:       0.3,
@@ -565,7 +563,7 @@ const printCard = async () => {
                 jsPDF:        { unit: 'in', format: 'a4', orientation: 'portrait' }
             };
             
-            await window.html2pdf().from(element).set(opt).save();
+            await html2pdf().from(element).set(opt).save();
             element.className = originalClass;
         } catch (error) {
             console.error('PDF Generation failed:', error);
