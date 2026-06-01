@@ -24,6 +24,7 @@
     "dependencies": {
         "@inertiajs/vue3": "^2.3.12",
         "@vitejs/plugin-vue": "^6.0.3",
+        "cropperjs": "^1.6.2",
         "html2pdf.js": "^0.14.0",
         "laravel-echo": "^2.3.4",
         "pusher-js": "^8.5.0",

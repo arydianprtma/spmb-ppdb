@@ -1,6 +1,8 @@
 <script setup>
-import { ref, computed } from 'vue';
+import { ref, computed, nextTick } from 'vue';
 import { useForm, router, Head, Link } from '@inertiajs/vue3';
+import Cropper from 'cropperjs';
+import 'cropperjs/dist/cropper.css';
 
 const props = defineProps({
     user: Object,
@@ -34,11 +36,75 @@ const showSuccess = (msg) => {
     setTimeout(() => successMsg.value = '', 4000);
 };
 
+// Cropper State
+const showCropModal = ref(false);
+const cropImageSrc = ref('');
+const cropImageRef = ref(null);
+let cropper = null;
+let originalFile = null;
+
 const onAvatarChange = (e) => {
     const file = e.target.files[0];
     if (!file) return;
-    profileForm.avatar = file;
-    avatarPreview.value = URL.createObjectURL(file);
+    originalFile = file;
+    cropImageSrc.value = URL.createObjectURL(file);
+    showCropModal.value = true;
+    
+    nextTick(() => {
+        if (cropper) {
+            cropper.destroy();
+        }
+        cropper = new Cropper(cropImageRef.value, {
+            aspectRatio: 3 / 4,
+            viewMode: 1,
+            autoCropArea: 1,
+            responsive: true,
+            restore: false,
+            guides: true,
+            center: true,
+            highlight: false,
+            cropBoxMovable: true,
+            cropBoxResizable: true,
+            toggleDragModeOnDblclick: false,
+        });
+    });
+};
+
+const cancelCrop = () => {
+    showCropModal.value = false;
+    cropImageSrc.value = '';
+    if (cropper) {
+        cropper.destroy();
+        cropper = null;
+    }
+    if (fileInput.value) {
+        fileInput.value.value = '';
+    }
+};
+
+const applyCrop = () => {
+    if (!cropper) return;
+    const canvas = cropper.getCroppedCanvas({
+        width: 600,
+        height: 800,
+        imageSmoothingEnabled: true,
+        imageSmoothingQuality: 'high',
+    });
+    
+    canvas.toBlob((blob) => {
+        if (!blob) return;
+        const croppedFile = new File([blob], originalFile.name, {
+            type: originalFile.type,
+            lastModified: Date.now()
+        });
+        
+        profileForm.avatar = croppedFile;
+        avatarPreview.value = URL.createObjectURL(croppedFile);
+        
+        showCropModal.value = false;
+        cropper.destroy();
+        cropper = null;
+    }, originalFile.type || 'image/jpeg', 0.9);
 };
 
 const submitProfile = () => {
@@ -240,5 +306,40 @@ const initials = computed(() => {
 
             </div>
         </div>
+
+        <!-- Crop Modal -->
+        <Transition
+            enter-active-class="transition duration-300 ease-out"
+            enter-from-class="opacity-0 scale-95"
+            enter-to-class="opacity-100 scale-100"
+            leave-active-class="transition duration-200 ease-in"
+            leave-to-class="opacity-0 scale-95"
+        >
+            <div v-if="showCropModal" class="fixed inset-0 z-[100] flex items-center justify-center p-4 bg-black/60 backdrop-blur-sm">
+                <div class="bg-white w-full max-w-md rounded-3xl p-6 shadow-2xl border border-gray-100 animate-fadeIn relative">
+                    <div class="mb-4">
+                        <h3 class="text-lg font-bold text-gray-800">Sesuaikan Pas Foto</h3>
+                        <p class="text-xs text-gray-500 mt-1">Geser, perbesar, dan atur posisi foto calon santri agar pas di dalam kotak potong (Rasio 3:4).</p>
+                    </div>
+
+                    <!-- Cropper Container -->
+                    <div class="w-full max-h-[320px] bg-gray-900 rounded-2xl overflow-hidden flex items-center justify-center mb-6">
+                        <img ref="cropImageRef" :src="cropImageSrc" class="max-w-full block max-h-[300px]" alt="Foto untuk dipotong" />
+                    </div>
+
+                    <!-- Actions -->
+                    <div class="flex items-center gap-3">
+                        <button type="button" @click="cancelCrop"
+                            class="flex-1 py-3 border-2 border-gray-100 text-gray-500 rounded-xl font-semibold text-sm hover:bg-gray-50 transition-colors">
+                            Batal
+                        </button>
+                        <button type="button" @click="applyCrop"
+                            class="flex-1 py-3 bg-gradient-to-r from-emerald-500 to-teal-500 text-white rounded-xl font-semibold text-sm hover:from-emerald-600 hover:to-teal-600 transition-colors shadow-md shadow-emerald-100">
+                            Potong & Simpan
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </Transition>
     </div>
 </template>
