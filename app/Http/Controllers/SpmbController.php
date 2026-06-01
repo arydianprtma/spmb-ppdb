@@ -284,11 +284,11 @@ class SpmbController extends Controller
                         // Encode ke webp dengan kualitas 80%
                         $encoded = $image->encode('webp', 80);
                         
-                        Storage::disk('public')->put($path, $encoded);
+                        Storage::disk('local')->put($path, $encoded);
                     } else {
                         // Jika bukan gambar (misal PDF), simpan biasa
                         $fileName = "{$field}_{$studentName}.{$extension}";
-                        $path = $file->storeAs("berkas/{$pendaftaran->no_reg}", $fileName, 'public');
+                        $path = $file->storeAs("berkas/{$pendaftaran->no_reg}", $fileName, 'local');
                     }
                     
                     $berkasData[$field] = $path;
