@@ -347,26 +347,41 @@
     <!-- Printable Registration Card (Visible ONLY on Print) -->
     <!-- MODIFIKASI VERSI ATM (AMATI TIRU MODIFIKASI) -->
     <div class="hidden print:block print-container bg-white text-black font-sans">
-        <div class="flex items-center justify-between pb-3">
+        <div class="flex items-center justify-between pb-2">
             <img
-                src="/logo_provinsi.png"
-                alt="Logo Provinsi"
-                class="h-16 w-16 object-contain"
+                :src="isSma ? '/logo_provinsi.png' : '/Logo_Kabupaten.png'"
+                :alt="isSma ? 'Logo Provinsi' : 'Logo Kabupaten'"
+                class="h-20 w-20 object-contain"
             />
-            <div class="text-center flex-1 mx-6">
-                <h2 class="text-[10px] font-bold tracking-widest uppercase text-gray-800">KARTU TANDA PESERTA</h2>
-                <h1 class="text-lg font-black tracking-tight uppercase text-emerald-900 leading-tight">PPDB ONLINE {{ spmbSetting?.tahunAjaran || '2024/2025' }}</h1>
-                <p class="text-xs font-bold text-emerald-700 mt-0.5 uppercase">{{ spmbSetting?.kartuHeader2 || 'Pondok Pesantren Riyadussalikin Padaherang' }}</p>
-                <p class="text-[8px] text-gray-600 mt-0.5 italic">{{ spmbSetting?.kartuAlamat || 'Jl. Raya Padaherang, Kab. Pangandaran, Jawa Barat' }}</p>
+            <div class="text-center flex-1 mx-4">
+                <template v-if="isSma">
+                    <h2 class="text-[11px] font-bold leading-tight tracking-wider">PEMERINTAH PROVINSI JAWA BARAT</h2>
+                    <h2 class="text-[11px] font-bold leading-tight tracking-wider">DINAS PENDIDIKAN</h2>
+                    <h2 class="text-xs font-bold leading-tight">YAYASAN AL MASRUHIYAH</h2>
+                    <h1 class="text-sm font-extrabold leading-snug tracking-wide">SMA KSATRIA NUSANTARA</h1>
+                    <p class="text-[8px] font-medium leading-tight">No Izin Operasional : 421.3/0442-Disdikbudpora/2016 NPSN : 69935515</p>
+                    <p class="text-[7.5px] leading-tight text-gray-700">Jalan Paledah Dusun Patinggen II RT 020 / RW 005 Desa Karangpawitan Kecamatan Padaherang</p>
+                    <p class="text-[7.5px] leading-tight text-gray-700">Kabupaten Pangandaran Kode Pos 46384 No Hp 087725807558*</p>
+                    <p class="text-[7.5px] leading-tight text-gray-700">email : <span class="text-blue-600 underline">smaksatrianusantara01@gmail.com</span></p>
+                </template>
+                <template v-else>
+                    <h2 class="text-[11px] font-bold leading-tight tracking-wider">PEMERINTAH KABUPATEN PANGANDARAN</h2>
+                    <h2 class="text-[11px] font-bold leading-tight tracking-wider">DINAS PENDIDIKAN KEPEMUDAAN DAN OLAHRAGA</h2>
+                    <h2 class="text-xs font-bold leading-tight">YAYASAN AL MASRUHIYAH</h2>
+                    <h1 class="text-sm font-extrabold leading-snug tracking-wide">SMP DHARMA KSATRIA</h1>
+                    <p class="text-[8px] font-medium leading-tight">No Izin Operasional : 421/3143/Disdikbudpora/2016 NPSN : 69950605</p>
+                    <p class="text-[7.5px] leading-tight text-gray-700">Jalan Paledah Dusun Patinggen II RT 020 / RW 005 Desa Karangpawitan Kecamatan Padaherang</p>
+                    <p class="text-[7.5px] leading-tight text-gray-700">Kabupaten Pangandaran Kode Pos 46384 No Hp 087725807558</p>
+                    <p class="text-[7.5px] leading-tight text-gray-700">email : <span class="text-blue-600 underline">smpdharmaksatria@gmail.com</span></p>
+                </template>
             </div>
             <img
-                :src="logoUrl"
-                alt="Logo Pesantren"
-                class="h-16 w-16 object-contain"
-                @error="onLogoError"
+                :src="isSma ? '/assets/Logo_Sekolah/sma_ksatria_nusantara.png' : '/assets/Logo_Sekolah/smp_dharma_ksatria.png'"
+                :alt="isSma ? 'Logo SMA' : 'Logo SMP'"
+                class="h-20 w-20 object-contain"
             />
         </div>
-        <div class="space-y-[2px] mb-4">
+        <div class="space-y-[1px] mb-4">
             <div class="border-t border-black"></div>
             <div class="border-t-[3px] border-black"></div>
         </div>
@@ -522,6 +537,10 @@ const props = defineProps({
 // Logo: pakai dari settings jika ada, fallback ke default
 const logoUrl = computed(() => props.spmbSetting?.kartuLogo || '/Logo Riyad.png');
 const onLogoError = (e) => { e.target.src = '/Logo Riyad.png'; };
+
+const isSma = computed(() => {
+    return props.pendaftaran?.tingkat?.toLowerCase() === 'sma';
+});
 
 onMounted(() => {
     if (props.pendaftaran?.id) {
