@@ -1300,7 +1300,35 @@ const onVillChange = () => {
 
 const handleFileUpload = (event, field) => {
     const file = event.target.files[0];
-    if (file) form.berkas[field] = file;
+    if (!file) return;
+    
+    // Validasi tipe file
+    const allowedTypes = ['image/jpeg', 'image/jpg', 'image/png', 'image/webp', 'application/pdf'];
+    if (!allowedTypes.includes(file.type)) {
+        Swal.fire({
+            icon: 'error',
+            title: 'Tipe File Tidak Valid',
+            text: 'Harap unggah berkas dengan format JPG, JPEG, PNG, WEBP, atau PDF.',
+            confirmButtonColor: '#10b981',
+        });
+        event.target.value = '';
+        return;
+    }
+    
+    // Validasi ukuran (maksimal 2MB = 2 * 1024 * 1024 bytes)
+    const maxSize = 2 * 1024 * 1024;
+    if (file.size > maxSize) {
+        Swal.fire({
+            icon: 'error',
+            title: 'Ukuran File Terlalu Besar',
+            text: 'Ukuran berkas maksimal adalah 2MB.',
+            confirmButtonColor: '#10b981',
+        });
+        event.target.value = '';
+        return;
+    }
+    
+    form.berkas[field] = file;
 };
 
 const berkasWajib = [
