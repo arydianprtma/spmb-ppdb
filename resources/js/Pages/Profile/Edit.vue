@@ -1,5 +1,5 @@
 <script setup>
-import { ref, computed, nextTick } from 'vue';
+import { ref, computed, nextTick, watch } from 'vue';
 import { useForm, router, Head, Link } from '@inertiajs/vue3';
 import Cropper from 'cropperjs';
 import 'cropperjs/dist/cropper.css';
@@ -127,6 +127,11 @@ const submitPassword = () => {
 
 const initials = computed(() => {
     return props.user.name?.split(' ').map(w => w[0]).join('').substring(0, 2).toUpperCase() ?? 'S';
+});
+
+watch(() => props.user.avatar, (newAvatar) => {
+    avatarPreview.value = newAvatar;
+    profileForm.avatar = null;
 });
 </script>
 

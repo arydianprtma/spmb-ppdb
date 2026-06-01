@@ -40,6 +40,13 @@ class ProfileController extends Controller
     {
         $user = Auth::user();
 
+        \Log::info('Profile Update Request:', [
+            'has_file' => $request->hasFile('avatar'),
+            'file_details' => $request->file('avatar'),
+            'all_keys' => array_keys($request->all()),
+            'file_keys' => array_keys($request->allFiles()),
+        ]);
+
         $validated = $request->validate([
             'name'   => 'required|string|max:255',
             'email'  => 'required|email|max:255|unique:users,email,' . $user->id,
