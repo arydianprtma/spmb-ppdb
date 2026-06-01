@@ -356,35 +356,43 @@
                 loading="eager"
                 :src="isSma ? '/logo_provinsi.png' : '/Logo_Kabupaten.png'"
                 :alt="isSma ? 'Logo Provinsi' : 'Logo Kabupaten'"
-                class="h-20 w-20 object-contain"
+                class="h-24 w-24 object-contain"
             />
-            <div class="text-center flex-1 mx-4">
+            <div class="text-center flex-1 mx-4" style="font-family: 'Times New Roman', Times, serif; color: black;">
                 <template v-if="isSma">
-                    <h2 class="text-[11px] font-bold leading-tight tracking-wider">PEMERINTAH PROVINSI JAWA BARAT</h2>
-                    <h2 class="text-[11px] font-bold leading-tight tracking-wider">DINAS PENDIDIKAN</h2>
-                    <h2 class="text-xs font-bold leading-tight">YAYASAN AL MASRUHIYAH</h2>
-                    <h1 class="text-sm font-extrabold leading-snug tracking-wide">SMA KSATRIA NUSANTARA</h1>
-                    <p class="text-[8px] font-medium leading-tight">No Izin Operasional : 421.3/0442-Disdikbudpora/2016 NPSN : 69935515</p>
-                    <p class="text-[7.5px] leading-tight text-gray-700">Jalan Paledah Dusun Patinggen II RT 020 / RW 005 Desa Karangpawitan Kecamatan Padaherang</p>
-                    <p class="text-[7.5px] leading-tight text-gray-700">Kabupaten Pangandaran Kode Pos 46384 No Hp 087725807558*</p>
-                    <p class="text-[7.5px] leading-tight text-gray-700">email : <span class="text-blue-600 underline">smaksatrianusantara01@gmail.com</span></p>
+                    <div style="font-size: 12pt; font-weight: bold; line-height: 1.2; margin-bottom: 3px;">
+                        <div>PEMERINTAH PROVINSI JAWA BARAT</div>
+                        <div>DINAS PENDIDIKAN</div>
+                        <div>YAYASAN AL MASRUHIYAH</div>
+                        <div>SMA KSATRIA NUSANTARA</div>
+                    </div>
+                    <div style="font-size: 11pt; line-height: 1.25;">
+                        <div>No Izin Operasional : 421.3/0442-Disdikbudpora/2016 NPSN : 69935515</div>
+                        <div>Jalan Paledah Dusun Patinggen II RT 020 / RW 005 Desa Karangpawitan Kecamatan Padaherang</div>
+                        <div>Kabupaten Pangandaran Kode Pos 46384 No HP 087725807558*</div>
+                        <div>email: <span class="text-blue-600 underline">smaksatrianusantara01@gmail.com</span></div>
+                    </div>
                 </template>
                 <template v-else>
-                    <h2 class="text-[11px] font-bold leading-tight tracking-wider">PEMERINTAH KABUPATEN PANGANDARAN</h2>
-                    <h2 class="text-[11px] font-bold leading-tight tracking-wider">DINAS PENDIDIKAN KEPEMUDAAN DAN OLAHRAGA</h2>
-                    <h2 class="text-xs font-bold leading-tight">YAYASAN AL MASRUHIYAH</h2>
-                    <h1 class="text-sm font-extrabold leading-snug tracking-wide">SMP DHARMA KSATRIA</h1>
-                    <p class="text-[8px] font-medium leading-tight">No Izin Operasional : 421/3143/Disdikbudpora/2016 NPSN : 69950605</p>
-                    <p class="text-[7.5px] leading-tight text-gray-700">Jalan Paledah Dusun Patinggen II RT 020 / RW 005 Desa Karangpawitan Kecamatan Padaherang</p>
-                    <p class="text-[7.5px] leading-tight text-gray-700">Kabupaten Pangandaran Kode Pos 46384 No Hp 087725807558</p>
-                    <p class="text-[7.5px] leading-tight text-gray-700">email : <span class="text-blue-600 underline">smpdharmaksatria@gmail.com</span></p>
+                    <div style="font-size: 12pt; font-weight: bold; line-height: 1.2; margin-bottom: 3px;">
+                        <div>PEMERINTAH KABUPATEN PANGANDARAN</div>
+                        <div>DINAS PENDIDIKAN KEPEMUDAAN DAN OLAHRAGA</div>
+                        <div>YAYASAN AL MASRUHIYAH</div>
+                        <div>SMP DHARMA KSATRIA</div>
+                    </div>
+                    <div style="font-size: 11pt; line-height: 1.25;">
+                        <div>No Izin Operasional : 421/3143/Disdikbudpora/2016 NPSN : 69950605</div>
+                        <div>Jalan Paledah Dusun Patinggen II RT 020 / RW 005 Desa Karangpawitan Kecamatan Padaherang</div>
+                        <div>Kabupaten Pangandaran Kode Pos 46384 No HP 087725807558</div>
+                        <div>email: <span class="text-blue-600 underline">smpdharmaksatria@gmail.com</span></div>
+                    </div>
                 </template>
             </div>
             <img
                 loading="eager"
                 :src="isSma ? '/assets/Logo_Sekolah/sma_ksatria_nusantara.png' : '/assets/Logo_Sekolah/smp_dharma_ksatria.png'"
                 :alt="isSma ? 'Logo SMA' : 'Logo SMP'"
-                class="h-20 w-20 object-contain"
+                class="h-24 w-24 object-contain"
             />
         </div>
         <div class="space-y-[1px] mb-4">
