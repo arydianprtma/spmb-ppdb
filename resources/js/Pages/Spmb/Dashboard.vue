@@ -401,102 +401,105 @@
             <div class="border-t-[3px] border-black"></div>
         </div>
 
-        <!-- 2. TIRU: Judul dengan garis bawah -->
-        <h3 class="text-center text-sm font-black tracking-[0.3em] uppercase mb-6 underline underline-offset-4 decoration-2">
+        <!-- 2. KARTU BUKTI PENDAFTARAN (Centered, Bold, No Underline) -->
+        <h3 class="text-center font-bold uppercase mb-6" style="font-size: 14pt; tracking: 0.05em;">
             KARTU BUKTI PENDAFTARAN
         </h3>
 
-        <!-- 3. MODIFIKASI: Layout Grid untuk Data dan Foto -->
-        <div class="grid grid-cols-12 gap-6 items-start mb-6">
+        <!-- 3. DATA DIRI & FOTO (Align Left, Vertical Colons, Borderless) -->
+        <div class="grid grid-cols-12 gap-6 items-start mb-6" style="font-size: 11pt;">
             <!-- Details -->
-            <div class="col-span-8 space-y-2 text-[11px] border-2 border-black p-3 rounded-xl">
-                <div class="grid grid-cols-12 gap-2 border-b border-gray-200 pb-1.5">
-                    <span class="col-span-4 text-gray-800 font-semibold uppercase tracking-tighter">Nomor Registrasi</span>
-                    <span class="col-span-8 font-black text-emerald-800 text-xs tracking-widest">: {{ pendaftaran?.no_reg }}</span>
+            <div class="col-span-8 space-y-2">
+                <div class="flex">
+                    <span class="w-48 font-bold uppercase">NOMOR REGISTRASI</span>
+                    <span class="mr-2 font-bold">:</span>
+                    <span class="font-bold uppercase">{{ pendaftaran?.no_reg }}</span>
                 </div>
-                <div class="grid grid-cols-12 gap-2 border-b border-gray-200 pb-1.5">
-                    <span class="col-span-4 text-gray-800 font-semibold uppercase tracking-tighter">Nama Lengkap</span>
-                    <span class="col-span-8 font-bold uppercase">: {{ pendaftaran?.siswa?.nama_lengkap }}</span>
+                <div class="flex">
+                    <span class="w-48 font-bold uppercase">NAMA LENGKAP</span>
+                    <span class="mr-2 font-bold">:</span>
+                    <span class="font-bold uppercase">{{ pendaftaran?.siswa?.nama_lengkap }}</span>
                 </div>
-                <div class="grid grid-cols-12 gap-2 border-b border-gray-200 pb-1.5">
-                    <span class="col-span-4 text-gray-800 font-semibold uppercase tracking-tighter">Tempat, Tgl Lahir</span>
-                    <span class="col-span-8 font-bold">: {{ pendaftaran?.siswa?.tempat_lahir }}, {{ formatTanggal(pendaftaran?.siswa?.tanggal_lahir) }}</span>
+                <div class="flex">
+                    <span class="w-48 font-bold uppercase">TEMPAT, TGL LAHIR</span>
+                    <span class="mr-2 font-bold">:</span>
+                    <span class="font-bold uppercase">{{ pendaftaran?.siswa?.tempat_lahir }}, {{ formatTanggal(pendaftaran?.siswa?.tanggal_lahir) }}</span>
                 </div>
-                <div class="grid grid-cols-12 gap-2 border-b border-gray-200 pb-1.5">
-                    <span class="col-span-4 text-gray-800 font-semibold uppercase tracking-tighter">NISN / NIK</span>
-                    <span class="col-span-8 font-bold">: {{ pendaftaran?.siswa?.nisn ?? '-' }} / {{ pendaftaran?.siswa?.nik ?? '-' }}</span>
+                <div class="flex">
+                    <span class="w-48 font-bold uppercase">NISN / NIK</span>
+                    <span class="mr-2 font-bold">:</span>
+                    <span class="font-bold uppercase">{{ pendaftaran?.siswa?.nisn ?? '-' }} / {{ pendaftaran?.siswa?.nik ?? '-' }}</span>
                 </div>
-                <div class="grid grid-cols-12 gap-2 border-b border-gray-200 pb-1.5">
-                    <span class="col-span-4 text-gray-800 font-semibold uppercase tracking-tighter">Asal Sekolah</span>
-                    <span class="col-span-8 font-bold">: {{ pendaftaran?.siswa?.asal_sekolah ?? '-' }}</span>
+                <div class="flex">
+                    <span class="w-48 font-bold uppercase">ASAL SEKOLAH</span>
+                    <span class="mr-2 font-bold">:</span>
+                    <span class="font-bold uppercase">{{ pendaftaran?.siswa?.asal_sekolah ?? '-' }}</span>
                 </div>
-                <div class="grid grid-cols-12 gap-2">
-                    <span class="col-span-4 text-gray-800 font-semibold uppercase tracking-tighter">Tingkat Sekolah</span>
-                    <span class="col-span-8 font-black text-emerald-700 uppercase">: {{ pendaftaran?.tingkat }}</span>
+                <div class="flex">
+                    <span class="w-48 font-bold uppercase">TINGKAT SEKOLAH</span>
+                    <span class="mr-2 font-bold">:</span>
+                    <span class="font-bold uppercase">{{ pendaftaran?.tingkat }}</span>
                 </div>
             </div>
 
-            <!-- Photo (Tiru Image 1) -->
-            <div class="col-span-4 flex flex-col items-center gap-2">
-                <div class="w-32 h-40 border-4 border-gray-200 rounded-lg overflow-hidden bg-gray-50 flex items-center justify-center p-1 shadow-inner">
-                    <img v-if="$page.props.auth.user.avatar_url" :src="$page.props.auth.user.avatar_url" loading="eager" class="w-full h-full object-cover rounded" />
-                    <div v-else class="text-center p-4 text-[10px] text-gray-300 font-black uppercase leading-tight border-2 border-dashed border-gray-200 w-full h-full flex items-center justify-center">
-                        PAS FOTO<br>3 X 4
+            <!-- Pas Foto Box (3x4 cm) -->
+            <div class="col-span-4 flex flex-col items-center">
+                <div class="w-[3cm] h-[4cm] border border-black flex flex-col items-center justify-center bg-white p-0.5">
+                    <img v-if="$page.props.auth.user.avatar_url" :src="$page.props.auth.user.avatar_url" loading="eager" class="w-full h-full object-cover" />
+                    <div v-else class="text-center p-2 text-[10px] font-bold uppercase leading-tight w-full h-full flex items-center justify-center">
+                        PAS FOTO
                     </div>
                 </div>
-                <p class="text-[9px] font-bold text-gray-400 uppercase tracking-widest">Pas Foto Pendaftar</p>
             </div>
         </div>
 
-        <!-- 4. Tabel Status dengan border hitam -->
+        <!-- 4. TABEL STATUS (Simple black border, White header background, Capitalized) -->
         <div class="mb-6">
-            <table class="w-full border-collapse border border-black text-[10px]">
-                <thead class="bg-emerald-700 text-white">
-                    <tr>
-                        <th class="border border-black p-2 text-left uppercase tracking-widest font-black w-1/4">Pendaftaran</th>
-                        <th class="border border-black p-2 text-left uppercase tracking-widest font-black">Pilihan Sekolah / Tingkat</th>
-                        <th class="border border-black p-2 text-left uppercase tracking-widest font-black w-1/4 text-center">Status</th>
+            <table class="w-full border-collapse border border-black text-[11pt]">
+                <thead>
+                    <tr class="font-bold text-center">
+                        <th class="border border-black p-2 uppercase w-1/4">PENDAFTARAN</th>
+                        <th class="border border-black p-2 uppercase">PILIHAN SEKOLAH / TINGKAT</th>
+                        <th class="border border-black p-2 uppercase w-1/4">STATUS</th>
                     </tr>
                 </thead>
-                <tbody class="bg-white">
-                    <tr class="font-medium">
-                        <td class="border border-black p-3">
-                            <p class="font-black text-emerald-800 uppercase">Gelombang I</p>
-                            <p class="text-[9px] text-gray-700 mt-0.5 italic">{{ formatTanggal(pendaftaran?.tanggal_daftar) }}</p>
+                <tbody>
+                    <tr class="text-center">
+                        <td class="border border-black p-3 align-middle">
+                            <div class="font-bold uppercase">Gelombang I</div>
+                            <div class="text-[9pt] mt-0.5 italic">{{ formatTanggal(pendaftaran?.tanggal_daftar) }}</div>
                         </td>
-                        <td class="border border-black p-3">
-                            <p class="font-black uppercase text-gray-800 text-[11px]">{{ spmbSetting?.kartuHeader2 || 'PP. RIYADUSSALIKIN PADAHERANG' }}</p>
-                            <p class="text-[9px] text-gray-700 mt-0.5">Jenjang Pendidikan: <span class="uppercase font-black text-emerald-700">{{ pendaftaran?.tingkat }}</span></p>
+                        <td class="border border-black p-3 text-left align-middle">
+                            <div class="font-bold uppercase">{{ spmbSetting?.kartuHeader2 || 'PP. RIYADUSSALIKIN PADAHERANG' }}</div>
+                            <div class="text-[9pt] mt-0.5">Jenjang Pendidikan: <span class="uppercase font-bold">{{ pendaftaran?.tingkat }}</span></div>
                         </td>
-                        <td class="border border-black p-3 text-center">
-                            <div class="inline-block px-3 py-0.5 rounded-full bg-emerald-100 text-emerald-800 font-black uppercase tracking-tighter text-[9px]">
-                                {{ stageStatusLabel(pendaftaran?.status) }}
-                            </div>
+                        <td class="border border-black p-3 align-middle font-bold uppercase">
+                            {{ stageStatusLabel(pendaftaran?.status) }}
                         </td>
                     </tr>
                 </tbody>
             </table>
         </div>
 
-        <!-- 5. TIRU: Informasi Penting (Tiru Image 1 & 2) -->
-        <div class="mb-6 p-4 border-2 border-gray-200 rounded-xl bg-gray-50/50">
-            <p class="text-[10px] font-black mb-2 uppercase tracking-[0.2em] text-gray-700 border-b-2 border-gray-200 pb-1 flex items-center gap-2">
-                Informasi Penting Bagi Calon Santri:
+        <!-- 5. INFORMASI PENTING (List standard, No background/border box) -->
+        <div class="mb-6 text-[11pt]">
+            <p class="font-bold mb-2">
+                Informasi Penting Sebagai Calon Siswa/Santri:
             </p>
-            <ol class="text-[9px] space-y-1 list-decimal pl-5 text-gray-600 font-semibold leading-relaxed">
-                <li>Kartu Pendaftaran ini <strong>WAJIB</strong> dibawa saat seleksi atau daftar ulang.</li>
-                <li>Membawa dokumen asli (KTP Orang Tua, KK, Akte Kelahiran).</li>
-                <li>Membawa seluruh dokumen fisik yang telah diunggah di portal.</li>
-                <li>Berpakaian rapi, sopan, menutup aurat, dan menjaga adab.</li>
-                <li>Pantau terus status pendaftaran Anda melalui dashboard user.</li>
+            <ol class="space-y-1 list-decimal pl-5 leading-normal">
+                <li>Kartu Pendaftaran Ini Wajib Di Bawa Saat Seleksi Atau Daftar Ulang</li>
+                <li>Membawa Dokumen Asli (KTP Orang Tua, KK, Akte Kelahiran)</li>
+                <li>Membawa Seluruh Berkas Dokumen Fisik Yang Diunggah Di <a href="https://ppdb.riyadussalikin.my.id/" target="_blank" class="text-blue-600 underline">https://ppdb.riyadussalikin.my.id/</a></li>
+                <li>Berpakaian Rapih, Sopan, Menutup Aurat, Dan Menjaga Adab</li>
+                <li>Pantau Terus Status Pendaftaran Anda Melalui <a href="https://ppdb.riyadussalikin.my.id/dashboard" target="_blank" class="text-blue-600 underline">https://ppdb.riyadussalikin.my.id/dashboard</a></li>
             </ol>
         </div>
 
-        <!-- 6. QR Code (lebih besar) dan Tanda Tangan Ganda -->
-        <div class="flex justify-between items-end mt-8 text-[11px]">
-            <!-- QR Verification -->
-            <div class="flex flex-col items-center gap-1">
-                <div class="border-2 border-black p-1 bg-white rounded" style="width: 3cm; height: 3cm;">
+        <!-- 6. QR CODE & TANDA TANGAN (Aligned, Signature Table) -->
+        <div class="grid grid-cols-12 gap-4 items-end mt-8 text-[11pt]">
+            <!-- QR Code -->
+            <div class="col-span-4 flex flex-col items-center gap-1">
+                <div class="border border-black p-1 bg-white" style="width: 3cm; height: 3cm;">
                     <div class="w-full h-full bg-white flex items-center justify-center border border-dashed border-gray-300 rounded overflow-hidden">
                         <img v-if="qrCodeUrl" :src="qrCodeUrl" loading="eager" class="w-full h-full object-contain" />
                         <div v-else class="grid grid-cols-4 gap-1 w-14 h-14 opacity-30">
@@ -504,30 +507,44 @@
                         </div>
                     </div>
                 </div>
-                <p class="text-[8px] font-black text-emerald-700 tracking-widest uppercase">E-VERIFICATION QR</p>
-                <p class="text-[7px] text-gray-600 font-semibold">Scan untuk verifikasi</p>
+                <p class="text-[9pt] font-bold text-center tracking-wider uppercase mt-1">E-VERIFIKATION QR</p>
             </div>
 
-            <!-- Double Signature -->
-            <div class="flex gap-12 text-center">
-                <div class="min-w-[140px]">
-                    <p class="mb-1 font-bold text-gray-800 uppercase tracking-tighter">Mengetahui,<br><span class="text-[9px] text-gray-600 font-medium">Orang Tua / Wali</span></p>
-                    <p class="text-[10px] font-semibold text-gray-800 mb-14">{{ namaOrtuWali }}</p>
-                    <p class="font-black border-t border-gray-400 pt-1 text-gray-800 text-[10px]">( __________________________ )</p>
-                </div>
-                <div class="min-w-[140px]">
-                    <p class="mb-16 font-bold text-gray-800 uppercase tracking-tighter">Pangandaran, {{ formatTanggal(new Date()) }}<br><span class="text-[9px] text-gray-600 font-medium">Calon Peserta</span></p>
-                    <p class="font-black border-t border-gray-400 pt-1 text-emerald-900 uppercase underline decoration-emerald-200 decoration-2 text-[10px]">{{ pendaftaran?.siswa?.nama_lengkap }}</p>
-                </div>
+            <!-- Signature Table -->
+            <div class="col-span-8">
+                <table class="w-full border-collapse border border-black">
+                    <thead>
+                        <tr class="font-bold text-center text-[10pt]">
+                            <th class="border border-black p-2 w-1/2 align-middle">
+                                MENGETAHUI,<br>ORANG TUA/WALI
+                            </th>
+                            <th class="border border-black p-2 w-1/2 align-middle uppercase">
+                                PANGANDARAN, {{ formatTanggal(new Date()).toUpperCase() }}<br>CALON PESERTA
+                            </th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td class="border border-black p-2 h-[75px] text-center align-bottom text-[10pt]">
+                                <div class="mb-1">
+                                    ({{ namaOrtuWali || '........................................' }})
+                                </div>
+                            </td>
+                            <td class="border border-black p-2 h-[75px] text-center align-bottom text-[10pt] font-bold">
+                                <div class="mb-1 underline">
+                                    {{ pendaftaran?.siswa?.nama_lengkap }}
+                                </div>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
             </div>
         </div>
 
-        <!-- 7. TIRU: Footer Watermark (Tiru Image 2) -->
-        <div class="absolute pt-3 border-t-2 border-dotted border-gray-200 text-center" style="left: 15mm; right: 15mm; bottom: 8mm;">
-            <p class="text-[10px] font-black uppercase tracking-[0.4em] text-gray-300">Simpanlah Lembar Pendaftaran ini sebagai bukti pendaftaran anda</p>
-            <div class="flex justify-center mt-2 px-2">
-                <p class="text-[8px] text-emerald-600 font-black tracking-tight italic uppercase">Sistem PPDB Online PP. Riyadussalikin</p>
-            </div>
+        <!-- 7. WATERMARK FOOTER -->
+        <div class="absolute text-center text-gray-400 uppercase font-bold" style="left: 15mm; right: 15mm; bottom: 8mm; font-size: 9pt; line-height: 1.3;">
+            <div>SIMPANLAH LEMBAR PENDAFTARAN INI SEBAGAI BUKTI PENDAFTARAN ANDA</div>
+            <div>SISTEM PPDB ONLINE PP. RIYADUSSALIKIN</div>
         </div>
     </div>
 
