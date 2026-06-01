@@ -9,10 +9,10 @@
             <div class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
                 <!-- Logo -->
                 <div class="flex items-center gap-3">
-                    <img src="/Logo Riyad.png" alt="Logo" class="h-10 w-10" />
-                    <div>
-                        <div class="text-emerald-700 font-bold text-sm leading-tight">Pondok Pesantren</div>
-                        <div class="text-emerald-600 text-xs">Riyadussalikin Padaherang</div>
+                    <img src="/logo_pondok.png" alt="Logo" class="h-10 w-10" />
+                    <div class="font-['Poppins']">
+                        <div class="text-emerald-700 font-extrabold text-sm leading-tight tracking-wide">PONDOK PESANTREN</div>
+                        <div class="text-emerald-600 font-semibold text-xs tracking-wider">Riyadussalikin Padaherang</div>
                     </div>
                 </div>
                 <!-- User & Logout -->

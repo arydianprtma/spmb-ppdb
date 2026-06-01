@@ -42,10 +42,10 @@ const status = props.pendaftaran ? (statusConfig[props.pendaftaran.status] || st
         <header style="background:#fff;border-bottom:1px solid #e5e7eb;position:sticky;top:0;z-index:50;">
             <div style="max-width:1100px;margin:0 auto;padding:0 24px;height:64px;display:flex;align-items:center;justify-content:space-between;">
                 <div style="display:flex;align-items:center;gap:12px;">
-                    <img src="/Logo Riyad.png" alt="Logo" style="height:40px;width:40px;object-fit:contain;" />
-                    <div>
-                        <div style="color:#047857;font-weight:700;font-size:14px;line-height:1.3;">Pondok Pesantren</div>
-                        <div style="color:#059669;font-size:12px;">Riyadussalikin Padaherang</div>
+                    <img src="/logo_pondok.png" alt="Logo" style="height:40px;width:40px;object-fit:contain;" />
+                    <div style="font-family:'Poppins',sans-serif;">
+                        <div style="color:#047857;font-weight:800;font-size:14px;line-height:1.3;letter-spacing:0.03em;">PONDOK PESANTREN</div>
+                        <div style="color:#059669;font-weight:600;font-size:12px;letter-spacing:0.02em;">Riyadussalikin Padaherang</div>
                     </div>
                 </div>
                 <div style="display:flex;align-items:center;gap:20px;">

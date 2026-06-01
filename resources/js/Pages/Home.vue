@@ -7,7 +7,7 @@
             <div class="container mx-auto px-4 pt-24 pb-20 relative z-10">
                 <div class="text-center">
                     <div class="mb-6">
-                        <img src="/Logo Riyad.png" alt="Logo Riyadussalikin" class="h-24 w-24 mx-auto mb-4" />
+                        <img src="/logo_pondok.png" alt="Logo Riyadussalikin" class="h-24 w-24 mx-auto mb-4" />
                     </div>
                     <h1 class="text-4xl md:text-6xl font-bold text-gray-900 mb-6">
                         Pondok Pesantren <span class="text-gradient">Riyadussalikin</span>

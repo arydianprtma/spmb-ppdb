@@ -31,10 +31,10 @@
         <header class="bg-white border-b border-gray-100 sticky top-0 z-50 shadow-sm">
             <div class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
                 <div class="flex items-center gap-2 sm:gap-3">
-                    <img src="/Logo Riyad.png" alt="Logo" class="h-8 w-8 sm:h-10 sm:w-10 flex-shrink-0" />
-                    <div>
-                        <div class="text-emerald-700 font-bold text-xs sm:text-sm leading-tight">Pondok Pesantren</div>
-                        <div class="text-emerald-600 text-[10px] sm:text-xs">Riyadussalikin Padaherang</div>
+                    <img src="/logo_pondok.png" alt="Logo" class="h-8 w-8 sm:h-10 sm:w-10 flex-shrink-0" />
+                    <div class="font-['Poppins']">
+                        <div class="text-emerald-700 font-extrabold text-xs sm:text-sm leading-tight tracking-wide">PONDOK PESANTREN</div>
+                        <div class="text-emerald-600 font-semibold text-[9px] sm:text-xs tracking-wider">Riyadussalikin Padaherang</div>
                     </div>
                 </div>
                 <div class="flex items-center gap-2 sm:gap-3">
@@ -535,8 +535,8 @@ const props = defineProps({
 });
 
 // Logo: pakai dari settings jika ada, fallback ke default
-const logoUrl = computed(() => props.spmbSetting?.kartuLogo || '/Logo Riyad.png');
-const onLogoError = (e) => { e.target.src = '/Logo Riyad.png'; };
+const logoUrl = computed(() => props.spmbSetting?.kartuLogo || '/logo_pondok.png');
+const onLogoError = (e) => { e.target.src = '/logo_pondok.png'; };
 
 const isSma = computed(() => {
     return props.pendaftaran?.tingkat?.toLowerCase() === 'sma';
