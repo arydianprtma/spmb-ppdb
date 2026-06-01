@@ -352,7 +352,7 @@
     <!-- Printable Registration Card (Visible ONLY on Print) -->
     <!-- MODIFIKASI VERSI ATM (AMATI TIRU MODIFIKASI) -->
     <div class="hidden print:block print-container bg-white text-black" style="font-family: 'Times New Roman', Times, serif;">
-        <div class="flex items-center justify-between pb-2">
+        <div class="flex items-start justify-between pb-2">
             <img
                 loading="eager"
                 :src="isSma ? '/logo_provinsi.png' : '/Logo_Kabupaten.png'"
@@ -512,25 +512,25 @@
 
             <!-- Signature Table -->
             <div class="col-span-8">
-                <table class="w-full border-collapse border border-black">
+                <table class="w-full border-collapse">
                     <thead>
                         <tr class="font-bold text-center text-[10pt]">
-                            <th class="border border-black p-2 w-1/2 align-middle">
+                            <th class="p-2 w-1/2 align-middle font-bold">
                                 MENGETAHUI,<br>ORANG TUA/WALI
                             </th>
-                            <th class="border border-black p-2 w-1/2 align-middle uppercase">
+                            <th class="p-2 w-1/2 align-middle uppercase font-bold">
                                 PANGANDARAN, {{ formatTanggal(new Date()).toUpperCase() }}<br>CALON PESERTA
                             </th>
                         </tr>
                     </thead>
                     <tbody>
                         <tr>
-                            <td class="border border-black p-2 h-[75px] text-center align-bottom text-[10pt]">
+                            <td class="p-2 h-[75px] text-center align-bottom text-[10pt]">
                                 <div class="mb-1">
                                     ({{ namaOrtuWali || '........................................' }})
                                 </div>
                             </td>
-                            <td class="border border-black p-2 h-[75px] text-center align-bottom text-[10pt] font-bold">
+                            <td class="p-2 h-[75px] text-center align-bottom text-[10pt] font-bold">
                                 <div class="mb-1 underline">
                                     {{ pendaftaran?.siswa?.nama_lengkap }}
                                 </div>
