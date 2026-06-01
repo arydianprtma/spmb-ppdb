@@ -334,10 +334,14 @@
                     <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 113.536 3.536L6.5 21.036H3v-3.572L16.732 3.732z"/></svg>
                     Edit / Perbarui Data
                 </Link>
-                <button @click="printCard"
-                    class="flex-1 sm:flex-none flex items-center justify-center gap-2 bg-white text-gray-700 border-2 border-gray-200 px-6 py-3 rounded-2xl font-bold hover:bg-gray-50 transition-all">
-                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 17h2a2 2 0 002-2v-4a2 2 0 00-2-2H5a2 2 0 00-2 2v4a2 2 0 002 2h2m2 4h6a2 2 0 002-2v-4a2 2 0 00-2-2H9a2 2 0 00-2 2v4a2 2 0 002 2zm8-12V5a2 2 0 00-2-2H9a2 2 0 00-2 2v4h10z"/></svg>
-                    Cetak Bukti
+                <button @click="printCard" :disabled="isDownloading"
+                    class="flex-1 sm:flex-none flex items-center justify-center gap-2 bg-white text-gray-700 border-2 border-gray-200 px-6 py-3 rounded-2xl font-bold hover:bg-gray-50 transition-all disabled:opacity-75 disabled:cursor-not-allowed">
+                    <svg v-if="isDownloading" class="animate-spin h-5 w-5 text-gray-500" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                        <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+                        <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+                    </svg>
+                    <svg v-else class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 17h2a2 2 0 002-2v-4a2 2 0 00-2-2H5a2 2 0 00-2 2v4a2 2 0 002 2h2m2 4h6a2 2 0 002-2v-4a2 2 0 00-2-2H9a2 2 0 00-2 2v4a2 2 0 002 2zm8-12V5a2 2 0 00-2-2H9a2 2 0 00-2 2v4h10z"/></svg>
+                    {{ printButtonText }}
                 </button>
             </div>
 
@@ -523,8 +527,55 @@
 import { computed, ref, onMounted, onUnmounted } from 'vue';
 import { Head, Link, router } from '@inertiajs/vue3';
 
-const printCard = () => {
-    window.print();
+const isDownloading = ref(false);
+
+const printButtonText = computed(() => {
+    if (isDownloading.value) return 'Mengunduh...';
+    const isMobile = typeof window !== 'undefined' && (window.innerWidth < 768 || /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent));
+    return isMobile ? 'Unduh PDF' : 'Cetak Bukti';
+});
+
+const printCard = async () => {
+    const isMobile = window.innerWidth < 768 || /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
+    
+    if (isMobile) {
+        if (isDownloading.value) return;
+        isDownloading.value = true;
+        
+        try {
+            if (!window.html2pdf) {
+                await new Promise((resolve) => {
+                    const script = document.createElement('script');
+                    script.src = 'https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js';
+                    script.onload = resolve;
+                    document.head.appendChild(script);
+                });
+            }
+            
+            const element = document.querySelector('.print-container');
+            const originalClass = element.className;
+            
+            element.className = 'block bg-white text-black font-sans p-6 w-[790px]';
+            
+            const opt = {
+                margin:       0.3,
+                filename:     `Bukti_Pendaftaran_${props.pendaftaran?.no_reg || 'PPDB'}.pdf`,
+                image:        { type: 'jpeg', quality: 0.98 },
+                html2canvas:  { scale: 2, useCORS: true, logging: false },
+                jsPDF:        { unit: 'in', format: 'a4', orientation: 'portrait' }
+            };
+            
+            await window.html2pdf().from(element).set(opt).save();
+            element.className = originalClass;
+        } catch (error) {
+            console.error('PDF Generation failed:', error);
+            window.print();
+        } finally {
+            isDownloading.value = false;
+        }
+    } else {
+        window.print();
+    }
 };
 
 const props = defineProps({
