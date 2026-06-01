@@ -347,13 +347,11 @@
     <!-- Printable Registration Card (Visible ONLY on Print) -->
     <!-- MODIFIKASI VERSI ATM (AMATI TIRU MODIFIKASI) -->
     <div class="hidden print:block print-container bg-white text-black font-sans">
-        <!-- 1. Kop Surat dinamis dari settings -->
-        <div class="flex items-center justify-between border-b-4 border-double border-black pb-3 mb-4">
+        <div class="flex items-center justify-between pb-3">
             <img
-                :src="logoUrl"
-                alt="Logo Pesantren"
+                src="/logo_provinsi.png"
+                alt="Logo Provinsi"
                 class="h-16 w-16 object-contain"
-                @error="onLogoError"
             />
             <div class="text-center flex-1 mx-6">
                 <h2 class="text-[10px] font-bold tracking-widest uppercase text-gray-800">KARTU TANDA PESERTA</h2>
@@ -367,6 +365,10 @@
                 class="h-16 w-16 object-contain"
                 @error="onLogoError"
             />
+        </div>
+        <div class="space-y-[2px] mb-4">
+            <div class="border-t border-black"></div>
+            <div class="border-t-[3px] border-black"></div>
         </div>
 
         <!-- 2. TIRU: Judul dengan garis bawah -->
