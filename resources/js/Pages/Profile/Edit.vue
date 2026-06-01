@@ -104,6 +104,11 @@ const applyCrop = () => {
         showCropModal.value = false;
         cropper.destroy();
         cropper = null;
+        
+        // Auto-submit form so that "Potong & Simpan" button actually saves to backend
+        nextTick(() => {
+            submitProfile();
+        });
     }, originalFile.type || 'image/jpeg', 0.9);
 };
 
