@@ -352,7 +352,7 @@
     <!-- Printable Registration Card (Visible ONLY on Print) -->
     <!-- MODIFIKASI VERSI ATM (AMATI TIRU MODIFIKASI) -->
     <div class="hidden print:block print-container bg-white text-black" style="font-family: 'Times New Roman', Times, serif;">
-        <div class="flex items-start justify-between pb-2">
+        <div class="flex items-start justify-between">
             <img
                 loading="eager"
                 :src="isSma ? '/logo_provinsi.png' : '/Logo_Kabupaten.png'"
@@ -361,31 +361,19 @@
             />
             <div class="text-center flex-1 mx-4" style="font-family: 'Times New Roman', Times, serif; color: black;">
                 <template v-if="isSma">
-                    <div style="font-size: 12pt; font-weight: bold; line-height: 1.2; margin-bottom: 3px;">
+                    <div style="font-size: 12pt; font-weight: bold; line-height: 1.25;">
                         <div>PEMERINTAH PROVINSI JAWA BARAT</div>
                         <div>DINAS PENDIDIKAN</div>
                         <div>YAYASAN AL MASRUHIYAH</div>
                         <div>SMA KSATRIA NUSANTARA</div>
                     </div>
-                    <div style="font-size: 11pt; line-height: 1.25;">
-                        <div>No Izin Operasional : 421.3/0442-Disdikbudpora/2016 NPSN : 69935515</div>
-                        <div>Jalan Paledah Dusun Patinggen II RT 020 / RW 005 Desa Karangpawitan Kecamatan Padaherang</div>
-                        <div>Kabupaten Pangandaran Kode Pos 46384 No HP 087725807558*</div>
-                        <div>email: <span class="text-blue-600 underline">smaksatrianusantara01@gmail.com</span></div>
-                    </div>
                 </template>
                 <template v-else>
-                    <div style="font-size: 12pt; font-weight: bold; line-height: 1.2; margin-bottom: 3px;">
+                    <div style="font-size: 12pt; font-weight: bold; line-height: 1.25;">
                         <div>PEMERINTAH KABUPATEN PANGANDARAN</div>
                         <div>DINAS PENDIDIKAN KEPEMUDAAN DAN OLAHRAGA</div>
                         <div>YAYASAN AL MASRUHIYAH</div>
                         <div>SMP DHARMA KSATRIA</div>
-                    </div>
-                    <div style="font-size: 11pt; line-height: 1.25;">
-                        <div>No Izin Operasional : 421/3143/Disdikbudpora/2016 NPSN : 69950605</div>
-                        <div>Jalan Paledah Dusun Patinggen II RT 020 / RW 005 Desa Karangpawitan Kecamatan Padaherang</div>
-                        <div>Kabupaten Pangandaran Kode Pos 46384 No HP 087725807558</div>
-                        <div>email: <span class="text-blue-600 underline">smpdharmaksatria@gmail.com</span></div>
                     </div>
                 </template>
             </div>
@@ -395,6 +383,25 @@
                 :alt="isSma ? 'Logo SMA' : 'Logo SMP'"
                 class="h-24 w-24 object-contain"
             />
+        </div>
+
+        <div class="text-center w-full pb-2" style="font-family: 'Times New Roman', Times, serif; color: black; margin-top: 4px;">
+            <template v-if="isSma">
+                <div style="font-size: 11pt; line-height: 1.25;">
+                    <div>No Izin Operasional : 421.3/0442-Disdikbudpora/2016 NPSN : 69935515</div>
+                    <div>Jalan Paledah Dusun Patinggen II RT 020 / RW 005 Desa Karangpawitan Kecamatan Padaherang</div>
+                    <div>Kabupaten Pangandaran Kode Pos 46384 No HP 087725807558*</div>
+                    <div>email: <span class="text-blue-600 underline">smaksatrianusantara01@gmail.com</span></div>
+                </div>
+            </template>
+            <template v-else>
+                <div style="font-size: 11pt; line-height: 1.25;">
+                    <div>No Izin Operasional : 421/3143/Disdikbudpora/2016 NPSN : 69950605</div>
+                    <div>Jalan Paledah Dusun Patinggen II RT 020 / RW 005 Desa Karangpawitan Kecamatan Padaherang</div>
+                    <div>Kabupaten Pangandaran Kode Pos 46384 No HP 087725807558</div>
+                    <div>email: <span class="text-blue-600 underline">smpdharmaksatria@gmail.com</span></div>
+                </div>
+            </template>
         </div>
         <div class="space-y-[1px] mb-4">
             <div class="border-t border-black"></div>
