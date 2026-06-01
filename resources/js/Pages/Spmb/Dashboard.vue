@@ -19,6 +19,7 @@
         box-sizing: border-box;
         position: relative;
         overflow: hidden;
+        font-family: 'Times New Roman', Times, serif !important;
     }
 }
 </style>
@@ -350,7 +351,7 @@
 
     <!-- Printable Registration Card (Visible ONLY on Print) -->
     <!-- MODIFIKASI VERSI ATM (AMATI TIRU MODIFIKASI) -->
-    <div class="hidden print:block print-container bg-white text-black font-sans">
+    <div class="hidden print:block print-container bg-white text-black" style="font-family: 'Times New Roman', Times, serif;">
         <div class="flex items-center justify-between pb-2">
             <img
                 loading="eager"
@@ -559,7 +560,8 @@ const printCard = async () => {
             const originalStyle = element.getAttribute('style') || '';
             
             // Render visible and force exact A4 dimensions with relative positioning
-            element.className = 'block bg-white text-black font-sans relative';
+            element.className = 'block bg-white text-black relative';
+            element.style.fontFamily = "'Times New Roman', Times, serif";
             element.style.width = '210mm';
             element.style.height = '297mm';
             element.style.padding = '10mm 15mm';
