@@ -514,7 +514,7 @@
         </div>
 
         <!-- 7. TIRU: Footer Watermark (Tiru Image 2) -->
-        <div class="absolute bottom-6 left-15 right-15 pt-3 border-t-2 border-dotted border-gray-200 text-center">
+        <div class="absolute pt-3 border-t-2 border-dotted border-gray-200 text-center" style="left: 15mm; right: 15mm; bottom: 8mm;">
             <p class="text-[10px] font-black uppercase tracking-[0.4em] text-gray-300">Simpanlah Lembar Pendaftaran ini sebagai bukti pendaftaran anda</p>
             <div class="flex justify-center mt-2 px-2">
                 <p class="text-[8px] text-emerald-600 font-black tracking-tight italic uppercase">Sistem PPDB Online PP. Riyadussalikin</p>
@@ -548,23 +548,32 @@ const printCard = async () => {
         try {
             const element = document.querySelector('.print-container');
             const originalClass = element.className;
+            const originalStyle = element.getAttribute('style') || '';
             
-            // Render visible
-            element.className = 'block bg-white text-black font-sans p-6 w-[790px]';
+            // Render visible and force exact A4 dimensions with relative positioning
+            element.className = 'block bg-white text-black font-sans relative';
+            element.style.width = '210mm';
+            element.style.height = '297mm';
+            element.style.padding = '10mm 15mm';
+            element.style.boxSizing = 'border-box';
+            element.style.overflow = 'hidden';
             
             // Force browser to load non-lazy images in the print layout before rendering
             await new Promise(resolve => setTimeout(resolve, 300));
             
             const opt = {
-                margin:       0.3,
+                margin:       0,
                 filename:     `Bukti_Pendaftaran_${props.pendaftaran?.no_reg || 'PPDB'}.pdf`,
                 image:        { type: 'jpeg', quality: 0.98 },
                 html2canvas:  { scale: 2, useCORS: true, logging: false },
-                jsPDF:        { unit: 'in', format: 'a4', orientation: 'portrait' }
+                jsPDF:        { unit: 'mm', format: 'a4', orientation: 'portrait' }
             };
             
             await html2pdf().from(element).set(opt).save();
+            
+            // Restore original class and inline styles
             element.className = originalClass;
+            element.setAttribute('style', originalStyle);
         } catch (error) {
             console.error('PDF Generation failed:', error);
             window.print();
