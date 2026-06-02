@@ -256,7 +256,7 @@
                                 </div>
 
                                 <!-- Klasifikasi badge when accepted -->
-                                <div v-if="['diterima_ula','diterima_wustho','diterima_ulya','diterima'].includes(pendaftaran.status) && stage.key === 'hasil'"
+                                <div v-if="['diterima_ula','diterima_idadiyah','diterima_wustho','diterima_ulya','diterima'].includes(pendaftaran.status) && stage.key === 'hasil'"
                                     class="mt-3 inline-flex items-center gap-2 bg-emerald-600 text-white px-4 py-2 rounded-xl text-sm font-bold shadow-md shadow-emerald-200">
                                     🎉 Selamat! Kelas: {{ klasifikasiLabel }}
                                 </div>
@@ -665,29 +665,29 @@ const registrationFlow = [
     {
         key: 'formulir',
         label: 'Pendaftaran & Isi Formulir',
-        desc: 'Lengkapi formulir pendaftaran dan upload seluruh berkas yang diperlukan.',
-        doneStatuses: ['pending', 'jadwal_tes', 'tes_berlangsung', 'wawancara', 'diterima_ula', 'diterima_wustho', 'diterima_ulya', 'diterima', 'ditolak'],
+        desc: 'Lengkapi formulir pendaftaran and upload seluruh berkas yang diperlukan.',
+        doneStatuses: ['pending', 'jadwal_tes', 'tes_berlangsung', 'wawancara', 'diterima_ula', 'diterima_idadiyah', 'diterima_wustho', 'diterima_ulya', 'diterima', 'ditolak'],
         activeStatuses: [],
     },
     {
         key: 'tes',
         label: 'Seleksi & Ujian Masuk',
         desc: 'Psikotes · Tes Akademik · Tes Baca Al-Qur\'an · Tes Ibadah',
-        doneStatuses: ['wawancara', 'diterima_ula', 'diterima_wustho', 'diterima_ulya', 'diterima', 'ditolak'],
+        doneStatuses: ['wawancara', 'diterima_ula', 'diterima_idadiyah', 'diterima_wustho', 'diterima_ulya', 'diterima', 'ditolak'],
         activeStatuses: ['jadwal_tes', 'tes_berlangsung'],
     },
     {
         key: 'wawancara',
         label: 'Wawancara Orang Tua & Calon Santri',
         desc: 'Sesi wawancara bersama orang tua dan calon santri/siswa oleh panitia seleksi.',
-        doneStatuses: ['diterima_ula', 'diterima_wustho', 'diterima_ulya', 'diterima', 'ditolak'],
+        doneStatuses: ['diterima_ula', 'diterima_idadiyah', 'diterima_wustho', 'diterima_ulya', 'diterima', 'ditolak'],
         activeStatuses: ['wawancara'],
     },
     {
         key: 'hasil',
         label: 'Pengumuman Hasil Seleksi',
-        desc: 'Penerimaan berdasarkan hasil klasifikasi: Ula (Dasar), Wustho (Menengah), atau Ulya (Lanjutan).',
-        doneStatuses: ['diterima_ula', 'diterima_wustho', 'diterima_ulya', 'diterima'],
+        desc: 'Penerimaan berdasarkan hasil klasifikasi: Ula (Dasar), Idadiyah (Persiapan), Wustho (Menengah), atau Ulya (Lanjutan).',
+        doneStatuses: ['diterima_ula', 'diterima_idadiyah', 'diterima_wustho', 'diterima_ulya', 'diterima'],
         activeStatuses: [],
         rejectedStatuses: ['ditolak'],
     },
@@ -717,6 +717,7 @@ const stageDesc = (stage) => {
 const klasifikasiLabel = computed(() => {
     const map = {
         diterima_ula: 'Ula (Dasar)',
+        diterima_idadiyah: 'Idadiyah (Persiapan)',
         diterima_wustho: 'Wustho (Menengah)',
         diterima_ulya: 'Ulya (Lanjutan)',
         diterima: 'Diterima',
@@ -745,6 +746,7 @@ const stageStatusLabel = (status) => {
         wawancara: 'Sesi Wawancara',
         diterima: 'Diterima',
         diterima_ula: 'Diterima (Ula)',
+        diterima_idadiyah: 'Diterima (Idadiyah)',
         diterima_wustho: 'Diterima (Wustho)',
         diterima_ulya: 'Diterima (Ulya)',
         ditolak: 'Tidak Lulus',
