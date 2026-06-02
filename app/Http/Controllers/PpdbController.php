@@ -222,7 +222,7 @@ class PpdbController extends Controller
                 // --- CREATE NEW ---
                 $pendaftaran = PpdbPendaftaran::create([
                     'user_id' => $user_id,
-                    'no_reg' => 'REG-' . date('Ymd') . '-' . strtoupper(bin2hex(random_bytes(2))),
+                    'no_reg' => 'REG-' . date('Ymd') . '-' . strtoupper(bin2hex(random_bytes(4))),
                     'tanggal_daftar' => now(),
                     'tingkat' => $request->tingkat,
                     'status' => 'pending',
