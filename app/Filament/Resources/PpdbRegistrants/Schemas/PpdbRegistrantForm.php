@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Filament\Resources\SpmbRegistrants\Schemas;
+namespace App\Filament\Resources\PpdbRegistrants\Schemas;
 
 use Filament\Forms\Components\Checkbox;
 use Filament\Forms\Components\DatePicker;
@@ -15,7 +15,7 @@ use Filament\Schemas\Components\Tabs;
 use Filament\Schemas\Components\Tabs\Tab;
 use Filament\Schemas\Schema;
 
-class SpmbRegistrantForm
+class PpdbRegistrantForm
 {
     public static function configure(Schema $schema): Schema
     {
@@ -136,25 +136,25 @@ class SpmbRegistrantForm
                                             ->image()
                                             ->disk('local')
                                             ->visibility('private')
-                                            ->saveUploadedFileUsing(fn ($file) => \App\Services\ImageService::processUpload($file, 'Spmb/ijazah'))
+                                            ->saveUploadedFileUsing(fn ($file) => \App\Services\ImageService::processUpload($file, 'Ppdb/ijazah'))
                                             ->maxSize(2048),
                                         FileUpload::make('akte_kelahiran')
                                             ->image()
                                             ->disk('local')
                                             ->visibility('private')
-                                            ->saveUploadedFileUsing(fn ($file) => \App\Services\ImageService::processUpload($file, 'Spmb/akte'))
+                                            ->saveUploadedFileUsing(fn ($file) => \App\Services\ImageService::processUpload($file, 'Ppdb/akte'))
                                             ->maxSize(2048),
                                         FileUpload::make('kartu_keluarga')
                                             ->image()
                                             ->disk('local')
                                             ->visibility('private')
-                                            ->saveUploadedFileUsing(fn ($file) => \App\Services\ImageService::processUpload($file, 'Spmb/kk'))
+                                            ->saveUploadedFileUsing(fn ($file) => \App\Services\ImageService::processUpload($file, 'Ppdb/kk'))
                                             ->maxSize(2048),
                                         FileUpload::make('kartu_kip')
                                             ->image()
                                             ->disk('local')
                                             ->visibility('private')
-                                            ->saveUploadedFileUsing(fn ($file) => \App\Services\ImageService::processUpload($file, 'Spmb/kip'))
+                                            ->saveUploadedFileUsing(fn ($file) => \App\Services\ImageService::processUpload($file, 'Ppdb/kip'))
                                             ->maxSize(2048),
                                     ])->columns(2),
                             ]),

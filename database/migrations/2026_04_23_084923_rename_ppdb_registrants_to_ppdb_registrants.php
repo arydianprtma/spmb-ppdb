@@ -11,8 +11,8 @@ return new class extends Migration
      */
     public function up(): void
     {
-        if (Schema::hasTable('ppdb_registrants') && !Schema::hasTable('spmb_registrants')) {
-            Schema::rename('ppdb_registrants', 'spmb_registrants');
+        if (Schema::hasTable('ppdb_registrants') && !Schema::hasTable('ppdb_registrants')) {
+            Schema::rename('ppdb_registrants', 'ppdb_registrants');
         }
     }
 
@@ -21,6 +21,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::rename('spmb_registrants', 'ppdb_registrants');
+        Schema::rename('ppdb_registrants', 'ppdb_registrants');
     }
 };

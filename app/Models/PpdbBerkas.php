@@ -4,7 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 
-class SpmbBerkas extends Model
+class PpdbBerkas extends Model
 {
     protected $table = 'ppdb_berkas';
     protected $guarded = [];

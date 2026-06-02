@@ -4,7 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 
-class SpmbRegistrant extends Model
+class PpdbRegistrant extends Model
 {
     protected $table = 'pendaftar_ppdb';
 

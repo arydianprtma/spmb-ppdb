@@ -2,17 +2,17 @@
 
 namespace App\Observers;
 
-use App\Models\SpmbRegistrant;
+use App\Models\PpdbRegistrant;
 use App\Models\User;
 use Filament\Notifications\Notification;
 use Filament\Actions\Action;
 
-class SpmbRegistrantObserver
+class PpdbRegistrantObserver
 {
     /**
-     * Handle the SpmbRegistrant "created" event.
+     * Handle the PpdbRegistrant "created" event.
      */
-    public function created(SpmbRegistrant $registrant): void
+    public function created(PpdbRegistrant $registrant): void
     {
         $admins = User::whereIn('role', ['admin', 'super_admin'])->get();
 

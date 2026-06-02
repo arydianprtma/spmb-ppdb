@@ -51,18 +51,18 @@
                         Formulir Pendaftaran
                     </h1>
                     <p class="mt-2 text-base md:text-lg text-gray-600">
-                        Pondok Pesantren Riyadussalikin Periode {{ spmbSetting?.tahunAjaran ?? '-' }}
+                        Pondok Pesantren Riyadussalikin Periode {{ ppdbSetting?.tahunAjaran ?? '-' }}
                     </p>
                 </div>
 
                 <!-- Registration Closed Alert -->
-                <div v-if="!spmbSetting?.isOpen" class="mb-8 bg-red-50 border-2 border-red-200 rounded-2xl p-6 text-center shadow-lg shadow-red-100 animate-fadeIn">
+                <div v-if="!ppdbSetting?.isOpen" class="mb-8 bg-red-50 border-2 border-red-200 rounded-2xl p-6 text-center shadow-lg shadow-red-100 animate-fadeIn">
                     <div class="w-16 h-16 bg-red-100 rounded-full flex items-center justify-center mx-auto mb-4 text-red-600">
                         <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
                     </div>
                     <h2 class="text-xl font-black text-red-800 mb-2">Pendaftaran Sedang Ditutup</h2>
                     <p class="text-red-600 text-sm font-medium mb-4">
-                        {{ spmbSetting?.pesanTutup || 'Mohon maaf, saat ini pendaftaran santri baru sedang tidak dibuka.' }}
+                        {{ ppdbSetting?.pesanTutup || 'Mohon maaf, saat ini pendaftaran santri baru sedang tidak dibuka.' }}
                     </p>
                     <Link :href="route('dashboard')" class="inline-flex items-center gap-2 bg-red-600 text-white px-6 py-2 rounded-xl font-bold hover:bg-red-700 transition-all">
                         Kembali ke Dashboard
@@ -1021,13 +1021,13 @@ import Swal from 'sweetalert2';
 const page = usePage();
 const STORAGE_KEY = computed(() => {
     const userId = page.props.auth?.user?.id;
-    return userId ? `spmb_draft_user_${userId}` : null;
+    return userId ? `ppdb_draft_user_${userId}` : null;
 });
 
 // Props from server
 const props = defineProps({
     existingData: Object,
-    spmbSetting: Object,
+    ppdbSetting: Object,
 });
 
 const step = ref(1);
@@ -1210,8 +1210,8 @@ onMounted(async () => {
     
     // Cleanup old/deprecated storage keys to prevent data leaking
     try {
-        localStorage.removeItem('spmb_draft'); // old generic key
-        localStorage.removeItem('spmb_draft_user_guest'); // old guest key
+        localStorage.removeItem('ppdb_draft'); // old generic key
+        localStorage.removeItem('ppdb_draft_user_guest'); // old guest key
     } catch (e) {}
 
     try {

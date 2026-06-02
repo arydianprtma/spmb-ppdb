@@ -4,8 +4,8 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
-use App\Models\SpmbPendaftaran;
-use App\Models\SpmbSetting;
+use App\Models\PpdbPendaftaran;
+use App\Models\PpdbSetting;
 use App\Http\Controllers\VerificationController;
 use Inertia\Inertia;
 
@@ -15,7 +15,7 @@ class DashboardController extends Controller
     {
         $user = Auth::user();
 
-        $pendaftaran = SpmbPendaftaran::with(['siswa', 'berkas', 'orangTua', 'wali'])
+        $pendaftaran = PpdbPendaftaran::with(['siswa', 'berkas', 'orangTua', 'wali'])
             ->where('user_id', $user->id)
             ->latest()
             ->first();
@@ -27,24 +27,24 @@ class DashboardController extends Controller
 
         // Statistik global untuk dashboard
         $stats = [
-            'total_smp' => SpmbPendaftaran::where('tingkat', 'smp')->count(),
-            'total_sma' => SpmbPendaftaran::where('tingkat', 'sma')->count(),
+            'total_smp' => PpdbPendaftaran::where('tingkat', 'smp')->count(),
+            'total_sma' => PpdbPendaftaran::where('tingkat', 'sma')->count(),
         ];
 
-        $setting = SpmbSetting::where('is_active', true)->latest()->first();
+        $setting = PpdbSetting::where('is_active', true)->latest()->first();
 
-        return Inertia::render('Spmb/Dashboard', [
+        return Inertia::render('Ppdb/Dashboard', [
             'pendaftaran' => $pendaftaran,
             'qrCodeUrl' => $qrCodeUrl,
             'stats' => $stats,
-            'spmbSetting' => [
-                'isOpen' => SpmbSetting::isOpen(),
+            'ppdbSetting' => [
+                'isOpen' => PpdbSetting::isOpen(),
                 'tahunAjaran' => $setting?->tahun_ajaran,
                 'tglTutup' => $setting?->tgl_tutup?->format('Y-m-d H:i:s'),
                 'kartuHeader1' => $setting?->kartu_header_1,
                 'kartuHeader2' => $setting?->kartu_header_2,
                 'kartuAlamat' => $setting?->kartu_alamat,
-                // Logo disimpan di storage admin (ppdb), bangun URL absolut agar bisa diakses dari portal SPMB
+                // Logo disimpan di storage admin (ppdb), bangun URL absolut agar bisa diakses dari portal PPDB
                 'kartuLogo' => $setting?->kartu_logo
                     ? rtrim(env('PPDB_ADMIN_URL', config('app.url')), '/') . '/storage/' . $setting->kartu_logo
                     : null,

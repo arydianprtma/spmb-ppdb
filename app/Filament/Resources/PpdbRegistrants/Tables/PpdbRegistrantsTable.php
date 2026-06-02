@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Filament\Resources\SpmbRegistrants\Tables;
+namespace App\Filament\Resources\PpdbRegistrants\Tables;
 
 use Filament\Actions\BulkActionGroup;
 use Filament\Actions\DeleteBulkAction;
@@ -10,7 +10,7 @@ use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Filters\SelectFilter;
 use Filament\Tables\Table;
 
-class SpmbRegistrantsTable
+class PpdbRegistrantsTable
 {
     public static function configure(Table $table): Table
     {

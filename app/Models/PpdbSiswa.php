@@ -4,13 +4,13 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 
-class SpmbPeriodik extends Model
+class PpdbSiswa extends Model
 {
-    protected $table = 'ppdb_periodik';
+    protected $table = 'ppdb_siswa';
     protected $guarded = [];
 
     public function pendaftaran()
     {
-        return $this->belongsTo(SpmbPendaftaran::class, 'pendaftaran_id');
+        return $this->belongsTo(PpdbPendaftaran::class, 'pendaftaran_id');
     }
 }

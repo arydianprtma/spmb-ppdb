@@ -4,7 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 
-class SpmbSetting extends Model
+class PpdbSetting extends Model
 {
     protected $table = 'ppdb_settings';
 

@@ -1,21 +1,21 @@
 <?php
 
-namespace App\Filament\Resources\SpmbRegistrants;
+namespace App\Filament\Resources\PpdbRegistrants;
 
-use App\Filament\Resources\SpmbRegistrants\Pages\CreateSpmbRegistrant;
-use App\Filament\Resources\SpmbRegistrants\Pages\EditSpmbRegistrant;
-use App\Filament\Resources\SpmbRegistrants\Pages\ListSpmbRegistrants;
-use App\Filament\Resources\SpmbRegistrants\Schemas\SpmbRegistrantForm;
-use App\Filament\Resources\SpmbRegistrants\Tables\SpmbRegistrantsTable;
-use App\Models\SpmbPendaftaran;
+use App\Filament\Resources\PpdbRegistrants\Pages\CreatePpdbRegistrant;
+use App\Filament\Resources\PpdbRegistrants\Pages\EditPpdbRegistrant;
+use App\Filament\Resources\PpdbRegistrants\Pages\ListPpdbRegistrants;
+use App\Filament\Resources\PpdbRegistrants\Schemas\PpdbRegistrantForm;
+use App\Filament\Resources\PpdbRegistrants\Tables\PpdbRegistrantsTable;
+use App\Models\PpdbPendaftaran;
 use Filament\Resources\Resource;
 use Filament\Schemas\Schema;
 use Filament\Tables\Table;
 use Illuminate\Support\Facades\Auth;
 
-class SpmbRegistrantResource extends Resource
+class PpdbRegistrantResource extends Resource
 {
-    protected static ?string $model = SpmbPendaftaran::class;
+    protected static ?string $model = PpdbPendaftaran::class;
 
     protected static string|\BackedEnum|null $navigationIcon = 'heroicon-o-rectangle-stack';
 
@@ -31,12 +31,12 @@ class SpmbRegistrantResource extends Resource
 
     public static function form(Schema $schema): Schema
     {
-        return SpmbRegistrantForm::configure($schema);
+        return PpdbRegistrantForm::configure($schema);
     }
 
     public static function table(Table $table): Table
     {
-        return SpmbRegistrantsTable::configure($table);
+        return PpdbRegistrantsTable::configure($table);
     }
 
     public static function getRelations(): array
@@ -49,9 +49,9 @@ class SpmbRegistrantResource extends Resource
     public static function getPages(): array
     {
         return [
-            'index' => ListSpmbRegistrants::route('/'),
-            'create' => CreateSpmbRegistrant::route('/create'),
-            'edit' => EditSpmbRegistrant::route('/{record}/edit'),
+            'index' => ListPpdbRegistrants::route('/'),
+            'create' => CreatePpdbRegistrant::route('/create'),
+            'edit' => EditPpdbRegistrant::route('/{record}/edit'),
         ];
     }
 

@@ -1,7 +1,7 @@
 <?php
 
 
-use App\Http\Controllers\SpmbController;
+use App\Http\Controllers\PpdbController;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\HomeController;
@@ -70,9 +70,9 @@ Route::middleware('auth')->group(function () {
     // Dashboard
     Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
     // PPDB Routes
-    Route::get('/ppdb', [SpmbController::class, 'create'])->name('ppdb.register');
-    Route::post('/ppdb', [SpmbController::class, 'store'])->name('ppdb.store');
-    Route::get('/ppdb/success/{no_reg}', [SpmbController::class, 'success'])->name('ppdb.success');
+    Route::get('/ppdb', [PpdbController::class, 'create'])->name('ppdb.register');
+    Route::post('/ppdb', [PpdbController::class, 'store'])->name('ppdb.store');
+    Route::get('/ppdb/success/{no_reg}', [PpdbController::class, 'success'])->name('ppdb.success');
     // Profile Routes
     Route::get('/profile', [\App\Http\Controllers\ProfileController::class, 'edit'])->name('profile.edit');
     Route::match(['post', 'patch'], '/profile', [\App\Http\Controllers\ProfileController::class, 'update'])->name('profile.update');

@@ -4,15 +4,15 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 
-use App\Models\SpmbPendaftaran;
-use App\Models\SpmbSetting;
+use App\Models\PpdbPendaftaran;
+use App\Models\PpdbSetting;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Inertia\Inertia;
 use Intervention\Image\ImageManager;
 use Illuminate\Support\Facades\Storage;
 
-class SpmbController extends Controller
+class PpdbController extends Controller
 {
     protected ImageManager $imageManager;
 
@@ -22,16 +22,16 @@ class SpmbController extends Controller
     }
     public function create()
     {
-        $setting = SpmbSetting::where('is_active', true)->latest()->first();
-        $isOpen = SpmbSetting::isOpen();
+        $setting = PpdbSetting::where('is_active', true)->latest()->first();
+        $isOpen = PpdbSetting::isOpen();
 
-        $pendaftaran = SpmbPendaftaran::with([
+        $pendaftaran = PpdbPendaftaran::with([
             'siswa', 'ayah', 'ibu', 'wali', 'periodik', 'prestasi', 'beasiswa', 'berkas'
         ])->where('user_id', Auth::id())->latest()->first();
 
-        return Inertia::render('Spmb/Register', [
+        return Inertia::render('Ppdb/Register', [
             'existingData' => $pendaftaran,
-            'spmbSetting' => [
+            'ppdbSetting' => [
                 'isOpen' => $isOpen,
                 'tahunAjaran' => $setting?->tahun_ajaran,
                 'pesanTutup' => $setting?->pesan_tutup,
@@ -42,12 +42,12 @@ class SpmbController extends Controller
 
     public function store(Request $request)
     {
-        if (!SpmbSetting::isOpen()) {
+        if (!PpdbSetting::isOpen()) {
             return back()->withErrors(['message' => 'Mohon maaf, pendaftaran saat ini sedang ditutup.']);
         }
 
         $user_id = Auth::id();
-        $pendaftaran = SpmbPendaftaran::with('siswa')->where('user_id', $user_id)->first();
+        $pendaftaran = PpdbPendaftaran::with('siswa')->where('user_id', $user_id)->first();
         $siswaId = $pendaftaran?->siswa?->id;
 
         $request->validate([
@@ -195,7 +195,7 @@ class SpmbController extends Controller
         DB::beginTransaction();
         try {
             $user_id = Auth::id();
-            $pendaftaran = SpmbPendaftaran::where('user_id', $user_id)->first();
+            $pendaftaran = PpdbPendaftaran::where('user_id', $user_id)->first();
             $isNew = !$pendaftaran;
 
             if ($pendaftaran) {
@@ -220,7 +220,7 @@ class SpmbController extends Controller
 
             } else {
                 // --- CREATE NEW ---
-                $pendaftaran = SpmbPendaftaran::create([
+                $pendaftaran = PpdbPendaftaran::create([
                     'user_id' => $user_id,
                     'no_reg' => 'REG-' . date('Ymd') . '-' . strtoupper(bin2hex(random_bytes(2))),
                     'tanggal_daftar' => now(),
@@ -315,8 +315,8 @@ class SpmbController extends Controller
 
     public function success(string $no_reg)
     {
-        $pendaftaran = SpmbPendaftaran::where('no_reg', $no_reg)->firstOrFail();
-        return Inertia::render('Spmb/Success', [
+        $pendaftaran = PpdbPendaftaran::where('no_reg', $no_reg)->firstOrFail();
+        return Inertia::render('Ppdb/Success', [
             'no_reg' => $no_reg,
             'nama' => $pendaftaran->siswa->nama_lengkap
         ]);

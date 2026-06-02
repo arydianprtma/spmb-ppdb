@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\SpmbPendaftaran;
+use App\Models\PpdbPendaftaran;
 use Illuminate\Http\Request;
 use SimpleSoftwareIO\QrCode\Facades\QrCode;
 use Illuminate\Support\Facades\Storage;
@@ -22,7 +22,7 @@ class VerificationController extends Controller
 
         $token = $request->query('token');
         
-        $pendaftaran = SpmbPendaftaran::with(['siswa'])
+        $pendaftaran = PpdbPendaftaran::with(['siswa'])
             ->where('no_reg', $no_reg)
             ->where('verification_token', $token)
             ->first();
@@ -37,7 +37,7 @@ class VerificationController extends Controller
     /**
      * Mendapatkan URL QR Code untuk pendaftaran tertentu
      */
-    public static function getQrCodeUrl(SpmbPendaftaran $pendaftaran)
+    public static function getQrCodeUrl(PpdbPendaftaran $pendaftaran)
     {
         if (empty($pendaftaran->verification_token)) {
             $pendaftaran->verification_token = \Illuminate\Support\Str::random(32);

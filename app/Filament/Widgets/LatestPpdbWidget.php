@@ -2,12 +2,12 @@
 
 namespace App\Filament\Widgets;
 
-use App\Models\SpmbPendaftaran;
+use App\Models\PpdbPendaftaran;
 use Filament\Tables;
 use Filament\Tables\Table;
 use Filament\Widgets\TableWidget as BaseWidget;
 
-class LatestSpmbWidget extends BaseWidget
+class LatestPpdbWidget extends BaseWidget
 {
 
 
@@ -22,7 +22,7 @@ class LatestSpmbWidget extends BaseWidget
         return $table
             ->poll('5s')
             ->query(
-                SpmbPendaftaran::query()->latest()->limit(5)
+                PpdbPendaftaran::query()->latest()->limit(5)
             )
             ->columns([
                 Tables\Columns\TextColumn::make('siswa.nama_lengkap')
@@ -74,7 +74,7 @@ class LatestSpmbWidget extends BaseWidget
                 Tables\Columns\TextColumn::make('created_at')
                     ->label('Waktu Daftar')
                     ->dateTime('d M Y H:i:s')
-                    ->description(fn(SpmbPendaftaran $record): string => $record->created_at->diffForHumans())
+                    ->description(fn(PpdbPendaftaran $record): string => $record->created_at->diffForHumans())
                     ->color('gray'),
             ]);
     }

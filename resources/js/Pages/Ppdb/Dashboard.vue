@@ -67,7 +67,7 @@
                     <div class="flex flex-wrap gap-3">
                         <div class="bg-white/20 rounded-2xl px-4 py-2">
                             <p class="text-emerald-100 text-xs">Periode</p>
-                            <p class="text-white font-extrabold text-lg tracking-tight">{{ spmbSetting?.tahunAjaran ?? '-' }}</p>
+                            <p class="text-white font-extrabold text-lg tracking-tight">{{ ppdbSetting?.tahunAjaran ?? '-' }}</p>
                         </div>
                         <div class="bg-white/20 rounded-2xl px-4 py-2">
                             <p class="text-emerald-100 text-xs">No. Registrasi</p>
@@ -484,7 +484,7 @@
                             <div class="text-[9pt] mt-0.5 italic">{{ formatTanggal(pendaftaran?.tanggal_daftar) }}</div>
                         </td>
                         <td class="border border-black p-3 text-left align-middle">
-                            <div class="font-bold uppercase">{{ spmbSetting?.kartuHeader2 || 'PP. RIYADUSSALIKIN PADAHERANG' }}</div>
+                            <div class="font-bold uppercase">{{ ppdbSetting?.kartuHeader2 || 'PP. RIYADUSSALIKIN PADAHERANG' }}</div>
                             <div class="text-[9pt] mt-0.5">Jenjang Pendidikan: <span class="uppercase font-bold">{{ pendaftaran?.tingkat }}</span></div>
                         </td>
                         <td class="border border-black p-3 align-middle font-bold uppercase">
@@ -630,11 +630,11 @@ const props = defineProps({
     pendaftaran: Object,
     qrCodeUrl: String,
     stats: Object,
-    spmbSetting: Object,
+    ppdbSetting: Object,
 });
 
 // Logo: pakai dari settings jika ada, fallback ke default
-const logoUrl = computed(() => props.spmbSetting?.kartuLogo || '/logo_pondok.png');
+const logoUrl = computed(() => props.ppdbSetting?.kartuLogo || '/logo_pondok.png');
 const onLogoError = (e) => { e.target.src = '/logo_pondok.png'; };
 
 const isSma = computed(() => {
