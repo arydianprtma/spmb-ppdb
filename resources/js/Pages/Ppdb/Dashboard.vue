@@ -672,7 +672,7 @@ const registrationFlow = [
     {
         key: 'tes',
         label: 'Seleksi & Ujian Masuk',
-        desc: 'Psikotes · Tes Akademik · Tes Baca Al-Qur\'an · Tes Sholat',
+        desc: 'Psikotes · Tes Akademik · Tes Baca Al-Qur\'an · Tes Ibadah',
         doneStatuses: ['wawancara', 'diterima_ula', 'diterima_wustho', 'diterima_ulya', 'diterima', 'ditolak'],
         activeStatuses: ['jadwal_tes', 'tes_berlangsung'],
     },
@@ -756,7 +756,7 @@ const tesJenisLabel = {
     psikotes:   'Psikotes',
     akademik:   'Tes Akademik',
     baca_quran: 'Tes Baca Al-Quran',
-    sholat:     'Tes Sholat',
+    sholat:     'Tes Ibadah',
 };
 
 const formatTanggal = (tgl) => {
