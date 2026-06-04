@@ -4,6 +4,10 @@ namespace App\Providers;
 
 use Illuminate\Support\Facades\Vite;
 use Illuminate\Support\ServiceProvider;
+use App\Models\PpdbPendaftaran;
+use App\Observers\PpdbRegistrantObserver;
+use App\Models\ContactMessage;
+use App\Observers\ContactMessageObserver;
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -21,5 +25,8 @@ class AppServiceProvider extends ServiceProvider
     public function boot(): void
     {
         Vite::prefetch(concurrency: 3);
+        
+        PpdbPendaftaran::observe(PpdbRegistrantObserver::class);
+        ContactMessage::observe(ContactMessageObserver::class);
     }
 }

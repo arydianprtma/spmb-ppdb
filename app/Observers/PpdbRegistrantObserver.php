@@ -2,19 +2,22 @@
 
 namespace App\Observers;
 
-use App\Models\PpdbRegistrant;
+use App\Models\PpdbPendaftaran;
 use App\Models\User;
 use Filament\Notifications\Notification;
-use Filament\Actions\Action;
 
 class PpdbRegistrantObserver
 {
     /**
-     * Handle the PpdbRegistrant "created" event.
+     * Handle the PpdbPendaftaran "created" event.
      */
-    public function created(PpdbRegistrant $registrant): void
+    public function created(PpdbPendaftaran $pendaftaran): void
     {
-        $admins = User::whereIn('role', ['admin', 'super_admin'])->get();
+        $admins = User::role(['admin', 'super_admin'])->get();
+
+        if ($admins->isEmpty()) {
+            $admins = User::whereIn('role', ['admin', 'super_admin'])->get();
+        }
 
         if ($admins->isEmpty()) {
             return;
@@ -22,16 +25,9 @@ class PpdbRegistrantObserver
 
         Notification::make()
             ->title('Pendaftaran PPDB Baru')
-            ->body("Siswa Baru: {$registrant->nama_lengkap} telah mendaftar.")
+            ->body("Siswa baru: {$pendaftaran->siswa?->nama_lengkap} telah mendaftar.")
             ->icon('heroicon-o-user-plus')
             ->iconColor('success')
-            ->actions([
-                Action::make('lihat')
-                    ->label('Cek Pendaftar')
-                    ->url(route('filament.portal.resources.ppdb.index'))
-                    ->button(),
-            ])
-            ->sendToDatabase($admins)
-            ->broadcast($admins);
+            ->sendToDatabase($admins);
     }
 }
