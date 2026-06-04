@@ -11,9 +11,11 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::table('ppdb_siswa', function (Blueprint $table) {
-            $table->string('asal_sekolah')->nullable()->after('nama_lengkap');
-        });
+        if (Schema::hasTable('ppdb_siswa') && !Schema::hasColumn('ppdb_siswa', 'asal_sekolah')) {
+            Schema::table('ppdb_siswa', function (Blueprint $table) {
+                $table->string('asal_sekolah')->nullable()->after('nama_lengkap');
+            });
+        }
     }
 
     /**
@@ -21,8 +23,10 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::table('ppdb_siswa', function (Blueprint $table) {
-            $table->dropColumn('asal_sekolah');
-        });
+        if (Schema::hasTable('ppdb_siswa') && Schema::hasColumn('ppdb_siswa', 'asal_sekolah')) {
+            Schema::table('ppdb_siswa', function (Blueprint $table) {
+                $table->dropColumn('asal_sekolah');
+            });
+        }
     }
 };

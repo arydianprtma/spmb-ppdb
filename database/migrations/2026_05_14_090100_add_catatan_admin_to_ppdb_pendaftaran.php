@@ -9,15 +9,20 @@ return new class extends Migration
     public function up(): void
     {
         if (!Schema::hasTable('ppdb_pendaftaran')) return;
-        Schema::table('ppdb_pendaftaran', function (Blueprint $table) {
-            $table->text('catatan_admin')->nullable()->after('status');
-        });
+        
+        if (!Schema::hasColumn('ppdb_pendaftaran', 'catatan_admin')) {
+            Schema::table('ppdb_pendaftaran', function (Blueprint $table) {
+                $table->text('catatan_admin')->nullable()->after('status');
+            });
+        }
     }
 
     public function down(): void
     {
-        Schema::table('ppdb_pendaftaran', function (Blueprint $table) {
-            $table->dropColumn('catatan_admin');
-        });
+        if (Schema::hasTable('ppdb_pendaftaran') && Schema::hasColumn('ppdb_pendaftaran', 'catatan_admin')) {
+            Schema::table('ppdb_pendaftaran', function (Blueprint $table) {
+                $table->dropColumn('catatan_admin');
+            });
+        }
     }
 };
