@@ -666,21 +666,21 @@ const registrationFlow = [
         key: 'formulir',
         label: 'Pendaftaran & Isi Formulir',
         desc: 'Lengkapi formulir pendaftaran and upload seluruh berkas yang diperlukan.',
-        doneStatuses: ['pending', 'jadwal_tes', 'tes_berlangsung', 'wawancara', 'diterima_ula', 'diterima_idadiyah', 'diterima_wustho', 'diterima_ulya', 'diterima', 'ditolak'],
+        doneStatuses: ['pending', 'jadwal_tes', 'tes_berlangsung', 'wawancara', 'diterima_ula', 'diterima_idadiyah', 'diterima_wustho', 'diterima_ulya', 'diterima', 'ditolak', 'mengundurkan_diri'],
         activeStatuses: [],
     },
     {
         key: 'tes',
         label: 'Seleksi & Ujian Masuk',
         desc: 'Psikotes · Tes Akademik · Tes Baca Al-Qur\'an · Tes Ibadah',
-        doneStatuses: ['wawancara', 'diterima_ula', 'diterima_idadiyah', 'diterima_wustho', 'diterima_ulya', 'diterima', 'ditolak'],
+        doneStatuses: ['wawancara', 'diterima_ula', 'diterima_idadiyah', 'diterima_wustho', 'diterima_ulya', 'diterima', 'ditolak', 'mengundurkan_diri'],
         activeStatuses: ['jadwal_tes', 'tes_berlangsung'],
     },
     {
         key: 'wawancara',
         label: 'Wawancara Orang Tua & Calon Santri',
         desc: 'Sesi wawancara bersama orang tua dan calon santri/siswa oleh panitia seleksi.',
-        doneStatuses: ['diterima_ula', 'diterima_idadiyah', 'diterima_wustho', 'diterima_ulya', 'diterima', 'ditolak'],
+        doneStatuses: ['diterima_ula', 'diterima_idadiyah', 'diterima_wustho', 'diterima_ulya', 'diterima', 'ditolak', 'mengundurkan_diri'],
         activeStatuses: ['wawancara'],
     },
     {
@@ -689,7 +689,7 @@ const registrationFlow = [
         desc: 'Penerimaan berdasarkan hasil klasifikasi: Ula (Dasar), Idadiyah (Persiapan), Wustho (Menengah), atau Ulya (Lanjutan).',
         doneStatuses: ['diterima_ula', 'diterima_idadiyah', 'diterima_wustho', 'diterima_ulya', 'diterima'],
         activeStatuses: [],
-        rejectedStatuses: ['ditolak'],
+        rejectedStatuses: ['ditolak', 'mengundurkan_diri'],
     },
 ];
 
@@ -710,7 +710,10 @@ const stageDesc = (stage) => {
         if (s === 'tes_berlangsung') return 'Proses ujian sedang berlangsung. Harap hadir tepat waktu sesuai jadwal yang diberikan.';
     }
     if (stage.key === 'wawancara' && s === 'wawancara') return 'Anda dijadwalkan untuk sesi wawancara. Hadir bersama orang tua/wali sesuai jadwal panitia.';
-    if (stage.key === 'hasil' && s === 'ditolak') return 'Mohon maaf, Anda belum berhasil dalam seleksi ini. Silakan hubungi panitia untuk informasi lebih lanjut.';
+    if (stage.key === 'hasil') {
+        if (s === 'ditolak') return 'Mohon maaf, Anda belum berhasil dalam seleksi ini. Silakan hubungi panitia untuk informasi lebih lanjut.';
+        if (s === 'mengundurkan_diri') return 'Anda telah mengundurkan diri dari proses pendaftaran PPDB.';
+    }
     return stage.desc;
 };
 
@@ -750,6 +753,7 @@ const stageStatusLabel = (status) => {
         diterima_wustho: 'Diterima (Wustho)',
         diterima_ulya: 'Diterima (Ulya)',
         ditolak: 'Tidak Lulus',
+        mengundurkan_diri: 'Mengundurkan Diri',
     };
     return map[status] || 'Menunggu';
 };

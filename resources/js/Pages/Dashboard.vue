@@ -28,6 +28,13 @@ const statusConfig = {
         border: '#fca5a5',
         icon: `<svg fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 14l2-2m0 0l2-2m-2 2l-2-2m2 2l2 2m7-2a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>`,
     },
+    mengundurkan_diri: {
+        label: 'Mengundurkan Diri',
+        color: '#ef4444',
+        bg: '#fef2f2',
+        border: '#fca5a5',
+        icon: `<svg fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 14l2-2m0 0l2-2m-2 2l-2-2m2 2l2 2m7-2a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>`,
+    },
 };
 
 const status = props.pendaftaran ? (statusConfig[props.pendaftaran.status] || statusConfig.pending) : null;
@@ -92,7 +99,7 @@ const status = props.pendaftaran ? (statusConfig[props.pendaftaran.status] || st
                     <div :style="`width:52px;height:52px;background:${status.color}20;border-radius:50%;display:flex;align-items:center;justify-content:center;flex-shrink:0;`">
                         <svg style="width:28px;height:28px;" :style="`color:${status.color}`" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                             <path v-if="pendaftaran.status === 'diterima'" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/>
-                            <path v-else-if="pendaftaran.status === 'ditolak'" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 14l2-2m0 0l2-2m-2 2l-2-2m2 2l2 2m7-2a9 9 0 11-18 0 9 9 0 0118 0z"/>
+                            <path v-else-if="pendaftaran.status === 'ditolak' || pendaftaran.status === 'mengundurkan_diri'" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 14l2-2m0 0l2-2m-2 2l-2-2m2 2l2 2m7-2a9 9 0 11-18 0 9 9 0 0118 0z"/>
                             <path v-else stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"/>
                         </svg>
                     </div>
@@ -145,7 +152,7 @@ const status = props.pendaftaran ? (statusConfig[props.pendaftaran.status] || st
                             <div v-for="(tahap, idx) in [
                                 { label: 'Formulir Dikirim', done: true },
                                 { label: 'Verifikasi Berkas', done: pendaftaran.status !== 'pending' },
-                                { label: 'Pengumuman Hasil', done: pendaftaran.status === 'diterima' || pendaftaran.status === 'ditolak' },
+                                { label: 'Pengumuman Hasil', done: pendaftaran.status === 'diterima' || pendaftaran.status === 'ditolak' || pendaftaran.status === 'mengundurkan_diri' },
                                 { label: 'Daftar Ulang', done: pendaftaran.status === 'diterima' },
                             ]" :key="idx" style="display:flex;align-items:center;gap:12px;">
                                 <div :style="`width:28px;height:28px;border-radius:50%;display:flex;align-items:center;justify-content:center;flex-shrink:0;${tahap.done ? 'background:#059669;' : 'background:#e5e7eb;'}`">
