@@ -18,6 +18,10 @@ class PpdbPendaftaran extends Model
             if (empty($model->verification_token)) {
                 $model->verification_token = Str::random(32);
             }
+            if (empty($model->tahun_ajaran)) {
+                $activeSetting = PpdbSetting::where('is_active', true)->first();
+                $model->tahun_ajaran = $activeSetting ? $activeSetting->tahun_ajaran : date('Y') . '/' . (date('Y') + 1);
+            }
         });
     }
 

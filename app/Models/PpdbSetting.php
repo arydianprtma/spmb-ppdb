@@ -26,6 +26,19 @@ class PpdbSetting extends Model
         'is_active' => 'boolean',
     ];
 
+    protected static function booted()
+    {
+        static::saving(function ($model) {
+            if ($model->is_active) {
+                $query = static::query();
+                if ($model->exists) {
+                    $query->where('id', '!=', $model->id);
+                }
+                $query->update(['is_active' => false]);
+            }
+        });
+    }
+
     /**
      * Cek apakah pendaftaran sedang dibuka berdasarkan waktu saat ini
      */
