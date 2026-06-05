@@ -2,16 +2,16 @@
 
 namespace App\Observers;
 
-use App\Models\PpdbPendaftaran;
+use App\Models\PpdbSiswa;
 use App\Models\User;
 use Filament\Notifications\Notification;
 
 class PpdbRegistrantObserver
 {
     /**
-     * Handle the PpdbPendaftaran "created" event.
+     * Handle the PpdbSiswa "created" event.
      */
-    public function created(PpdbPendaftaran $pendaftaran): void
+    public function created(PpdbSiswa $siswa): void
     {
         try {
             $admins = User::role(['admin', 'super_admin'])->get();
@@ -29,7 +29,7 @@ class PpdbRegistrantObserver
 
         Notification::make()
             ->title('Pendaftaran PPDB Baru')
-            ->body("Siswa baru: {$pendaftaran->siswa?->nama_lengkap} telah mendaftar.")
+            ->body("Siswa baru: {$siswa->nama_lengkap} telah mendaftar.")
             ->icon('heroicon-o-user-plus')
             ->iconColor('success')
             ->sendToDatabase($admins);
