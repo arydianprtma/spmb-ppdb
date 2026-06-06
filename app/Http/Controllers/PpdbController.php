@@ -396,7 +396,7 @@ class PpdbController extends Controller
             // Copy siswa (biodata)
             $siswa = $latest->siswa;
             if ($siswa) {
-                $newSiswaData = $siswa->replicate(['pendaftaran_id', 'created_at', 'updated_at'])->toArray();
+                $newSiswaData = $siswa->replicate(['pendaftaran_id', 'nis', 'created_at', 'updated_at'])->toArray();
                 $newPendaftaran->siswa()->create($newSiswaData);
             }
 
