@@ -358,7 +358,7 @@
                 </div>
                 <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
                     <!-- Surat Pernyataan Orang Tua (Semua Pendaftar) -->
-                    <a href="/assets/Dokument/SURAT PERNYATAAN ORANG TUA .pdf" download target="_blank"
+                    <a href="/assets/Dokument/surat_pernyataan_orang_tua.pdf" download target="_blank"
                         class="flex items-center justify-between p-4 bg-slate-50 hover:bg-slate-100 border border-slate-100 rounded-2xl transition-all group">
                         <div class="flex items-center gap-3">
                             <div class="w-10 h-10 rounded-xl bg-red-100 text-red-600 flex items-center justify-center font-bold text-xs flex-shrink-0">PDF</div>
@@ -371,7 +371,7 @@
                     </a>
 
                     <!-- Surat Pernyataan Siswa SMA (Hanya untuk pendaftar SMA) -->
-                    <a v-if="isSma" href="/assets/Dokument/Formulir Surat Pernyataan Siswa SMA.pdf" download target="_blank"
+                    <a v-if="isSma" href="/assets/Dokument/formulir_surat_pernyataan_siswa_sma.pdf" download target="_blank"
                         class="flex items-center justify-between p-4 bg-slate-50 hover:bg-slate-100 border border-slate-100 rounded-2xl transition-all group">
                         <div class="flex items-center gap-3">
                             <div class="w-10 h-10 rounded-xl bg-red-100 text-red-600 flex items-center justify-center font-bold text-xs flex-shrink-0">PDF</div>
