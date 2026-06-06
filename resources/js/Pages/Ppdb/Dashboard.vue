@@ -490,37 +490,45 @@
         <!-- 3. DATA DIRI & FOTO (Align Left, Vertical Colons, Borderless) -->
         <div class="grid grid-cols-12 gap-6 items-start mb-6" style="font-size: 11pt;">
             <!-- Details -->
-            <div class="col-span-8 space-y-2">
-                <div class="flex">
-                    <span style="display: inline-block; width: 180px; flex-shrink: 0;" class="font-bold uppercase">NOMOR REGISTRASI</span>
-                    <span class="mr-2 font-bold">:</span>
-                    <span class="font-bold uppercase">{{ pendaftaran?.no_reg }}</span>
-                </div>
-                <div class="flex">
-                    <span style="display: inline-block; width: 180px; flex-shrink: 0;" class="font-bold uppercase">NAMA LENGKAP</span>
-                    <span class="mr-2 font-bold">:</span>
-                    <span class="font-bold uppercase">{{ pendaftaran?.siswa?.nama_lengkap }}</span>
-                </div>
-                <div class="flex">
-                    <span style="display: inline-block; width: 180px; flex-shrink: 0;" class="font-bold uppercase">TEMPAT, TGL LAHIR</span>
-                    <span class="mr-2 font-bold">:</span>
-                    <span class="font-bold uppercase">{{ pendaftaran?.siswa?.tempat_lahir }}, {{ formatTanggal(pendaftaran?.siswa?.tanggal_lahir) }}</span>
-                </div>
-                <div class="flex">
-                    <span style="display: inline-block; width: 180px; flex-shrink: 0;" class="font-bold uppercase">NISN / NIK</span>
-                    <span class="mr-2 font-bold">:</span>
-                    <span class="font-bold uppercase">{{ pendaftaran?.siswa?.nisn ?? '-' }} / {{ pendaftaran?.siswa?.nik ?? '-' }}</span>
-                </div>
-                <div class="flex">
-                    <span style="display: inline-block; width: 180px; flex-shrink: 0;" class="font-bold uppercase">ASAL SEKOLAH</span>
-                    <span class="mr-2 font-bold">:</span>
-                    <span class="font-bold uppercase">{{ pendaftaran?.siswa?.asal_sekolah ?? '-' }}</span>
-                </div>
-                <div class="flex">
-                    <span style="display: inline-block; width: 180px; flex-shrink: 0;" class="font-bold uppercase">TINGKAT SEKOLAH</span>
-                    <span class="mr-2 font-bold">:</span>
-                    <span class="font-bold uppercase">{{ pendaftaran?.tingkat }}</span>
-                </div>
+            <div class="col-span-8">
+                <table style="width: 100%; border: none; border-collapse: collapse; font-family: 'Times New Roman', Times, serif;">
+                    <tbody>
+                        <tr>
+                            <td style="width: 180px; vertical-align: top; padding: 0 0 8px 0;" class="font-bold uppercase">NOMOR REGISTRASI</td>
+                            <td style="width: 15px; vertical-align: top; padding: 0 0 8px 0;" class="font-bold text-center">:</td>
+                            <td style="vertical-align: top; padding: 0 0 8px 0;" class="font-bold uppercase">{{ pendaftaran?.no_reg }}</td>
+                        </tr>
+                        <tr>
+                            <td style="width: 180px; vertical-align: top; padding: 0 0 8px 0;" class="font-bold uppercase">NAMA LENGKAP</td>
+                            <td style="width: 15px; vertical-align: top; padding: 0 0 8px 0;" class="font-bold text-center">:</td>
+                            <td style="vertical-align: top; padding: 0 0 8px 0;" class="font-bold uppercase">{{ pendaftaran?.siswa?.nama_lengkap }}</td>
+                        </tr>
+                        <tr>
+                            <td style="width: 180px; vertical-align: top; padding: 0 0 8px 0;" class="font-bold uppercase">TEMPAT, TGL LAHIR</td>
+                            <td style="width: 15px; vertical-align: top; padding: 0 0 8px 0;" class="font-bold text-center">:</td>
+                            <td style="vertical-align: top; padding: 0 0 8px 0;" class="font-bold uppercase">
+                                {{ pendaftaran?.siswa?.tempat_lahir }}, {{ formatTanggal(pendaftaran?.siswa?.tanggal_lahir) }}
+                            </td>
+                        </tr>
+                        <tr>
+                            <td style="width: 180px; vertical-align: top; padding: 0 0 8px 0;" class="font-bold uppercase">NISN / NIK</td>
+                            <td style="width: 15px; vertical-align: top; padding: 0 0 8px 0;" class="font-bold text-center">:</td>
+                            <td style="vertical-align: top; padding: 0 0 8px 0;" class="font-bold uppercase">
+                                {{ pendaftaran?.siswa?.nisn ?? '-' }} / {{ pendaftaran?.siswa?.nik ?? '-' }}
+                            </td>
+                        </tr>
+                        <tr>
+                            <td style="width: 180px; vertical-align: top; padding: 0 0 8px 0;" class="font-bold uppercase">ASAL SEKOLAH</td>
+                            <td style="width: 15px; vertical-align: top; padding: 0 0 8px 0;" class="font-bold text-center">:</td>
+                            <td style="vertical-align: top; padding: 0 0 8px 0;" class="font-bold uppercase">{{ pendaftaran?.siswa?.asal_sekolah ?? '-' }}</td>
+                        </tr>
+                        <tr>
+                            <td style="width: 180px; vertical-align: top; padding: 0 0 8px 0;" class="font-bold uppercase">TINGKAT SEKOLAH</td>
+                            <td style="width: 15px; vertical-align: top; padding: 0 0 8px 0;" class="font-bold text-center">:</td>
+                            <td style="vertical-align: top; padding: 0 0 8px 0;" class="font-bold uppercase">{{ pendaftaran?.tingkat }}</td>
+                        </tr>
+                    </tbody>
+                </table>
             </div>
 
             <!-- Pas Foto Box (3x4 cm) -->
