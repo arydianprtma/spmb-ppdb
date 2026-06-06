@@ -124,11 +124,15 @@
                                         <!-- SMP Button -->
                                         <button
                                             type="button"
+                                            :disabled="!!existingData"
                                             @click="form.tingkat = 'smp'"
                                             class="py-3.5 px-4 rounded-xl border-2 font-bold transition-all text-sm md:text-base flex flex-col items-center gap-1"
-                                            :class="form.tingkat === 'smp'
-                                                ? 'border-[#2E5FA3] bg-[#2E5FA3] text-white shadow-lg shadow-[#2E5FA3]/30'
-                                                : 'border-[#A8C4E5] bg-white text-[#4A7AC0] hover:border-[#2E5FA3] hover:bg-[#EBF0FB]'"
+                                            :class="[
+                                                form.tingkat === 'smp'
+                                                    ? 'border-[#2E5FA3] bg-[#2E5FA3] text-white shadow-lg shadow-[#2E5FA3]/30'
+                                                    : 'border-[#A8C4E5] bg-white text-[#4A7AC0] hover:border-[#2E5FA3] hover:bg-[#EBF0FB]',
+                                                existingData ? 'pointer-events-none opacity-60' : ''
+                                            ]"
                                         >
                                             <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 14l9-5-9-5-9 5 9 5z"/><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 14l6.16-3.422a12.083 12.083 0 01.665 6.479A11.952 11.952 0 0012 20.055a11.952 11.952 0 00-6.824-2.998 12.078 12.078 0 01.665-6.479L12 14z"/></svg>
                                             SMP
@@ -136,21 +140,30 @@
                                         <!-- SMA Button -->
                                         <button
                                             type="button"
+                                            :disabled="!!existingData"
                                             @click="form.tingkat = 'sma'"
                                             class="py-3.5 px-4 rounded-xl border-2 font-bold transition-all text-sm md:text-base flex flex-col items-center gap-1"
-                                            :class="form.tingkat === 'sma'
-                                                ? 'border-slate-600 bg-slate-600 text-white shadow-lg shadow-slate-200'
-                                                : 'border-slate-300 bg-white text-slate-500 hover:border-slate-500 hover:bg-slate-50'"
+                                            :class="[
+                                                form.tingkat === 'sma'
+                                                    ? 'border-slate-600 bg-slate-600 text-white shadow-lg shadow-slate-200'
+                                                    : 'border-slate-300 bg-white text-slate-500 hover:border-slate-500 hover:bg-slate-50',
+                                                existingData ? 'pointer-events-none opacity-60' : ''
+                                            ]"
                                         >
                                             <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4"/></svg>
                                             SMA
                                         </button>
                                     </div>
                                     <!-- Badge informasi jenjang terpilih -->
-                                    <div class="mt-3 inline-flex items-center gap-2 px-4 py-2 rounded-full text-xs font-bold transition-all duration-500"
-                                        :class="form.tingkat === 'smp' ? 'bg-[#D6E4F5] text-[#1A4080]' : 'bg-slate-200 text-slate-700'">
-                                        <span class="w-2 h-2 rounded-full animate-pulse" :class="form.tingkat === 'smp' ? 'bg-[#2E5FA3]' : 'bg-slate-500'"></span>
-                                        Mendaftar untuk jenjang: <strong>{{ form.tingkat.toUpperCase() }}</strong>
+                                    <div class="mt-3 flex flex-wrap items-center gap-2">
+                                        <div class="inline-flex items-center gap-2 px-4 py-2 rounded-full text-xs font-bold transition-all duration-500"
+                                            :class="form.tingkat === 'smp' ? 'bg-[#D6E4F5] text-[#1A4080]' : 'bg-slate-200 text-slate-700'">
+                                            <span class="w-2 h-2 rounded-full animate-pulse" :class="form.tingkat === 'smp' ? 'bg-[#2E5FA3]' : 'bg-slate-500'"></span>
+                                            Mendaftar untuk jenjang: <strong>{{ form.tingkat.toUpperCase() }}</strong>
+                                        </div>
+                                        <span v-if="existingData" class="text-xs text-gray-400 font-medium">
+                                            (Jenjang terkunci karena data pendaftaran sudah tersimpan)
+                                        </span>
                                     </div>
                                 </div>
 
