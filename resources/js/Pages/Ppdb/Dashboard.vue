@@ -605,9 +605,9 @@
         </div>
 
         <!-- Double border under Kop -->
-        <div style="margin-top: 6px; margin-bottom: 15px; width: 100%;">
-            <div style="border-top: 1px solid #000; margin-bottom: 1px;"></div>
-            <div style="border-top: 3px solid #000;"></div>
+        <div class="space-y-[1px] mb-4 w-full">
+            <div class="border-t border-black"></div>
+            <div class="border-t-[3px] border-black"></div>
         </div>
 
         <!-- Registration Number Boxes (Top Right) -->
