@@ -10,7 +10,11 @@
         -webkit-print-color-adjust: exact !important;
         print-color-adjust: exact !important;
     }
-    .print-container {
+    .print-container, .statement-print-container {
+        display: none !important;
+    }
+    body.print-card-active .print-container {
+        display: block !important;
         width: 210mm;
         height: 297mm;
         padding: 10mm 15mm !important;
@@ -20,6 +24,20 @@
         position: relative;
         overflow: hidden;
         font-family: 'Times New Roman', Times, serif !important;
+    }
+    body.print-statement-active .statement-print-container {
+        display: block !important;
+        width: 210mm;
+        height: 297mm;
+        padding: 15mm 20mm !important;
+        margin: 0 auto;
+        background: white !important;
+        box-sizing: border-box;
+        position: relative;
+        overflow: hidden;
+        font-family: 'Times New Roman', Times, serif !important;
+        color: black;
+        line-height: 1.5;
     }
 }
 </style>
@@ -344,6 +362,15 @@
                     <svg v-else class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 17h2a2 2 0 002-2v-4a2 2 0 00-2-2H5a2 2 0 00-2 2v4a2 2 0 002 2h2m2 4h6a2 2 0 002-2v-4a2 2 0 00-2-2H9a2 2 0 00-2 2v4a2 2 0 002 2zm8-12V5a2 2 0 00-2-2H9a2 2 0 00-2 2v4h10z"/></svg>
                     {{ printButtonText }}
                 </button>
+                <button v-if="isSma" @click="printStatement" :disabled="isDownloadingStatement"
+                    class="flex-1 sm:flex-none flex items-center justify-center gap-2 bg-amber-500 text-white px-6 py-3 rounded-2xl font-bold hover:bg-amber-600 transition-all disabled:opacity-75 disabled:cursor-not-allowed shadow-md shadow-amber-200">
+                    <svg v-if="isDownloadingStatement" class="animate-spin h-5 w-5 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                        <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+                        <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+                    </svg>
+                    <svg v-else class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/></svg>
+                    Cetak Surat Pernyataan
+                </button>
             </div>
 
         </div>
@@ -562,6 +589,94 @@
         </div>
     </div>
 
+    <!-- Printable Student Statement Letter (Visible ONLY on Print if active) -->
+    <div class="hidden print:block statement-print-container bg-white text-black" style="font-family: 'Times New Roman', Times, serif; font-size: 11pt; line-height: 1.5; color: black; padding: 15mm 20mm;">
+        <!-- Header / Kop Surat (Matches the attached image) -->
+        <div class="text-center" style="font-family: 'Times New Roman', Times, serif;">
+            <div style="font-size: 16pt; font-weight: bold; letter-spacing: 0.5px;">YAYASAN AL - MASRUHIYAH</div>
+            <div style="font-size: 9pt; margin-top: 2px;">Akta Notaris : 01/2009. NPWP : 02.733.936.5-442.000</div>
+            <div style="font-size: 9pt;">SK. MENHUNKAM Nomor : AHU-5057.AH.01.04.Tahun 2010</div>
+            <div style="font-size: 11pt; font-weight: bold; margin-top: 2px;">KARANGPAWITAN PADAHERANG PANGANDARAN</div>
+            <div style="font-size: 8.5pt; margin-top: 2px; line-height: 1.3;">
+                <div>Sekretariat : Jln. Paledah Dusun Patinggen II 020/005 Desa Karangpawitan</div>
+                <div>Kec. Padaherang Kab. Pangandaran Provinsi Jawa Barat Kode Pos 46384</div>
+                <div>Telp. (0265) 650738 / 087725807558</div>
+            </div>
+        </div>
+
+        <!-- Double border under Kop -->
+        <div style="margin-top: 6px; margin-bottom: 15px; width: 100%;">
+            <div style="border-top: 1px solid #000; margin-bottom: 1px;"></div>
+            <div style="border-top: 3px solid #000;"></div>
+        </div>
+
+        <!-- Registration Number Boxes (Top Right) -->
+        <div style="display: flex; justify-content: flex-end; align-items: center; margin-bottom: 25px; font-size: 11pt;">
+            <span style="margin-right: 8px;">No Reg :</span>
+            <div style="display: flex; gap: 0;">
+                <span v-for="(char, idx) in formatRegNoForBoxes" :key="idx" 
+                      style="border: 1px solid #000; width: 22px; height: 22px; display: inline-flex; align-items: center; justify-content: center; font-family: monospace; font-size: 10pt; font-weight: bold; background: white;">
+                    {{ char }}
+                </span>
+            </div>
+        </div>
+
+        <!-- Title -->
+        <h3 class="text-center font-bold uppercase mb-8" style="font-size: 12pt; letter-spacing: 0.5px;">
+            SURAT PERNYATAAN SISWA
+        </h3>
+
+        <!-- Body -->
+        <div style="margin-bottom: 15px;">
+            Yang bertanda tangan dibawah ini saya :
+        </div>
+
+        <table style="width: 100%; border: none; margin-left: 20px; margin-bottom: 25px; border-collapse: collapse;">
+            <tr style="height: 30px;">
+                <td style="width: 150px; vertical-align: top;">Nama Lengkap</td>
+                <td style="width: 15px; vertical-align: top;">:</td>
+                <td style="vertical-align: top; font-weight: bold; text-transform: uppercase;">{{ pendaftaran?.siswa?.nama_lengkap }}</td>
+            </tr>
+            <tr style="height: 30px;">
+                <td style="vertical-align: top;">NISN</td>
+                <td style="vertical-align: top;">:</td>
+                <td style="vertical-align: top;">{{ pendaftaran?.siswa?.nisn || '..................................................................' }}</td>
+            </tr>
+            <tr style="height: 45px;">
+                <td style="vertical-align: top;">Alamat Lengkap</td>
+                <td style="vertical-align: top;">:</td>
+                <td style="vertical-align: top; line-height: 1.4;">
+                    <div>{{ pendaftaran?.siswa?.alamat }}</div>
+                    <div style="margin-top: 15px; border-bottom: 1px dotted #888; width: 95%;"></div>
+                    <div style="margin-top: 20px; border-bottom: 1px dotted #888; width: 95%;"></div>
+                </td>
+            </tr>
+        </table>
+
+        <!-- Declarations -->
+        <div style="text-align: justify; text-indent: 30px; margin-bottom: 15px; line-height: 1.6;">
+            Menyatakan bersedia mengikuti segala kegiatan terprogram yang ada di sekolah SMA Ksatria Nusantara. Apabila saya tidak mengikuti kegiatan terprogram maka saya tetap berkewajiban untuk membayar biaya kegiatan terprogram tersebut.
+        </div>
+
+        <div style="text-align: justify; text-indent: 30px; margin-bottom: 40px; line-height: 1.6;">
+            Demikian pernyataan ini saya buat dengan sadar dan sungguh-sungguh tanpa ada paksaan.
+        </div>
+
+        <!-- Signature Area -->
+        <div style="float: right; width: 280px; text-align: center; margin-top: 20px;">
+            <div>Padaherang, .................................................... 20...</div>
+            <div style="height: 110px; display: flex; flex-direction: column; justify-content: center; align-items: center; margin: 15px 0;">
+                <div style="border: 1px solid #000; padding: 12px 18px; font-size: 8pt; color: #555; background: #fff; font-family: sans-serif;">
+                    Materai 10.000
+                </div>
+            </div>
+            <div style="border-bottom: 1px solid #000; width: 220px; margin: 0 auto; font-weight: bold; text-transform: uppercase; padding-bottom: 3px;">
+                {{ pendaftaran?.siswa?.nama_lengkap }}
+            </div>
+            <div style="margin-top: 6px;">Siswa</div>
+        </div>
+    </div>
+
 
 </template>
 
@@ -571,11 +686,19 @@ import { Head, Link, router } from '@inertiajs/vue3';
 import html2pdf from 'html2pdf.js';
 
 const isDownloading = ref(false);
+const isDownloadingStatement = ref(false);
 
 const printButtonText = computed(() => {
     if (isDownloading.value) return 'Mengunduh...';
     const isMobile = typeof window !== 'undefined' && (window.innerWidth < 768 || /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent));
     return isMobile ? 'Unduh PDF' : 'Cetak Bukti';
+});
+
+const formatRegNoForBoxes = computed(() => {
+    const reg = props.pendaftaran?.no_reg || '';
+    const cleanReg = reg.replace(/[^a-zA-Z0-9]/g, '');
+    const suffix = cleanReg.slice(-8) || '        ';
+    return suffix.padEnd(8, ' ').split('');
 });
 
 const printCard = async () => {
@@ -622,7 +745,65 @@ const printCard = async () => {
             isDownloading.value = false;
         }
     } else {
-        window.print();
+        document.body.classList.add('print-card-active');
+        document.body.classList.remove('print-statement-active');
+        
+        setTimeout(() => {
+            window.print();
+            document.body.classList.remove('print-card-active');
+        }, 100);
+    }
+};
+
+const printStatement = async () => {
+    const isMobile = window.innerWidth < 768 || /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
+    
+    if (isMobile) {
+        if (isDownloadingStatement.value) return;
+        isDownloadingStatement.value = true;
+        
+        try {
+            const element = document.querySelector('.statement-print-container');
+            const originalClass = element.className;
+            const originalStyle = element.getAttribute('style') || '';
+            
+            element.className = 'block bg-white text-black relative';
+            element.style.fontFamily = "'Times New Roman', Times, serif";
+            element.style.width = '210mm';
+            element.style.height = '297mm';
+            element.style.padding = '15mm 20mm';
+            element.style.boxSizing = 'border-box';
+            element.style.overflow = 'hidden';
+            element.style.lineHeight = '1.5';
+            
+            await new Promise(resolve => setTimeout(resolve, 300));
+            
+            const opt = {
+                margin:       0,
+                filename:     `Surat_Pernyataan_${props.pendaftaran?.siswa?.nama_lengkap || 'Siswa'}.pdf`,
+                image:        { type: 'jpeg', quality: 0.98 },
+                html2canvas:  { scale: 2, useCORS: true, logging: false },
+                jsPDF:        { unit: 'mm', format: 'a4', orientation: 'portrait' }
+            };
+            
+            await html2pdf().from(element).set(opt).save();
+            
+            element.className = originalClass;
+            element.setAttribute('style', originalStyle);
+        } catch (error) {
+            console.error('PDF Generation failed:', error);
+            window.print();
+        } finally {
+            isDownloadingStatement.value = false;
+        }
+    } else {
+        document.body.classList.add('print-statement-active');
+        document.body.classList.remove('print-card-active');
+        
+        setTimeout(() => {
+            window.print();
+            document.body.classList.remove('print-statement-active');
+        }, 100);
     }
 };
 
