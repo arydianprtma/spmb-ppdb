@@ -491,7 +491,7 @@
         <div class="grid grid-cols-12 gap-6 items-start mb-6" style="font-size: 11pt;">
             <!-- Details -->
             <div class="col-span-8">
-                <table style="width: 100%; border: none; border-collapse: collapse; font-family: 'Times New Roman', Times, serif;">
+                <table style="width: 100%; table-layout: fixed; border: none; border-collapse: collapse; font-family: 'Times New Roman', Times, serif;">
                     <tbody>
                         <tr>
                             <td style="width: 180px; vertical-align: top; padding: 0 0 8px 0;" class="font-bold uppercase">NOMOR REGISTRASI</td>
