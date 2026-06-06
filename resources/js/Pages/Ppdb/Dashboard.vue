@@ -573,6 +573,8 @@
                 <li>Membawa Seluruh Berkas Dokumen Fisik Yang Diunggah Di <a href="https://ppdb.riyadussalikin.my.id/" target="_blank" class="text-blue-600 underline">https://ppdb.riyadussalikin.my.id/</a></li>
                 <li>Berpakaian Rapih, Sopan, Menutup Aurat, Dan Menjaga Adab</li>
                 <li>Pantau Terus Status Pendaftaran Anda Melalui <a href="https://ppdb.riyadussalikin.my.id/dashboard" target="_blank" class="text-blue-600 underline">https://ppdb.riyadussalikin.my.id/dashboard</a></li>
+                <li>Membawa Surat Pernyataan Orang Tua yang telah diisi dan ditandatangani di atas meterai 10.000</li>
+                <li v-if="isSma">Membawa Surat Pernyataan Siswa SMA yang telah diisi dan ditandatangani di atas meterai 10.000</li>
             </ol>
         </div>
 
