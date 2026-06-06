@@ -568,15 +568,36 @@
             <p class="font-bold mb-2">
                 Informasi Penting Sebagai Calon Siswa/Santri:
             </p>
-            <ol class="space-y-1 list-decimal pl-5 leading-normal">
-                <li>Kartu Pendaftaran Ini Wajib Di Bawa Saat Seleksi Atau Daftar Ulang</li>
-                <li>Membawa Dokumen Asli (KTP Orang Tua, KK, Akte Kelahiran)</li>
-                <li>Membawa Seluruh Berkas Dokumen Fisik Yang Diunggah Di <a href="https://ppdb.riyadussalikin.my.id/" target="_blank" class="text-blue-600 underline">https://ppdb.riyadussalikin.my.id/</a></li>
-                <li>Berpakaian Rapih, Sopan, Menutup Aurat, Dan Menjaga Adab</li>
-                <li>Pantau Terus Status Pendaftaran Anda Melalui <a href="https://ppdb.riyadussalikin.my.id/dashboard" target="_blank" class="text-blue-600 underline">https://ppdb.riyadussalikin.my.id/dashboard</a></li>
-                <li>Membawa Surat Pernyataan Orang Tua yang telah diisi dan ditandatangani di atas meterai 10.000</li>
-                <li v-if="isSma">Membawa Surat Pernyataan Siswa SMA yang telah diisi dan ditandatangani di atas meterai 10.000</li>
-            </ol>
+            <div class="space-y-1.5 leading-normal" style="font-family: 'Times New Roman', Times, serif;">
+                <div class="flex items-start">
+                    <span class="w-5 flex-shrink-0">1.</span>
+                    <span>Kartu Pendaftaran Ini Wajib Di Bawa Saat Seleksi Atau Daftar Ulang</span>
+                </div>
+                <div class="flex items-start">
+                    <span class="w-5 flex-shrink-0">2.</span>
+                    <span>Membawa Dokumen Asli (KTP Orang Tua, KK, Akte Kelahiran)</span>
+                </div>
+                <div class="flex items-start">
+                    <span class="w-5 flex-shrink-0">3.</span>
+                    <span>Membawa Seluruh Berkas Dokumen Fisik Yang Diunggah Di <a href="https://ppdb.riyadussalikin.my.id/" target="_blank" class="text-blue-600 underline">https://ppdb.riyadussalikin.my.id/</a></span>
+                </div>
+                <div class="flex items-start">
+                    <span class="w-5 flex-shrink-0">4.</span>
+                    <span>Berpakaian Rapih, Sopan, Menutup Aurat, Dan Menjaga Adab</span>
+                </div>
+                <div class="flex items-start">
+                    <span class="w-5 flex-shrink-0">5.</span>
+                    <span>Pantau Terus Status Pendaftaran Anda Melalui <a href="https://ppdb.riyadussalikin.my.id/dashboard" target="_blank" class="text-blue-600 underline">https://ppdb.riyadussalikin.my.id/dashboard</a></span>
+                </div>
+                <div class="flex items-start">
+                    <span class="w-5 flex-shrink-0">6.</span>
+                    <span>Membawa Surat Pernyataan Orang Tua yang telah diisi dan ditandatangani di atas meterai 10.000</span>
+                </div>
+                <div v-if="isSma" class="flex items-start">
+                    <span class="w-5 flex-shrink-0">7.</span>
+                    <span>Membawa Surat Pernyataan Siswa SMA yang telah diisi dan ditandatangani di atas meterai 10.000</span>
+                </div>
+            </div>
         </div>
 
         <!-- 6. QR CODE & TANDA TANGAN (Aligned, Signature Table) -->
