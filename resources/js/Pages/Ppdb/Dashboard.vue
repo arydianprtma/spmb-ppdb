@@ -492,32 +492,32 @@
             <!-- Details -->
             <div class="col-span-8 space-y-2">
                 <div class="flex">
-                    <span class="w-48 font-bold uppercase">NOMOR REGISTRASI</span>
+                    <span style="display: inline-block; width: 180px; flex-shrink: 0;" class="font-bold uppercase">NOMOR REGISTRASI</span>
                     <span class="mr-2 font-bold">:</span>
                     <span class="font-bold uppercase">{{ pendaftaran?.no_reg }}</span>
                 </div>
                 <div class="flex">
-                    <span class="w-48 font-bold uppercase">NAMA LENGKAP</span>
+                    <span style="display: inline-block; width: 180px; flex-shrink: 0;" class="font-bold uppercase">NAMA LENGKAP</span>
                     <span class="mr-2 font-bold">:</span>
                     <span class="font-bold uppercase">{{ pendaftaran?.siswa?.nama_lengkap }}</span>
                 </div>
                 <div class="flex">
-                    <span class="w-48 font-bold uppercase">TEMPAT, TGL LAHIR</span>
+                    <span style="display: inline-block; width: 180px; flex-shrink: 0;" class="font-bold uppercase">TEMPAT, TGL LAHIR</span>
                     <span class="mr-2 font-bold">:</span>
                     <span class="font-bold uppercase">{{ pendaftaran?.siswa?.tempat_lahir }}, {{ formatTanggal(pendaftaran?.siswa?.tanggal_lahir) }}</span>
                 </div>
                 <div class="flex">
-                    <span class="w-48 font-bold uppercase">NISN / NIK</span>
+                    <span style="display: inline-block; width: 180px; flex-shrink: 0;" class="font-bold uppercase">NISN / NIK</span>
                     <span class="mr-2 font-bold">:</span>
                     <span class="font-bold uppercase">{{ pendaftaran?.siswa?.nisn ?? '-' }} / {{ pendaftaran?.siswa?.nik ?? '-' }}</span>
                 </div>
                 <div class="flex">
-                    <span class="w-48 font-bold uppercase">ASAL SEKOLAH</span>
+                    <span style="display: inline-block; width: 180px; flex-shrink: 0;" class="font-bold uppercase">ASAL SEKOLAH</span>
                     <span class="mr-2 font-bold">:</span>
                     <span class="font-bold uppercase">{{ pendaftaran?.siswa?.asal_sekolah ?? '-' }}</span>
                 </div>
                 <div class="flex">
-                    <span class="w-48 font-bold uppercase">TINGKAT SEKOLAH</span>
+                    <span style="display: inline-block; width: 180px; flex-shrink: 0;" class="font-bold uppercase">TINGKAT SEKOLAH</span>
                     <span class="mr-2 font-bold">:</span>
                     <span class="font-bold uppercase">{{ pendaftaran?.tingkat }}</span>
                 </div>
