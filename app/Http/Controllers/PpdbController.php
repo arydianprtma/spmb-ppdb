@@ -47,7 +47,7 @@ class PpdbController extends Controller
         }
 
         $user_id = Auth::id();
-        $pendaftaran = PpdbPendaftaran::with('siswa')->where('user_id', $user_id)->first();
+        $pendaftaran = PpdbPendaftaran::with('siswa')->where('user_id', $user_id)->latest()->first();
         $siswaId = $pendaftaran?->siswa?->id;
 
         $request->validate([
@@ -57,50 +57,95 @@ class PpdbController extends Controller
                 'nullable',
                 'string',
                 'size:16',
-                \Illuminate\Validation\Rule::unique('ppdb_siswa', 'nik')->ignore($siswaId),
+                \Illuminate\Validation\Rule::unique('ppdb_siswa', 'nik')
+                    ->where(function ($query) use ($user_id) {
+                        $query->whereNotIn('pendaftaran_id', function ($q) use ($user_id) {
+                            $q->select('id')->from('ppdb_pendaftaran')->where('user_id', $user_id);
+                        });
+                    }),
             ],
             'siswa.nisn' => [
                 'nullable',
                 'string',
                 'size:10',
-                \Illuminate\Validation\Rule::unique('ppdb_siswa', 'nisn')->ignore($siswaId),
+                \Illuminate\Validation\Rule::unique('ppdb_siswa', 'nisn')
+                    ->where(function ($query) use ($user_id) {
+                        $query->whereNotIn('pendaftaran_id', function ($q) use ($user_id) {
+                            $q->select('id')->from('ppdb_pendaftaran')->where('user_id', $user_id);
+                        });
+                    }),
             ],
             'siswa.no_ijazah' => [
                 'nullable',
                 'string',
-                \Illuminate\Validation\Rule::unique('ppdb_siswa', 'no_ijazah')->ignore($siswaId),
+                \Illuminate\Validation\Rule::unique('ppdb_siswa', 'no_ijazah')
+                    ->where(function ($query) use ($user_id) {
+                        $query->whereNotIn('pendaftaran_id', function ($q) use ($user_id) {
+                            $q->select('id')->from('ppdb_pendaftaran')->where('user_id', $user_id);
+                        });
+                    }),
             ],
             'siswa.no_skhun' => [
                 'nullable',
                 'string',
-                \Illuminate\Validation\Rule::unique('ppdb_siswa', 'no_skhun')->ignore($siswaId),
+                \Illuminate\Validation\Rule::unique('ppdb_siswa', 'no_skhun')
+                    ->where(function ($query) use ($user_id) {
+                        $query->whereNotIn('pendaftaran_id', function ($q) use ($user_id) {
+                            $q->select('id')->from('ppdb_pendaftaran')->where('user_id', $user_id);
+                        });
+                    }),
             ],
             'siswa.no_un' => [
                 'nullable',
                 'string',
-                \Illuminate\Validation\Rule::unique('ppdb_siswa', 'no_un')->ignore($siswaId),
+                \Illuminate\Validation\Rule::unique('ppdb_siswa', 'no_un')
+                    ->where(function ($query) use ($user_id) {
+                        $query->whereNotIn('pendaftaran_id', function ($q) use ($user_id) {
+                            $q->select('id')->from('ppdb_pendaftaran')->where('user_id', $user_id);
+                        });
+                    }),
             ],
             'siswa.no_registrasi_akta' => [
                 'nullable',
                 'string',
-                \Illuminate\Validation\Rule::unique('ppdb_siswa', 'no_registrasi_akta')->ignore($siswaId),
+                \Illuminate\Validation\Rule::unique('ppdb_siswa', 'no_registrasi_akta')
+                    ->where(function ($query) use ($user_id) {
+                        $query->whereNotIn('pendaftaran_id', function ($q) use ($user_id) {
+                            $q->select('id')->from('ppdb_pendaftaran')->where('user_id', $user_id);
+                        });
+                    }),
             ],
             'siswa.no_kip' => [
                 'nullable',
                 'string',
-                \Illuminate\Validation\Rule::unique('ppdb_siswa', 'no_kip')->ignore($siswaId),
+                \Illuminate\Validation\Rule::unique('ppdb_siswa', 'no_kip')
+                    ->where(function ($query) use ($user_id) {
+                        $query->whereNotIn('pendaftaran_id', function ($q) use ($user_id) {
+                            $q->select('id')->from('ppdb_pendaftaran')->where('user_id', $user_id);
+                        });
+                    }),
             ],
             'siswa.email_pribadi' => [
                 'nullable',
                 'email',
-                \Illuminate\Validation\Rule::unique('ppdb_siswa', 'email_pribadi')->ignore($siswaId),
+                \Illuminate\Validation\Rule::unique('ppdb_siswa', 'email_pribadi')
+                    ->where(function ($query) use ($user_id) {
+                        $query->whereNotIn('pendaftaran_id', function ($q) use ($user_id) {
+                            $q->select('id')->from('ppdb_pendaftaran')->where('user_id', $user_id);
+                        });
+                    }),
             ],
             'siswa.no_hp' => [
                 'required',
                 'string',
                 'min:10',
                 'max:15',
-                \Illuminate\Validation\Rule::unique('ppdb_siswa', 'no_hp')->ignore($siswaId),
+                \Illuminate\Validation\Rule::unique('ppdb_siswa', 'no_hp')
+                    ->where(function ($query) use ($user_id) {
+                        $query->whereNotIn('pendaftaran_id', function ($q) use ($user_id) {
+                            $q->select('id')->from('ppdb_pendaftaran')->where('user_id', $user_id);
+                        });
+                    }),
             ],
             'siswa.alamat' => 'required|string',
             'siswa.provinsi' => 'required|string',
@@ -195,10 +240,10 @@ class PpdbController extends Controller
         DB::beginTransaction();
         try {
             $user_id = Auth::id();
-            $pendaftaran = PpdbPendaftaran::where('user_id', $user_id)->first();
-            $isNew = !$pendaftaran;
+            $pendaftaran = PpdbPendaftaran::where('user_id', $user_id)->latest()->first();
+            $isNew = !$pendaftaran || $pendaftaran->status === 'lulus';
 
-            if ($pendaftaran) {
+            if ($pendaftaran && $pendaftaran->status !== 'lulus') {
                 // --- UPDATE EXISTING ---
                 $pendaftaran->update(['tingkat' => $request->tingkat]);
 
@@ -320,5 +365,87 @@ class PpdbController extends Controller
             'no_reg' => $no_reg,
             'nama' => $pendaftaran->siswa->nama_lengkap
         ]);
+    }
+
+    public function transition(Request $request)
+    {
+        $user_id = Auth::id();
+        $latest = PpdbPendaftaran::where('user_id', $user_id)->latest()->first();
+
+        if (!$latest || $latest->tingkat !== 'smp' || $latest->status !== 'lulus') {
+            return redirect()->route('dashboard')->withErrors(['message' => 'Anda tidak memenuhi syarat untuk melakukan perpindahan jenjang.']);
+        }
+
+        // Check if there is already a SMA pendaftaran
+        $hasSma = PpdbPendaftaran::where('user_id', $user_id)->where('tingkat', 'sma')->exists();
+        if ($hasSma) {
+            return redirect()->route('dashboard')->withErrors(['message' => 'Anda sudah memiliki pendaftaran SMA.']);
+        }
+
+        DB::beginTransaction();
+        try {
+            // Create a new pendaftaran for SMA
+            $newPendaftaran = PpdbPendaftaran::create([
+                'user_id' => $user_id,
+                'no_reg' => 'REG-' . date('Ymd') . '-' . strtoupper(bin2hex(random_bytes(4))),
+                'tanggal_daftar' => now(),
+                'tingkat' => 'sma',
+                'status' => 'pending',
+            ]);
+
+            // Copy siswa (biodata)
+            $siswa = $latest->siswa;
+            if ($siswa) {
+                $newSiswaData = $siswa->replicate(['pendaftaran_id', 'created_at', 'updated_at'])->toArray();
+                $newPendaftaran->siswa()->create($newSiswaData);
+            }
+
+            // Copy orangTua (ayah & ibu)
+            foreach ($latest->orangTua as $ortu) {
+                $newOrtuData = $ortu->replicate(['pendaftaran_id', 'created_at', 'updated_at'])->toArray();
+                $newPendaftaran->orangTua()->create($newOrtuData);
+            }
+
+            // Copy wali
+            $wali = $latest->wali;
+            if ($wali) {
+                $newWaliData = $wali->replicate(['pendaftaran_id', 'created_at', 'updated_at'])->toArray();
+                $newPendaftaran->wali()->create($newWaliData);
+            }
+
+            // Copy periodik
+            $periodik = $latest->periodik;
+            if ($periodik) {
+                $newPeriodikData = $periodik->replicate(['pendaftaran_id', 'created_at', 'updated_at'])->toArray();
+                $newPendaftaran->periodik()->create($newPeriodikData);
+            }
+
+            // Copy prestasi
+            foreach ($latest->prestasi as $prestasi) {
+                $newPrestasiData = $prestasi->replicate(['pendaftaran_id', 'created_at', 'updated_at'])->toArray();
+                $newPendaftaran->prestasi()->create($newPrestasiData);
+            }
+
+            // Copy beasiswa
+            foreach ($latest->beasiswa as $beasiswa) {
+                $newBeasiswaData = $beasiswa->replicate(['pendaftaran_id', 'created_at', 'updated_at'])->toArray();
+                $newPendaftaran->beasiswa()->create($newBeasiswaData);
+            }
+
+            // Copy berkas
+            $berkas = $latest->berkas;
+            if ($berkas) {
+                $newBerkasData = $berkas->replicate(['pendaftaran_id', 'created_at', 'updated_at'])->toArray();
+                $newPendaftaran->berkas()->create($newBerkasData);
+            }
+
+            DB::commit();
+            return redirect()->route('ppdb.register')->with('success', 'Silakan perbarui dan lengkapi data pendaftaran SMA Anda.');
+
+        } catch (\Exception $e) {
+            DB::rollBack();
+            \Illuminate\Support\Facades\Log::error('Transition Error: ' . $e->getMessage(), ['trace' => $e->getTraceAsString()]);
+            return redirect()->route('dashboard')->withErrors(['message' => 'Gagal melakukan perpindahan jenjang: ' . $e->getMessage()]);
+        }
     }
 }

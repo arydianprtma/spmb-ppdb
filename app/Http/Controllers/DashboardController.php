@@ -15,7 +15,7 @@ class DashboardController extends Controller
     {
         $user = Auth::user();
 
-        $pendaftaran = PpdbPendaftaran::with(['siswa', 'berkas', 'orangTua', 'wali'])
+        $pendaftaran = PpdbPendaftaran::with(['siswa', 'berkas', 'orangTua', 'wali', 'kelas'])
             ->where('user_id', $user->id)
             ->latest()
             ->first();
@@ -23,6 +23,11 @@ class DashboardController extends Controller
         $qrCodeUrl = null;
         if ($pendaftaran) {
             $qrCodeUrl = VerificationController::getQrCodeUrl($pendaftaran);
+        }
+
+        $canTransition = false;
+        if ($pendaftaran && $pendaftaran->tingkat === 'smp' && $pendaftaran->status === 'lulus') {
+            $canTransition = true;
         }
 
         // Statistik global untuk dashboard
@@ -37,6 +42,7 @@ class DashboardController extends Controller
             'pendaftaran' => $pendaftaran,
             'qrCodeUrl' => $qrCodeUrl,
             'stats' => $stats,
+            'canTransition' => $canTransition,
             'ppdbSetting' => [
                 'isOpen' => PpdbSetting::isOpen(),
                 'tahunAjaran' => $setting?->tahun_ajaran,

@@ -99,6 +99,43 @@
                 </div>
             </div>
 
+            <!-- Transition Banner (SMP to SMA) -->
+            <div v-if="canTransition" class="relative overflow-hidden rounded-3xl bg-gradient-to-br from-emerald-600 via-teal-600 to-cyan-600 p-6 sm:p-8 shadow-xl shadow-emerald-200 text-white animate-fadeIn border border-white/10">
+                <div class="absolute -top-10 -right-10 w-40 h-40 bg-white/10 rounded-full blur-xl pointer-events-none"></div>
+                <div class="absolute -bottom-10 -left-10 w-40 h-40 bg-emerald-500/20 rounded-full blur-xl pointer-events-none"></div>
+                
+                <div class="relative flex flex-col md:flex-row items-center gap-6 justify-between">
+                    <div class="flex items-start gap-4">
+                        <div class="w-14 h-14 rounded-2xl bg-white/20 backdrop-blur-md flex items-center justify-center flex-shrink-0 text-white shadow-inner">
+                            <!-- Graduation Cap Icon -->
+                            <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 14l9-5-9-5-9 5 9 5z" />
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 14l6.16-3.422a12.083 12.083 0 01.665 6.479A11.952 11.952 0 0012 20.055a11.952 11.952 0 00-6.824-2.998 12.078 12.078 0 01.665-6.479L12 14z" />
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 12v7a2 2 0 01-2 2H5a2 2 0 01-2-2v-7" />
+                            </svg>
+                        </div>
+                        <div class="text-left">
+                            <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-white/20 backdrop-blur-sm text-[10px] font-extrabold uppercase tracking-wider mb-2">
+                                🎓 Kelulusan & Lanjut Jenjang
+                            </div>
+                            <h2 class="text-xl sm:text-2xl font-black mb-2 leading-tight">Selamat atas kelulusan Anda di SMP!</h2>
+                            <p class="text-emerald-100 text-xs sm:text-sm leading-relaxed max-w-xl">
+                                Sebagai alumni SMP Pondok Pesantren Riyadussalikin, Anda dapat langsung melanjutkan pendidikan ke jenjang <strong>SMA Ksatria Nusantara</strong>. Klik tombol di bawah untuk mendaftar otomatis dengan menyalin seluruh biodata lama Anda.
+                            </p>
+                        </div>
+                    </div>
+                    
+                    <button @click="handleTransition" :disabled="isTransitioning"
+                        class="w-full md:w-auto inline-flex items-center justify-center gap-3 bg-white text-emerald-700 px-6 py-4 rounded-2xl font-black text-sm sm:text-base hover:bg-emerald-50 transition-all duration-300 shadow-lg hover:scale-105 active:scale-95 disabled:opacity-75 disabled:cursor-not-allowed flex-shrink-0">
+                        <span v-if="isTransitioning" class="inline-block animate-spin h-5 w-5 border-2 border-emerald-700 border-t-transparent rounded-full"></span>
+                        <svg v-else class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M13 5l7 7-7 7M5 5l7 7-7 7" />
+                        </svg>
+                        Lanjut Daftar ke SMA
+                    </button>
+                </div>
+            </div>
+
             <!-- Statistik Pendaftar -->
             <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 sm:gap-6">
                 <div class="bg-white rounded-3xl p-4 sm:p-5 border border-emerald-100 shadow-sm flex items-center gap-3 sm:gap-4">
@@ -748,6 +785,9 @@
 import { computed, ref, onMounted, onUnmounted } from 'vue';
 import { Head, Link, router } from '@inertiajs/vue3';
 import html2pdf from 'html2pdf.js';
+import Swal from 'sweetalert2';
+
+const isTransitioning = ref(false);
 
 const isDownloading = ref(false);
 const isDownloadingStatement = ref(false);
@@ -869,7 +909,40 @@ const props = defineProps({
     qrCodeUrl: String,
     stats: Object,
     ppdbSetting: Object,
+    canTransition: Boolean,
 });
+
+const handleTransition = () => {
+    if (isTransitioning.value) return;
+    
+    Swal.fire({
+        title: 'Lanjut Daftar ke SMA?',
+        text: 'Sistem akan membuat pendaftaran SMA baru dan menyalin seluruh biodata Anda dari data SMP sebelumnya.',
+        icon: 'question',
+        showCancelButton: true,
+        confirmButtonColor: '#10b981',
+        cancelButtonColor: '#6b7280',
+        confirmButtonText: 'Ya, Lanjutkan',
+        cancelButtonText: 'Batal'
+    }).then((result) => {
+        if (result.isConfirmed) {
+            isTransitioning.value = true;
+            router.post(route('ppdb.transition'), {}, {
+                onError: (errors) => {
+                    Swal.fire({
+                        icon: 'error',
+                        title: 'Gagal Pindah Jenjang',
+                        text: errors.message || 'Terjadi kesalahan saat melakukan perpindahan jenjang.',
+                        confirmButtonColor: '#10b981',
+                    });
+                },
+                onFinish: () => {
+                    isTransitioning.value = false;
+                }
+            });
+        }
+    });
+};
 
 // Logo: pakai dari settings jika ada, fallback ke default
 const logoUrl = computed(() => props.ppdbSetting?.kartuLogo || '/logo_pondok.png');

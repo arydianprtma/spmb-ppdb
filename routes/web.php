@@ -72,6 +72,7 @@ Route::middleware('auth')->group(function () {
     // PPDB Routes
     Route::get('/ppdb', [PpdbController::class, 'create'])->name('ppdb.register');
     Route::post('/ppdb', [PpdbController::class, 'store'])->name('ppdb.store');
+    Route::post('/ppdb/transition', [PpdbController::class, 'transition'])->name('ppdb.transition');
     Route::get('/ppdb/success/{no_reg}', [PpdbController::class, 'success'])->name('ppdb.success');
     // Profile Routes
     Route::get('/profile', [\App\Http\Controllers\ProfileController::class, 'edit'])->name('profile.edit');
