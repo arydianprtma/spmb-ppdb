@@ -345,6 +345,46 @@
                 </div>
             </div>
 
+            <!-- Download Surat Pernyataan Section -->
+            <div v-if="pendaftaran" class="bg-white rounded-3xl shadow-lg border border-gray-100 p-6 space-y-4">
+                <div class="flex items-center gap-3 pb-3 border-b border-gray-50">
+                    <div class="w-9 h-9 rounded-xl bg-amber-100 flex items-center justify-center">
+                        <svg class="w-5 h-5 text-amber-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 10v6m0 0l3-3m-3 3l-3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/></svg>
+                    </div>
+                    <div>
+                        <h3 class="font-bold text-gray-800">Unduh Formulir Surat Pernyataan</h3>
+                        <p class="text-xs text-gray-400 font-medium mt-0.5">Silakan unduh, cetak, isi, dan kumpulkan formulir berikut saat registrasi/daftar ulang</p>
+                    </div>
+                </div>
+                <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                    <!-- Surat Pernyataan Orang Tua (Semua Pendaftar) -->
+                    <a href="/assets/Dokument/SURAT PERNYATAAN ORANG TUA .pdf" download target="_blank"
+                        class="flex items-center justify-between p-4 bg-slate-50 hover:bg-slate-100 border border-slate-100 rounded-2xl transition-all group">
+                        <div class="flex items-center gap-3">
+                            <div class="w-10 h-10 rounded-xl bg-red-100 text-red-600 flex items-center justify-center font-bold text-xs flex-shrink-0">PDF</div>
+                            <div class="text-left">
+                                <p class="font-bold text-sm text-gray-800">Surat Pernyataan Orang Tua</p>
+                                <p class="text-xs text-gray-400">Untuk Orang Tua / Wali Siswa</p>
+                            </div>
+                        </div>
+                        <svg class="w-5 h-5 text-gray-400 group-hover:text-gray-600 transition-colors flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"/></svg>
+                    </a>
+
+                    <!-- Surat Pernyataan Siswa SMA (Hanya untuk pendaftar SMA) -->
+                    <a v-if="isSma" href="/assets/Dokument/Formulir Surat Pernyataan Siswa SMA.pdf" download target="_blank"
+                        class="flex items-center justify-between p-4 bg-slate-50 hover:bg-slate-100 border border-slate-100 rounded-2xl transition-all group">
+                        <div class="flex items-center gap-3">
+                            <div class="w-10 h-10 rounded-xl bg-red-100 text-red-600 flex items-center justify-center font-bold text-xs flex-shrink-0">PDF</div>
+                            <div class="text-left">
+                                <p class="font-bold text-sm text-gray-800">Surat Pernyataan Siswa SMA</p>
+                                <p class="text-xs text-gray-400">Khusus Calon Siswa SMA</p>
+                            </div>
+                        </div>
+                        <svg class="w-5 h-5 text-gray-400 group-hover:text-gray-600 transition-colors flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"/></svg>
+                    </a>
+                </div>
+            </div>
+
             <!-- Action Buttons -->
             <div v-if="pendaftaran" class="flex flex-wrap gap-4">
                 <Link :href="route('ppdb.register')"
