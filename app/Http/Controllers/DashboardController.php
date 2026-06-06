@@ -26,7 +26,7 @@ class DashboardController extends Controller
         }
 
         $canTransition = false;
-        if ($pendaftaran && $pendaftaran->tingkat === 'smp' && $pendaftaran->status === 'lulus') {
+        if ($pendaftaran && $pendaftaran->tingkat === 'smp' && $pendaftaran->siswa && $pendaftaran->siswa->status === 'lulus') {
             $canTransition = true;
         }
 

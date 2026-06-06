@@ -240,10 +240,10 @@ class PpdbController extends Controller
         DB::beginTransaction();
         try {
             $user_id = Auth::id();
-            $pendaftaran = PpdbPendaftaran::where('user_id', $user_id)->latest()->first();
-            $isNew = !$pendaftaran || $pendaftaran->status === 'lulus';
+            $pendaftaran = PpdbPendaftaran::with('siswa')->where('user_id', $user_id)->latest()->first();
+            $isNew = !$pendaftaran || ($pendaftaran->siswa && $pendaftaran->siswa->status === 'lulus');
 
-            if ($pendaftaran && $pendaftaran->status !== 'lulus') {
+            if ($pendaftaran && (!$pendaftaran->siswa || $pendaftaran->siswa->status !== 'lulus')) {
                 // --- UPDATE EXISTING ---
                 $pendaftaran->update(['tingkat' => $request->tingkat]);
 
@@ -372,7 +372,7 @@ class PpdbController extends Controller
         $user_id = Auth::id();
         $latest = PpdbPendaftaran::where('user_id', $user_id)->latest()->first();
 
-        if (!$latest || $latest->tingkat !== 'smp' || $latest->status !== 'lulus') {
+        if (!$latest || $latest->tingkat !== 'smp' || !$latest->siswa || $latest->siswa->status !== 'lulus') {
             return redirect()->route('dashboard')->withErrors(['message' => 'Anda tidak memenuhi syarat untuk melakukan perpindahan jenjang.']);
         }
 
@@ -396,7 +396,8 @@ class PpdbController extends Controller
             // Copy siswa (biodata)
             $siswa = $latest->siswa;
             if ($siswa) {
-                $newSiswaData = $siswa->replicate(['pendaftaran_id', 'nis', 'created_at', 'updated_at'])->toArray();
+                $newSiswaData = $siswa->replicate(['pendaftaran_id', 'nis', 'status', 'created_at', 'updated_at'])->toArray();
+                $newSiswaData['status'] = 'aktif';
                 $newPendaftaran->siswa()->create($newSiswaData);
             }
 
