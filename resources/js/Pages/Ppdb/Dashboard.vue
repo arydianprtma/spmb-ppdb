@@ -135,9 +135,22 @@
                 <div class="absolute top-24 right-24 w-3.5 h-3.5 bg-cyan-300 rounded-full blur-[1px] opacity-75 animate-sparkle" style="animation-delay: 1.2s"></div>
                 <div class="absolute bottom-12 left-1/3 w-3 h-3 bg-white/30 rounded-full blur-[1px] animate-sparkle" style="animation-delay: 2.1s"></div>
                 <div class="absolute bottom-20 right-1/4 w-2 h-2 bg-yellow-200 rounded-full blur-[1px] animate-sparkle" style="animation-delay: 0.8s"></div>
-                <div class="absolute top-1/2 left-8 text-white/10 select-none pointer-events-none animate-float-slow text-3xl">🎓</div>
-                <div class="absolute top-8 right-16 text-white/10 select-none pointer-events-none animate-float-fast text-4xl" style="animation-delay: 1.5s">🎓</div>
-                <div class="absolute bottom-6 right-8 text-white/5 select-none pointer-events-none animate-float-slow text-5xl" style="animation-delay: 3s">🎓</div>
+                
+                <div class="absolute top-1/3 left-12 text-white/10 select-none pointer-events-none animate-float-slow">
+                    <svg class="w-10 h-10" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M12 14l9-5-9-5-9 5 9 5zm0 0l6.16-3.422a12.083 12.083 0 01.665 6.479A11.952 11.952 0 0012 20.055a11.952 11.952 0 00-6.824-2.998 12.078 12.078 0 01.665-6.479L12 14zm-4 6v-7.5l4-2.222" />
+                    </svg>
+                </div>
+                <div class="absolute top-8 right-20 text-white/10 select-none pointer-events-none animate-float-fast" style="animation-delay: 1.5s">
+                    <svg class="w-12 h-12" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M12 14l9-5-9-5-9 5 9 5zm0 0l6.16-3.422a12.083 12.083 0 01.665 6.479A11.952 11.952 0 0012 20.055a11.952 11.952 0 00-6.824-2.998 12.078 12.078 0 01.665-6.479L12 14zm-4 6v-7.5l4-2.222" />
+                    </svg>
+                </div>
+                <div class="absolute bottom-6 right-12 text-white/5 select-none pointer-events-none animate-float-slow" style="animation-delay: 3s">
+                    <svg class="w-16 h-16" fill="none" stroke="currentColor" stroke-width="1.2" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M12 14l9-5-9-5-9 5 9 5zm0 0l6.16-3.422a12.083 12.083 0 01.665 6.479A11.952 11.952 0 0012 20.055a11.952 11.952 0 00-6.824-2.998 12.078 12.078 0 01.665-6.479L12 14zm-4 6v-7.5l4-2.222" />
+                    </svg>
+                </div>
 
                 <div class="absolute -top-12 -right-12 w-64 h-64 bg-white/5 rounded-full blur-3xl pointer-events-none"></div>
                 <div class="absolute -bottom-12 -left-12 w-64 h-64 bg-emerald-500/10 rounded-full blur-3xl pointer-events-none"></div>
@@ -147,7 +160,10 @@
                     <div class="flex-1 flex flex-col justify-between">
                         <div>
                             <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-white/10 backdrop-blur-md text-[10px] font-extrabold uppercase tracking-widest text-yellow-300 mb-4 border border-white/10 shadow-sm">
-                                🎉 Prestasi Kelulusan SMP
+                                <svg class="w-3.5 h-3.5 text-yellow-300" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" d="M9 12l2 2 4-4M7.835 4.697a3.42 3.42 0 001.946-.806 3.42 3.42 0 014.438 0 3.42 3.42 0 001.946.806 3.42 3.42 0 013.138 3.138 3.42 3.42 0 00.806 1.946 3.42 3.42 0 010 4.438 3.42 3.42 0 00-.806 1.946 3.42 3.42 0 01-3.138 3.138 3.42 3.42 0 00-1.946.806 3.42 3.42 0 01-4.438 0 3.42 3.42 0 00-1.946-.806 3.42 3.42 0 01-3.138-3.138 3.42 3.42 0 00-.806-1.946 3.42 3.42 0 010-4.438 3.42 3.42 0 00.806-1.946 3.42 3.42 0 013.138-3.138z" />
+                                </svg>
+                                Prestasi Kelulusan SMP
                             </div>
                             <h2 class="text-2xl sm:text-3xl font-extrabold mb-3 leading-tight tracking-tight">Selamat atas Kelulusan Anda!</h2>
                             <p class="text-emerald-100/90 text-sm sm:text-base leading-relaxed max-w-xl mb-6">
@@ -158,14 +174,22 @@
                         <!-- SMP School Graduation Badge Card (Glassmorphism) -->
                         <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 bg-white/5 backdrop-blur-md rounded-2xl p-4 border border-white/10 max-w-lg shadow-inner">
                             <div class="flex items-center gap-3">
-                                <div class="w-10 h-10 rounded-xl bg-white/10 flex items-center justify-center text-white text-lg">🏫</div>
+                                <div class="w-10 h-10 rounded-xl bg-white/10 flex items-center justify-center text-white">
+                                    <svg class="w-5 h-5 text-white" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4" />
+                                    </svg>
+                                </div>
                                 <div>
                                     <p class="text-emerald-200/70 text-[10px] font-bold uppercase tracking-wider">Asal Sekolah</p>
                                     <p class="text-white text-xs sm:text-sm font-extrabold">SMP Riyadussalikin</p>
                                 </div>
                             </div>
                             <div class="flex items-center gap-3">
-                                <div class="w-10 h-10 rounded-xl bg-yellow-400/20 flex items-center justify-center text-yellow-300 text-lg">🎖️</div>
+                                <div class="w-10 h-10 rounded-xl bg-yellow-400/20 flex items-center justify-center text-yellow-300">
+                                    <svg class="w-5 h-5 text-yellow-300" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" d="M12 14l9-5-9-5-9 5 9 5zm0 0l6.16-3.422a12.083 12.083 0 01.665 6.479A11.952 11.952 0 0012 20.055a11.952 11.952 0 00-6.824-2.998 12.078 12.078 0 01.665-6.479L12 14zm-4 6v-7.5l4-2.222" />
+                                    </svg>
+                                </div>
                                 <div>
                                     <p class="text-emerald-200/70 text-[10px] font-bold uppercase tracking-wider">Status Kelulusan</p>
                                     <span class="inline-flex items-center gap-1.5 text-xs font-black text-yellow-300">
@@ -857,7 +881,9 @@
             
             <div class="text-center mb-6">
                 <div class="w-16 h-16 rounded-3xl bg-emerald-50 flex items-center justify-center mx-auto mb-4 text-emerald-600 shadow-sm border border-emerald-100">
-                    <span class="inline-block animate-bounce text-2xl">⚡</span>
+                    <svg class="w-8 h-8 text-emerald-600 animate-bounce" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M13 10V3L4 14h7v7l9-11h-7z" />
+                    </svg>
                 </div>
                 <h3 class="text-xl font-extrabold text-gray-900">Memproses Pindah Jenjang</h3>
                 <p class="text-xs text-gray-500 mt-1 leading-normal">
