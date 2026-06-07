@@ -37,8 +37,37 @@
         overflow: hidden;
         font-family: 'Times New Roman', Times, serif !important;
         color: black;
-        line-height: 1.5;
     }
+}
+
+/* Custom Celebration Animations for Graduation */
+@keyframes float-slow {
+    0%, 100% { transform: translateY(0) rotate(0deg); }
+    50% { transform: translateY(-12px) rotate(4deg); }
+}
+@keyframes float-fast {
+    0%, 100% { transform: translateY(0) rotate(0deg) scale(1); }
+    50% { transform: translateY(-16px) rotate(-8deg) scale(1.05); }
+}
+@keyframes sparkle {
+    0%, 100% { opacity: 0.2; transform: scale(0.8); }
+    50% { opacity: 0.9; transform: scale(1.2); }
+}
+@keyframes scaleUp {
+    from { opacity: 0; transform: scale(0.95); }
+    to { opacity: 1; transform: scale(1); }
+}
+.animate-float-slow {
+    animation: float-slow 7s ease-in-out infinite;
+}
+.animate-float-fast {
+    animation: float-fast 5s ease-in-out infinite;
+}
+.animate-sparkle {
+    animation: sparkle 4s ease-in-out infinite;
+}
+.animate-scaleUp {
+    animation: scaleUp 0.3s cubic-bezier(0.16, 1, 0.3, 1) forwards;
 }
 </style>
 
@@ -100,39 +129,77 @@
             </div>
 
             <!-- Transition Banner (SMP to SMA) -->
-            <div v-if="canTransition" class="relative overflow-hidden rounded-3xl bg-gradient-to-br from-emerald-600 via-teal-600 to-cyan-600 p-6 sm:p-8 shadow-xl shadow-emerald-200 text-white animate-fadeIn border border-white/10">
-                <div class="absolute -top-10 -right-10 w-40 h-40 bg-white/10 rounded-full blur-xl pointer-events-none"></div>
-                <div class="absolute -bottom-10 -left-10 w-40 h-40 bg-emerald-500/20 rounded-full blur-xl pointer-events-none"></div>
+            <div v-if="canTransition" class="relative overflow-hidden rounded-3xl bg-gradient-to-br from-emerald-600 via-teal-700 to-cyan-800 p-6 sm:p-10 shadow-2xl shadow-emerald-900/30 text-white animate-fadeIn border border-white/20">
+                <!-- Floating Sparks/Stars and Graduation Caps for Celebration Effect -->
+                <div class="absolute top-10 left-10 w-2 h-2 bg-yellow-300 rounded-full blur-[1px] animate-sparkle" style="animation-delay: 0.5s"></div>
+                <div class="absolute top-24 right-24 w-3.5 h-3.5 bg-cyan-300 rounded-full blur-[1px] opacity-75 animate-sparkle" style="animation-delay: 1.2s"></div>
+                <div class="absolute bottom-12 left-1/3 w-3 h-3 bg-white/30 rounded-full blur-[1px] animate-sparkle" style="animation-delay: 2.1s"></div>
+                <div class="absolute bottom-20 right-1/4 w-2 h-2 bg-yellow-200 rounded-full blur-[1px] animate-sparkle" style="animation-delay: 0.8s"></div>
+                <div class="absolute top-1/2 left-8 text-white/10 select-none pointer-events-none animate-float-slow text-3xl">🎓</div>
+                <div class="absolute top-8 right-16 text-white/10 select-none pointer-events-none animate-float-fast text-4xl" style="animation-delay: 1.5s">🎓</div>
+                <div class="absolute bottom-6 right-8 text-white/5 select-none pointer-events-none animate-float-slow text-5xl" style="animation-delay: 3s">🎓</div>
+
+                <div class="absolute -top-12 -right-12 w-64 h-64 bg-white/5 rounded-full blur-3xl pointer-events-none"></div>
+                <div class="absolute -bottom-12 -left-12 w-64 h-64 bg-emerald-500/10 rounded-full blur-3xl pointer-events-none"></div>
                 
-                <div class="relative flex flex-col md:flex-row items-center gap-6 justify-between">
-                    <div class="flex items-start gap-4">
-                        <div class="w-14 h-14 rounded-2xl bg-white/20 backdrop-blur-md flex items-center justify-center flex-shrink-0 text-white shadow-inner">
-                            <!-- Graduation Cap Icon -->
-                            <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 14l9-5-9-5-9 5 9 5z" />
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 14l6.16-3.422a12.083 12.083 0 01.665 6.479A11.952 11.952 0 0012 20.055a11.952 11.952 0 00-6.824-2.998 12.078 12.078 0 01.665-6.479L12 14z" />
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 12v7a2 2 0 01-2 2H5a2 2 0 01-2-2v-7" />
-                            </svg>
-                        </div>
-                        <div class="text-left">
-                            <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-white/20 backdrop-blur-sm text-[10px] font-extrabold uppercase tracking-wider mb-2">
-                                🎓 Kelulusan & Lanjut Jenjang
+                <div class="relative flex flex-col lg:flex-row gap-8 items-stretch justify-between">
+                    <!-- Left Section: Celebration Card -->
+                    <div class="flex-1 flex flex-col justify-between">
+                        <div>
+                            <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-white/10 backdrop-blur-md text-[10px] font-extrabold uppercase tracking-widest text-yellow-300 mb-4 border border-white/10 shadow-sm">
+                                🎉 Prestasi Kelulusan SMP
                             </div>
-                            <h2 class="text-xl sm:text-2xl font-black mb-2 leading-tight">Selamat atas kelulusan Anda di SMP!</h2>
-                            <p class="text-emerald-100 text-xs sm:text-sm leading-relaxed max-w-xl">
-                                Sebagai alumni SMP Pondok Pesantren Riyadussalikin, Anda dapat langsung melanjutkan pendidikan ke jenjang <strong>SMA Ksatria Nusantara</strong>. Klik tombol di bawah untuk mendaftar otomatis dengan menyalin seluruh biodata lama Anda.
+                            <h2 class="text-2xl sm:text-3xl font-extrabold mb-3 leading-tight tracking-tight">Selamat atas Kelulusan Anda!</h2>
+                            <p class="text-emerald-100/90 text-sm sm:text-base leading-relaxed max-w-xl mb-6">
+                                Sebagai alumni <strong>SMP Pondok Pesantren Riyadussalikin</strong>, Anda telah dinyatakan <strong>LULUS</strong> dan berhak untuk langsung melanjutkan pendidikan ke jenjang <strong>SMA Ksatria Nusantara</strong>.
                             </p>
                         </div>
+
+                        <!-- SMP School Graduation Badge Card (Glassmorphism) -->
+                        <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 bg-white/5 backdrop-blur-md rounded-2xl p-4 border border-white/10 max-w-lg shadow-inner">
+                            <div class="flex items-center gap-3">
+                                <div class="w-10 h-10 rounded-xl bg-white/10 flex items-center justify-center text-white text-lg">🏫</div>
+                                <div>
+                                    <p class="text-emerald-200/70 text-[10px] font-bold uppercase tracking-wider">Asal Sekolah</p>
+                                    <p class="text-white text-xs sm:text-sm font-extrabold">SMP Riyadussalikin</p>
+                                </div>
+                            </div>
+                            <div class="flex items-center gap-3">
+                                <div class="w-10 h-10 rounded-xl bg-yellow-400/20 flex items-center justify-center text-yellow-300 text-lg">🎖️</div>
+                                <div>
+                                    <p class="text-emerald-200/70 text-[10px] font-bold uppercase tracking-wider">Status Kelulusan</p>
+                                    <span class="inline-flex items-center gap-1.5 text-xs font-black text-yellow-300">
+                                        <span class="w-2 h-2 rounded-full bg-yellow-300 animate-ping"></span>
+                                        LULUS / ALUMNI
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
                     </div>
-                    
-                    <button @click="handleTransition" :disabled="isTransitioning"
-                        class="w-full md:w-auto inline-flex items-center justify-center gap-3 bg-white text-emerald-700 px-6 py-4 rounded-2xl font-black text-sm sm:text-base hover:bg-emerald-50 transition-all duration-300 shadow-lg hover:scale-105 active:scale-95 disabled:opacity-75 disabled:cursor-not-allowed flex-shrink-0">
-                        <span v-if="isTransitioning" class="inline-block animate-spin h-5 w-5 border-2 border-emerald-700 border-t-transparent rounded-full"></span>
-                        <svg v-else class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M13 5l7 7-7 7M5 5l7 7-7 7" />
-                        </svg>
-                        Lanjut Daftar ke SMA
-                    </button>
+
+                    <!-- Right Section: Transition Actions -->
+                    <div class="lg:w-80 flex flex-col justify-center items-stretch bg-white/5 backdrop-blur-md rounded-3xl p-6 border border-white/10 shadow-lg relative">
+                        <div class="text-center mb-5">
+                            <div class="w-16 h-16 rounded-2xl bg-white/10 flex items-center justify-center mx-auto mb-3 shadow-inner">
+                                <svg class="w-9 h-9 text-yellow-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z" />
+                                </svg>
+                            </div>
+                            <h3 class="text-lg font-black tracking-tight text-white">Lanjut Ke SMA</h3>
+                            <p class="text-emerald-100/70 text-xs mt-1 leading-normal">
+                                Salin seluruh biodata, data keluarga, dan berkas Anda ke pendaftaran SMA secara instan dengan 1 klik.
+                            </p>
+                        </div>
+
+                        <button @click="startTransitionFlow" :disabled="isTransitioning"
+                            class="w-full inline-flex items-center justify-center gap-3 bg-gradient-to-r from-yellow-400 to-amber-500 text-gray-900 py-3.5 rounded-2xl font-black text-sm sm:text-base hover:from-yellow-300 hover:to-amber-400 transition-all duration-300 shadow-xl shadow-amber-950/20 hover:scale-102 active:scale-98 disabled:opacity-70 disabled:cursor-not-allowed">
+                            <span v-if="isTransitioning" class="inline-block animate-spin h-5 w-5 border-2 border-gray-900 border-t-transparent rounded-full"></span>
+                            <svg v-else class="w-5 h-5 text-gray-900" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M13 5l7 7-7 7M5 5l7 7-7 7" />
+                            </svg>
+                            Lanjut Daftar ke SMA
+                        </button>
+                    </div>
                 </div>
             </div>
 
@@ -778,7 +845,74 @@
         </div>
     </div>
 
+    <!-- Stepped Transition Progress Modal -->
+    <div v-if="showTransitionModal" class="fixed inset-0 z-50 overflow-y-auto flex items-center justify-center p-4">
+        <!-- Backdrop -->
+        <div class="fixed inset-0 bg-slate-900/80 backdrop-blur-md transition-opacity"></div>
 
+        <!-- Modal Content -->
+        <div class="relative bg-white rounded-3xl max-w-md w-full p-6 sm:p-8 shadow-2xl border border-gray-100 overflow-hidden transform transition-all animate-scaleUp z-10">
+            <!-- Top Decoration Circle -->
+            <div class="absolute -top-12 -right-12 w-36 h-36 bg-emerald-50 rounded-full -z-10"></div>
+            
+            <div class="text-center mb-6">
+                <div class="w-16 h-16 rounded-3xl bg-emerald-50 flex items-center justify-center mx-auto mb-4 text-emerald-600 shadow-sm border border-emerald-100">
+                    <span class="inline-block animate-bounce text-2xl">⚡</span>
+                </div>
+                <h3 class="text-xl font-extrabold text-gray-900">Memproses Pindah Jenjang</h3>
+                <p class="text-xs text-gray-500 mt-1 leading-normal">
+                    Mohon tunggu sebentar, sistem sedang memindahkan data akademik Anda dari SMP ke jenjang SMA.
+                </p>
+            </div>
+
+            <!-- Steps List -->
+            <div class="space-y-4 mb-6">
+                <div v-for="(step, sIdx) in transitionSteps" :key="sIdx"
+                    class="flex items-center gap-3 p-3.5 rounded-2xl border transition-all duration-300"
+                    :class="{
+                        'bg-emerald-50 border-emerald-200 text-emerald-900': step.status === 'done',
+                        'bg-white border-emerald-300 shadow-sm ring-2 ring-emerald-50': step.status === 'active',
+                        'bg-gray-50 border-gray-100 text-gray-400': step.status === 'pending',
+                        'bg-red-50 border-red-200 text-red-900': step.status === 'error',
+                    }">
+                    <!-- Icon/Indicator -->
+                    <div class="w-8 h-8 rounded-xl flex items-center justify-center flex-shrink-0"
+                        :class="{
+                            'bg-emerald-500 text-white': step.status === 'done',
+                            'bg-white border-2 border-emerald-500 text-emerald-500': step.status === 'active',
+                            'bg-gray-100 text-gray-300': step.status === 'pending',
+                            'bg-red-500 text-white': step.status === 'error',
+                        }">
+                        <svg v-if="step.status === 'done'" class="w-4 h-4 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="3.5" d="M5 13l4 4L19 7" />
+                        </svg>
+                        <span v-else-if="step.status === 'active'" class="inline-block animate-spin h-4 w-4 border-2 border-emerald-500 border-t-transparent rounded-full"></span>
+                        <svg v-else-if="step.status === 'error'" class="w-4 h-4 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M6 18L18 6M6 6l12 12" />
+                        </svg>
+                        <span v-else class="text-xs font-bold">{{ sIdx + 1 }}</span>
+                    </div>
+
+                    <div class="flex-1 min-w-0">
+                        <p class="text-xs font-extrabold uppercase tracking-wider"
+                            :class="step.status === 'pending' ? 'text-gray-400' : step.status === 'done' ? 'text-emerald-800' : step.status === 'error' ? 'text-red-800' : 'text-emerald-900'">
+                            {{ step.title }}
+                        </p>
+                        <p class="text-[11px] mt-0.5 leading-normal"
+                            :class="step.status === 'pending' ? 'text-gray-300' : 'text-gray-500'">
+                            {{ step.desc }}
+                        </p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Progress bar -->
+            <div class="w-full bg-gray-100 h-2 rounded-full overflow-hidden mb-2">
+                <div class="bg-gradient-to-r from-emerald-500 to-teal-500 h-full transition-all duration-500"
+                    :style="{ width: `${transitionProgress}%` }"></div>
+            </div>
+        </div>
+    </div>
 </template>
 
 <script setup>
@@ -788,6 +922,14 @@ import html2pdf from 'html2pdf.js';
 import Swal from 'sweetalert2';
 
 const isTransitioning = ref(false);
+const showTransitionModal = ref(false);
+const transitionProgress = ref(0);
+const transitionSteps = ref([
+    { title: 'Validasi Syarat', desc: 'Memverifikasi status kelulusan SMP Anda...', status: 'pending' },
+    { title: 'Inisialisasi SMA', desc: 'Mempersiapkan pendaftaran SMA Ksatria Nusantara...', status: 'pending' },
+    { title: 'Menyalin Biodata', desc: 'Menyalin biodata lengkap, data orang tua & wali...', status: 'pending' },
+    { title: 'Mengkloning Dokumen', desc: 'Menyalin seluruh berkas dokumen pendaftaran...', status: 'pending' },
+]);
 
 const isDownloading = ref(false);
 const isDownloadingStatement = ref(false);
@@ -912,7 +1054,7 @@ const props = defineProps({
     canTransition: Boolean,
 });
 
-const handleTransition = () => {
+const startTransitionFlow = () => {
     if (isTransitioning.value) return;
     
     Swal.fire({
@@ -924,22 +1066,74 @@ const handleTransition = () => {
         cancelButtonColor: '#6b7280',
         confirmButtonText: 'Ya, Lanjutkan',
         cancelButtonText: 'Batal'
-    }).then((result) => {
+    }).then(async (result) => {
         if (result.isConfirmed) {
             isTransitioning.value = true;
-            router.post(route('ppdb.transition'), {}, {
-                onError: (errors) => {
-                    Swal.fire({
-                        icon: 'error',
-                        title: 'Gagal Pindah Jenjang',
-                        text: errors.message || 'Terjadi kesalahan saat melakukan perpindahan jenjang.',
-                        confirmButtonColor: '#10b981',
-                    });
-                },
-                onFinish: () => {
-                    isTransitioning.value = false;
-                }
-            });
+            showTransitionModal.value = true;
+            transitionProgress.value = 0;
+            
+            // Reset steps
+            transitionSteps.value.forEach(s => s.status = 'pending');
+            
+            try {
+                // Step 1: Validasi Syarat
+                transitionSteps.value[0].status = 'active';
+                transitionProgress.value = 15;
+                await new Promise(r => setTimeout(r, 600));
+                transitionSteps.value[0].status = 'done';
+                
+                // Step 2: Inisialisasi SMA
+                transitionSteps.value[1].status = 'active';
+                transitionProgress.value = 40;
+                await new Promise(r => setTimeout(r, 700));
+                transitionSteps.value[1].status = 'done';
+                
+                // Step 3: Menyalin Biodata
+                transitionSteps.value[2].status = 'active';
+                transitionProgress.value = 65;
+                await new Promise(r => setTimeout(r, 600));
+                transitionSteps.value[2].status = 'done';
+                
+                // Step 4: Mengkloning Dokumen
+                transitionSteps.value[3].status = 'active';
+                transitionProgress.value = 90;
+                await new Promise(r => setTimeout(r, 700));
+                
+                // Call post route
+                router.post(route('ppdb.transition'), {}, {
+                    onSuccess: () => {
+                        transitionSteps.value[3].status = 'done';
+                        transitionProgress.value = 100;
+                        setTimeout(() => {
+                            showTransitionModal.value = false;
+                            isTransitioning.value = false;
+                        }, 500);
+                    },
+                    onError: (errors) => {
+                        transitionSteps.value[3].status = 'error';
+                        const activeStep = transitionSteps.value.find(s => s.status === 'active');
+                        if (activeStep) activeStep.status = 'error';
+                        
+                        Swal.fire({
+                            icon: 'error',
+                            title: 'Gagal Pindah Jenjang',
+                            text: errors.message || 'Terjadi kesalahan saat melakukan perpindahan jenjang.',
+                            confirmButtonColor: '#10b981',
+                        }).then(() => {
+                            showTransitionModal.value = false;
+                            isTransitioning.value = false;
+                        });
+                    },
+                    onFinish: () => {
+                        setTimeout(() => {
+                            isTransitioning.value = false;
+                        }, 2000);
+                    }
+                });
+            } catch (err) {
+                showTransitionModal.value = false;
+                isTransitioning.value = false;
+            }
         }
     });
 };
