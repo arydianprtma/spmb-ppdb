@@ -3,11 +3,8 @@ window.axios = axios;
 
 window.axios.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest';
 
-const token = document.head.querySelector('meta[name="csrf-token"]');
-
-if (token) {
-    window.axios.defaults.headers.common['X-CSRF-TOKEN'] = token.content;
-}
+// window.axios.defaults.xsrfCookieName is configured below.
+// Inertia/Axios will automatically read this cookie and set the X-XSRF-TOKEN header.
 
 window.axios.defaults.xsrfCookieName = 'ppdb-XSRF-TOKEN';
 

@@ -27,9 +27,6 @@ const refreshCsrf = async () => {
         
         const meta = document.querySelector('meta[name="csrf-token"]');
         if (meta) meta.setAttribute('content', data.token);
-        if (window.axios) {
-            window.axios.defaults.headers.common['X-CSRF-TOKEN'] = data.token;
-        }
     } catch (e) {
     } finally {
         isRefreshing.value = false;
