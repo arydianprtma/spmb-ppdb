@@ -33,4 +33,7 @@ createInertiaApp({
     progress: {
         color: '#4B5563',
     },
+    http: {
+        xsrfCookieName: 'ppdb-XSRF-TOKEN',
+    },
 });
