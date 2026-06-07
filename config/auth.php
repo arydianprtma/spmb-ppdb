@@ -14,7 +14,7 @@ return [
     */
 
     'defaults' => [
-        'guard' => env('AUTH_GUARD', 'web'),
+        'guard' => env('AUTH_GUARD', 'portal'),
         'passwords' => env('AUTH_PASSWORD_BROKER', 'users'),
     ],
 
@@ -33,10 +33,10 @@ return [
     |
     | Supported: "session"
     |
-    */
+    |*/
 
     'guards' => [
-        'web' => [
+        'portal' => [
             'driver' => 'session',
             'provider' => 'users',
             'remember' => 20160, // 14 days in minutes (14 * 24 * 60)
