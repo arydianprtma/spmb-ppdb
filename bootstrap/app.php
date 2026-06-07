@@ -34,5 +34,7 @@ return Application::configure(basePath: dirname(__DIR__))
         $middleware->trustProxies(at: '*');
     })
     ->withExceptions(function (Exceptions $exceptions): void {
-        //
+        $exceptions->render(function (\Illuminate\Session\TokenMismatchException $e, \Illuminate\Http\Request $request) {
+            return back()->with('error', 'Sesi Anda telah berakhir atau token CSRF kedaluwarsa. Halaman telah dimuat ulang secara otomatis, silakan coba lagi.');
+        });
     })->create();

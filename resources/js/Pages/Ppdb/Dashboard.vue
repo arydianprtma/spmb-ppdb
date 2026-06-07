@@ -958,10 +958,37 @@
 </template>
 
 <script setup>
-import { computed, ref, onMounted, onUnmounted } from 'vue';
-import { Head, Link, router } from '@inertiajs/vue3';
+import { computed, ref, onMounted, onUnmounted, watch } from 'vue';
+import { Head, Link, router, usePage } from '@inertiajs/vue3';
 import html2pdf from 'html2pdf.js';
 import Swal from 'sweetalert2';
+
+const page = usePage();
+
+// Watch for flash success/error messages from redirect sessions
+watch(() => page.props.flash?.error, (newVal) => {
+    if (newVal) {
+        Swal.fire({
+            title: 'Terjadi Kesalahan',
+            text: newVal,
+            icon: 'error',
+            confirmButtonColor: '#10b981',
+            confirmButtonText: 'OK',
+        });
+    }
+}, { immediate: true });
+
+watch(() => page.props.flash?.success, (newVal) => {
+    if (newVal) {
+        Swal.fire({
+            title: 'Berhasil',
+            text: newVal,
+            icon: 'success',
+            confirmButtonColor: '#10b981',
+            confirmButtonText: 'OK',
+        });
+    }
+}, { immediate: true });
 
 const isTransitioning = ref(false);
 const showTransitionModal = ref(false);
