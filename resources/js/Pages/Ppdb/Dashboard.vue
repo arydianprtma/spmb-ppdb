@@ -460,7 +460,7 @@
                                 <!-- Klasifikasi badge when accepted -->
                                 <div v-if="['diterima_ula','diterima_idadiyah','diterima_wustho','diterima_ulya','diterima'].includes(pendaftaran.status) && stage.key === 'hasil'"
                                     class="mt-3 inline-flex items-center gap-2 bg-emerald-600 text-white px-4 py-2 rounded-xl text-sm font-bold shadow-md shadow-emerald-200">
-                                    🎉 Selamat! Kelas: {{ klasifikasiLabel }}
+                                    Selamat! Kelas: {{ klasifikasiLabel }}
                                 </div>
                             </div>
                         </div>
