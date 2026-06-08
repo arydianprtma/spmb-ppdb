@@ -14,9 +14,10 @@ const fileInput = ref(null);
 
 // Profile form
 const profileForm = useForm({
-    name:   props.user.name,
-    email:  props.user.email,
-    avatar: null,
+    name:     props.user.name,
+    email:    props.user.email,
+    whatsapp: props.user.whatsapp,
+    avatar:   null,
 });
 
 // Password form
@@ -185,7 +186,11 @@ watch(() => props.user.avatar, (newAvatar) => {
                         </div>
                         <div class="pb-1">
                             <h1 class="text-xl font-bold text-gray-900">{{ user.name }}</h1>
-                            <p class="text-sm text-gray-500">{{ user.email }}</p>
+                            <div class="flex flex-wrap items-center gap-x-2 gap-y-0.5 text-sm text-gray-500">
+                                <span>{{ user.email }}</span>
+                                <span class="text-gray-300">•</span>
+                                <span>{{ user.whatsapp }}</span>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -241,6 +246,13 @@ watch(() => props.user.avatar, (newAvatar) => {
                                 class="w-full px-4 py-3 rounded-xl border border-gray-200 text-sm focus:outline-none focus:ring-2 focus:ring-emerald-400 focus:border-transparent transition-all"
                                 :class="profileForm.errors.email ? 'border-red-400 bg-red-50' : ''" />
                             <p v-if="profileForm.errors.email" class="text-xs text-red-500 mt-1">{{ profileForm.errors.email }}</p>
+                        </div>
+                        <div>
+                            <label class="block text-xs font-semibold text-gray-600 mb-1.5">Nomor WhatsApp (HP)</label>
+                            <input v-model="profileForm.whatsapp" type="text" placeholder="Contoh: 081234567890"
+                                class="w-full px-4 py-3 rounded-xl border border-gray-200 text-sm focus:outline-none focus:ring-2 focus:ring-emerald-400 focus:border-transparent transition-all"
+                                :class="profileForm.errors.whatsapp ? 'border-red-400 bg-red-50' : ''" />
+                            <p v-if="profileForm.errors.whatsapp" class="text-xs text-red-500 mt-1">{{ profileForm.errors.whatsapp }}</p>
                         </div>
                         <div>
                             <label class="block text-xs font-semibold text-gray-600 mb-1.5">Foto Profil</label>

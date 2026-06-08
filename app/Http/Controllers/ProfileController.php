@@ -28,10 +28,11 @@ class ProfileController extends Controller
 
         return Inertia::render('Profile/Edit', [
             'user' => [
-                'id'     => $user->id,
-                'name'   => $user->name,
-                'email'  => $user->email,
-                'avatar' => $avatarUrl,
+                'id'       => $user->id,
+                'name'     => $user->name,
+                'email'    => $user->email,
+                'whatsapp' => $user->whatsapp,
+                'avatar'   => $avatarUrl,
             ],
         ]);
     }
@@ -48,15 +49,20 @@ class ProfileController extends Controller
         ]);
 
         $validated = $request->validate([
-            'name'   => 'required|string|max:255',
-            'email'  => 'required|email|max:255|unique:users,email,' . $user->id,
-            'avatar' => 'nullable|image|mimes:jpg,jpeg,png,webp|max:4096',
+            'name'     => 'required|string|max:255',
+            'email'    => 'required|email|max:255|unique:users,email,' . $user->id,
+            'whatsapp' => 'required|string|min:10|max:15|unique:users,whatsapp,' . $user->id,
+            'avatar'   => 'nullable|image|mimes:jpg,jpeg,png,webp|max:4096',
         ], [
-            'name.required'  => 'Nama wajib diisi.',
-            'email.required' => 'Email wajib diisi.',
-            'email.unique'   => 'Email sudah digunakan.',
-            'avatar.image'   => 'File harus berupa gambar.',
-            'avatar.max'     => 'Ukuran foto maksimal 4MB.',
+            'name.required'     => 'Nama wajib diisi.',
+            'email.required'    => 'Email wajib diisi.',
+            'email.unique'      => 'Email sudah digunakan.',
+            'whatsapp.required' => 'Nomor WhatsApp wajib diisi.',
+            'whatsapp.min'      => 'Nomor WhatsApp minimal 10 digit.',
+            'whatsapp.max'      => 'Nomor WhatsApp maksimal 15 digit.',
+            'whatsapp.unique'   => 'Nomor WhatsApp ini sudah terdaftar.',
+            'avatar.image'      => 'File harus berupa gambar.',
+            'avatar.max'        => 'Ukuran foto maksimal 4MB.',
         ]);
 
         if ($request->hasFile('avatar')) {
