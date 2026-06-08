@@ -496,6 +496,16 @@
                             <dd class="text-sm font-semibold text-gray-800 text-right">{{ pendaftaran.siswa?.nama_lengkap }}</dd>
                         </div>
                         <div class="flex justify-between gap-4">
+                            <dt class="text-sm text-gray-500 flex-shrink-0">NIK</dt>
+                            <dd class="text-sm font-semibold text-gray-800 text-right">{{ pendaftaran.siswa?.nik ?? '-' }}</dd>
+                        </div>
+                        <div class="flex justify-between gap-4">
+                            <dt class="text-sm text-gray-500 flex-shrink-0">Jenis Kelamin</dt>
+                            <dd class="text-sm font-semibold text-gray-800 text-right">
+                                {{ pendaftaran.siswa?.jenis_kelamin === 'L' ? 'Laki-laki' : 'Perempuan' }}
+                            </dd>
+                        </div>
+                        <div class="flex justify-between gap-4">
                             <dt class="text-sm text-gray-500 flex-shrink-0">Tempat, Tgl Lahir</dt>
                             <dd class="text-sm font-semibold text-gray-800 text-right">{{ pendaftaran.siswa?.tempat_lahir }}, {{ pendaftaran.siswa?.tanggal_lahir }}</dd>
                         </div>
@@ -504,8 +514,26 @@
                             <dd class="text-sm font-semibold text-gray-800 text-right">{{ pendaftaran.siswa?.nisn ?? '-' }}</dd>
                         </div>
                         <div class="flex justify-between gap-4">
+                            <dt class="text-sm text-gray-500 flex-shrink-0">Asal Sekolah</dt>
+                            <dd class="text-sm font-semibold text-gray-800 text-right">{{ pendaftaran.siswa?.asal_sekolah ?? '-' }}</dd>
+                        </div>
+                        <div class="flex justify-between gap-4">
                             <dt class="text-sm text-gray-500 flex-shrink-0">No. HP</dt>
                             <dd class="text-sm font-semibold text-gray-800 text-right">{{ pendaftaran.siswa?.no_hp }}</dd>
+                        </div>
+                        <div class="flex justify-between gap-4">
+                            <dt class="text-sm text-gray-500 flex-shrink-0">Nama Ayah</dt>
+                            <dd class="text-sm font-semibold text-gray-800 text-right">{{ namaAyah }}</dd>
+                        </div>
+                        <div class="flex justify-between gap-4">
+                            <dt class="text-sm text-gray-500 flex-shrink-0">Nama Ibu</dt>
+                            <dd class="text-sm font-semibold text-gray-800 text-right">{{ namaIbu }}</dd>
+                        </div>
+                        <div class="flex justify-between gap-4">
+                            <dt class="text-sm text-gray-500 flex-shrink-0">Alamat Lengkap</dt>
+                            <dd class="text-sm font-semibold text-gray-800 text-right leading-relaxed max-w-[70%]">
+                                {{ alamatLengkap }}
+                            </dd>
                         </div>
                     </dl>
                 </div>
@@ -1415,6 +1443,33 @@ const formatJam = (jam) => {
     // jam format: "HH:MM:SS" or "HH:MM"
     return jam.substring(0, 5) + ' WIB';
 };
+
+const alamatLengkap = computed(() => {
+    const s = props.pendaftaran?.siswa;
+    if (!s) return '';
+    let parts = [s.alamat];
+    if (s.rt || s.rw) {
+        parts.push(`RT ${s.rt ?? '-'}/RW ${s.rw ?? '-'}`);
+    }
+    if (s.dusun) parts.push(`Dsn. ${s.dusun}`);
+    if (s.kelurahan_desa) parts.push(`Desa ${s.kelurahan_desa}`);
+    if (s.kecamatan) parts.push(`Kec. ${s.kecamatan}`);
+    if (s.kabupaten_kota) parts.push(s.kabupaten_kota);
+    if (s.provinsi) parts.push(s.provinsi);
+    return parts.filter(Boolean).join(', ');
+});
+
+const namaAyah = computed(() => {
+    const ortu = props.pendaftaran?.orange_tua ?? props.pendaftaran?.orangTua ?? [];
+    const ayah = Array.isArray(ortu) ? ortu.find(o => o.jenis === 'ayah') : null;
+    return ayah?.nama ?? '-';
+});
+
+const namaIbu = computed(() => {
+    const ortu = props.pendaftaran?.orange_tua ?? props.pendaftaran?.orangTua ?? [];
+    const ibu = Array.isArray(ortu) ? ortu.find(o => o.jenis === 'ibu') : null;
+    return ibu?.nama ?? '-';
+});
 
 const berkasStatus = computed(() => [
     { key: 'ijazah_skhu',        label: 'Ijazah / SKHU' },
