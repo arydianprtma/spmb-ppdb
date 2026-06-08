@@ -563,11 +563,10 @@
                             <li>Masukkan semua berkas fisik ke dalam map dan beri nama calon santri.</li>
                             <li>Warna map: 
                                 <span class="font-bold text-blue-600">SMP (Map Biru)</span> · 
-                                <span class="font-bold text-red-600">SMA (Map Snelheckter Merah)</span> · 
-                                <span class="font-bold text-emerald-600">Takhosus (Map Hijau)</span>.
+                                <span class="font-bold text-red-600">SMA (Map Snelheckter Merah)</span>.
                             </li>
                             <li>Fotokopi Ijazah/SKHU, Akte, KK, KTP diperbanyak masing-masing <span class="font-bold">3 lembar</span> (KTP orang tua diperbesar 200%).</li>
-                            <li>Pas foto latar merah berseragam ukuran 2x3 (<span class="font-bold">3 lembar</span>) & 3x4 (<span class="font-bold">3 lembar</span>). Santri Takhosus menggunakan foto hitam putih.</li>
+                            <li>Pas foto latar merah berseragam ukuran 2x3 (<span class="font-bold">3 lembar</span>) & 3x4 (<span class="font-bold">3 lembar</span>).</li>
                         </ul>
                     </div>
                 </div>
