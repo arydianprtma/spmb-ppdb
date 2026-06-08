@@ -138,6 +138,14 @@ class PpdbRegistrantForm
                                             ->visibility('private')
                                             ->saveUploadedFileUsing(fn ($file) => \App\Services\ImageService::processUpload($file, 'Ppdb/ijazah'))
                                             ->maxSize(2048),
+                                        FileUpload::make('rapot_legalisir')
+                                            ->label(fn ($record) => $record?->tingkat === 'smp' 
+                                                ? 'Rapot Terakhir SD/MI & Data Siswa' 
+                                                : 'Rapot Terakhir SMP/MTs & Data Siswa')
+                                            ->disk('local')
+                                            ->visibility('private')
+                                            ->saveUploadedFileUsing(fn ($file) => \App\Services\ImageService::processUpload($file, 'Ppdb/rapot_legalisir'))
+                                            ->maxSize(2048),
                                         FileUpload::make('akte_kelahiran')
                                             ->image()
                                             ->disk('local')

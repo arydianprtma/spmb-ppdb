@@ -161,6 +161,7 @@ class PpdbController extends Controller
             
             // Berkas Upload Validation
             'berkas.ijazah_skhu' => 'nullable|file|mimes:jpg,jpeg,png,webp,pdf|max:2048',
+            'berkas.rapot_legalisir' => 'nullable|file|mimes:jpg,jpeg,png,webp,pdf|max:2048',
             'berkas.akte_kelahiran' => 'nullable|file|mimes:jpg,jpeg,png,webp,pdf|max:2048',
             'berkas.ktp_orang_tua' => 'nullable|file|mimes:jpg,jpeg,png,webp,pdf|max:2048',
             'berkas.kartu_keluarga' => 'nullable|file|mimes:jpg,jpeg,png,webp,pdf|max:2048',
@@ -191,6 +192,7 @@ class PpdbController extends Controller
             'file' => 'Kolom :attribute harus berupa berkas/file.',
             'mimes' => 'Format file :attribute tidak didukung. Harap unggah berkas dengan format: :values.',
             'berkas.ijazah_skhu.max' => 'Berkas Ijazah/SKHU maksimal 2MB.',
+            'berkas.rapot_legalisir.max' => 'Berkas Rapot Legalisir maksimal 2MB.',
             'berkas.akte_kelahiran.max' => 'Berkas Akta Kelahiran maksimal 2MB.',
             'berkas.ktp_orang_tua.max' => 'Berkas KTP Orang Tua maksimal 2MB.',
             'berkas.kartu_keluarga.max' => 'Berkas Kartu Keluarga maksimal 2MB.',
@@ -225,6 +227,7 @@ class PpdbController extends Controller
             'ibu.nik' => 'NIK Ibu',
             'wali.nik' => 'NIK Wali',
             'berkas.ijazah_skhu' => 'Berkas Ijazah/SKHU',
+            'berkas.rapot_legalisir' => 'Berkas Rapot Legalisir',
             'berkas.akte_kelahiran' => 'Berkas Akta Kelahiran',
             'berkas.ktp_orang_tua' => 'Berkas KTP Orang Tua',
             'berkas.kartu_keluarga' => 'Berkas Kartu Keluarga',
@@ -299,7 +302,7 @@ class PpdbController extends Controller
             // Simpan Berkas
             $berkasData = [];
             $fileFields = [
-                'ijazah_skhu', 'akte_kelahiran', 'ktp_orang_tua', 'kartu_keluarga',
+                'ijazah_skhu', 'rapot_legalisir', 'akte_kelahiran', 'ktp_orang_tua', 'kartu_keluarga',
                 'surat_sehat', 'surat_kelakuan_baik', 'kartu_kks_pkh', 'kartu_kps',
                 'kartu_kip', 'kartu_kis_bpjs', 'kartu_nisn'
             ];

@@ -1383,12 +1383,18 @@ const formatJam = (jam) => {
     return jam.substring(0, 5) + ' WIB';
 };
 
-const berkasStatus = [
+const berkasStatus = computed(() => [
     { key: 'ijazah_skhu',        label: 'Ijazah / SKHU' },
+    {
+        key: 'rapot_legalisir',
+        label: props.pendaftaran?.tingkat === 'smp'
+            ? 'Rapot SD/MI'
+            : 'Rapot SMP/MTs'
+    },
     { key: 'akte_kelahiran',     label: 'Akte Kelahiran' },
     { key: 'ktp_orang_tua',      label: 'KTP Orang Tua' },
     { key: 'kartu_keluarga',     label: 'Kartu Keluarga' },
     { key: 'surat_sehat',        label: 'Surat Sehat' },
     { key: 'surat_kelakuan_baik',label: 'Surat Kelakuan Baik' },
-];
+]);
 </script>

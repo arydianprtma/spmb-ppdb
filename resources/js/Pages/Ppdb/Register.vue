@@ -1090,7 +1090,7 @@ const ex = props.existingData; // shorthand
 // Populate existingBerkas from server data (edit mode)
 if (ex?.berkas) {
     const berkasKeys = [
-        'ijazah_skhu', 'akte_kelahiran', 'ktp_orang_tua', 'kartu_keluarga',
+        'ijazah_skhu', 'rapot_legalisir', 'akte_kelahiran', 'ktp_orang_tua', 'kartu_keluarga',
         'surat_sehat', 'surat_kelakuan_baik', 'kartu_kks_pkh', 'kartu_kps',
         'kartu_kip', 'kartu_kis_bpjs', 'kartu_nisn'
     ];
@@ -1190,7 +1190,7 @@ const form = useForm({
     prestasi:  ex?.prestasi  ?? draft?.prestasi  ?? [],
     beasiswa:  ex?.beasiswa  ?? draft?.beasiswa  ?? [],
     berkas: {
-        ijazah_skhu: null, akte_kelahiran: null, ktp_orang_tua: null,
+        ijazah_skhu: null, rapot_legalisir: null, akte_kelahiran: null, ktp_orang_tua: null,
         kartu_keluarga: null, surat_sehat: null, surat_kelakuan_baik: null,
         kartu_kks_pkh: null, kartu_kps: null, kartu_kip: null,
         kartu_kis_bpjs: null, kartu_nisn: null,
@@ -1344,14 +1344,20 @@ const handleFileUpload = (event, field) => {
     form.berkas[field] = file;
 };
 
-const berkasWajib = [
+const berkasWajib = computed(() => [
     { key: 'ijazah_skhu',        label: 'Ijazah / SKHU (Dilegalisir)' },
+    {
+        key: 'rapot_legalisir',
+        label: form.tingkat === 'smp'
+            ? 'Rapot Semester Terakhir SD/MI (Legalisir) + Data Siswa (1 Lembar)'
+            : 'Rapot Semester Terakhir SMP/MTs (Legalisir) + Data Siswa (1 Lembar)'
+    },
     { key: 'akte_kelahiran',     label: 'Akte Kelahiran' },
     { key: 'ktp_orang_tua',      label: 'KTP Orang Tua (Ayah/Ibu)' },
     { key: 'kartu_keluarga',     label: 'Kartu Keluarga (KK)' },
     { key: 'surat_sehat',        label: 'Surat Keterangan Sehat' },
     { key: 'surat_kelakuan_baik',label: 'Surat Kelakuan Baik (Sekolah)' },
-];
+]);
 
 const berkasOpsional = [
     { key: 'kartu_kks_pkh',  label: 'Kartu KKS / PKH' },

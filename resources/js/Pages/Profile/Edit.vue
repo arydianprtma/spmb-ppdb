@@ -267,6 +267,12 @@ watch(() => props.user.avatar, (newAvatar) => {
                                 </button>
                                 <span v-if="profileForm.avatar" class="text-xs text-gray-500 truncate max-w-[120px]">{{ profileForm.avatar.name }}</span>
                             </div>
+                            <p class="text-xs text-amber-600 font-medium mt-2 flex items-center gap-1.5 bg-amber-50/70 border border-amber-100 rounded-xl p-2.5">
+                                <svg class="w-4 h-4 flex-shrink-0 text-amber-500" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" />
+                                </svg>
+                                <span>Himbauan: Silakan unggah pas foto diri menggunakan seragam sekolah dengan latar belakang merah.</span>
+                            </p>
                             <p v-if="profileForm.errors.avatar" class="text-xs text-red-500 mt-1">{{ profileForm.errors.avatar }}</p>
                         </div>
                         <div class="pt-2">
@@ -353,6 +359,12 @@ watch(() => props.user.avatar, (newAvatar) => {
                     <div class="mb-4">
                         <h3 class="text-lg font-bold text-gray-800">Sesuaikan Pas Foto</h3>
                         <p class="text-xs text-gray-500 mt-1">Geser, perbesar, dan atur posisi foto calon santri agar pas di dalam kotak potong (Rasio 3:4).</p>
+                        <p class="text-[11px] text-amber-600 font-medium mt-2 bg-amber-50 border border-amber-100 rounded-lg p-2 flex items-center gap-1">
+                            <svg class="w-3.5 h-3.5 text-amber-500 flex-shrink-0" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" />
+                            </svg>
+                            <span>Himbauan: Gunakan pas foto berseragam sekolah dengan latar belakang merah.</span>
+                        </p>
                     </div>
 
                     <!-- Cropper Container -->
