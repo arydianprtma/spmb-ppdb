@@ -167,6 +167,23 @@
                 </div>
             </div>
 
+            <!-- Pas Foto Warning Banner -->
+            <div v-if="!$page.props.auth.user.avatar" class="bg-amber-50 border border-amber-200 rounded-3xl p-5 shadow-sm flex items-start gap-4">
+                <div class="w-10 h-10 rounded-xl bg-amber-100 flex items-center justify-center flex-shrink-0 text-amber-600">
+                    <svg class="w-5.5 h-5.5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" />
+                    </svg>
+                </div>
+                <div class="flex-1">
+                    <h4 class="font-bold text-sm text-amber-800">Pas Foto Belum Diunggah</h4>
+                    <p class="text-xs text-amber-600 font-medium mt-1 leading-relaxed">
+                        Anda belum mengunggah pas foto profil. Harap mengunggah pas foto berseragam sekolah dengan latar belakang merah melalui menu 
+                        <Link :href="route('profile.edit')" class="underline hover:text-amber-800 font-bold transition-colors">Edit Profil</Link> 
+                        untuk kelengkapan kartu bukti pendaftaran Anda.
+                    </p>
+                </div>
+            </div>
+
             <!-- Transition Banner (SMP to SMA) -->
             <div v-if="canTransition" class="relative overflow-hidden rounded-3xl bg-gradient-to-br from-emerald-600 via-teal-700 to-cyan-800 p-6 sm:p-10 shadow-2xl shadow-emerald-900/30 text-white animate-fadeIn border border-white/20">
                 <!-- Floating Sparks/Stars and Graduation Caps for Celebration Effect -->
