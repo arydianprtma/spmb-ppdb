@@ -790,7 +790,7 @@
                                 MENGETAHUI,<br>ORANG TUA/WALI
                             </th>
                             <th class="p-2 w-1/2 align-middle uppercase font-bold">
-                                PANGANDARAN, {{ formatTanggal(new Date()).toUpperCase() }}<br>CALON PESERTA
+                                PANGANDARAN, {{ formatTanggal(pendaftaran?.tanggal_daftar || new Date()).toUpperCase() }}<br>CALON PESERTA
                             </th>
                         </tr>
                     </thead>
