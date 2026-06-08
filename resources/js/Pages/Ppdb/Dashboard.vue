@@ -718,7 +718,7 @@
                             <div class="font-bold uppercase">{{ formatTanggal(pendaftaran?.tanggal_daftar) }}</div>
                         </td>
                         <td class="border border-black p-3 text-left align-middle">
-                            <div class="font-bold uppercase">{{ ppdbSetting?.kartuHeader2 || 'PP. RIYADUSSALIKIN PADAHERANG' }}</div>
+                            <div class="font-bold uppercase">{{ isSma ? 'SMA KSATRIA NUSANTARA' : 'SMP DHARMA KSATRIA' }}</div>
                             <div class="text-[9pt] mt-0.5">Jenjang Pendidikan: <span class="uppercase font-bold">{{ pendaftaran?.tingkat }}</span></div>
                         </td>
                         <td class="border border-black p-3 align-middle font-bold uppercase">
