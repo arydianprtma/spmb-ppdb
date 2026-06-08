@@ -86,26 +86,49 @@
                     </div>
                 </div>
                 <div class="flex items-center gap-2 sm:gap-3">
-                    <!-- Profile Link (Avatar & Name) -->
-                    <div class="flex items-center gap-2">
-                        <div class="w-7 h-7 sm:w-8 sm:h-8 rounded-full overflow-hidden bg-emerald-100 border border-emerald-200 flex items-center justify-center flex-shrink-0">
-                            <img v-if="$page.props.auth.user.avatar_url" :src="$page.props.auth.user.avatar_url" loading="lazy" class="w-full h-full object-cover" />
-                            <span v-else class="text-emerald-600 font-bold text-xs">{{ $page.props.auth.user.name.charAt(0).toUpperCase() }}</span>
-                        </div>
-                        <span class="text-gray-700 text-sm font-semibold hidden md:block">{{ $page.props.auth.user.name }}</span>
+                    <!-- Profile Dropdown Container -->
+                    <div ref="profileDropdownRef" class="relative">
+                        <button @click="isProfileDropdownOpen = !isProfileDropdownOpen" 
+                            class="flex items-center gap-1.5 focus:outline-none group">
+                            <div class="w-7 h-7 sm:w-8 sm:h-8 rounded-full overflow-hidden bg-emerald-100 border border-emerald-200 flex items-center justify-center flex-shrink-0 transition-all duration-200 group-hover:scale-105 active:scale-95 group-hover:border-emerald-300">
+                                <img v-if="$page.props.auth.user.avatar_url" :src="$page.props.auth.user.avatar_url" loading="lazy" class="w-full h-full object-cover" />
+                                <span v-else class="text-emerald-600 font-bold text-xs">{{ $page.props.auth.user.name.charAt(0).toUpperCase() }}</span>
+                            </div>
+                            <span class="text-gray-700 text-sm font-semibold hidden md:block select-none group-hover:text-emerald-600 transition-colors">{{ $page.props.auth.user.name }}</span>
+                            <svg class="w-4 h-4 text-gray-400 hidden md:block transition-transform duration-200 group-hover:text-emerald-600" :class="{ 'rotate-180 text-emerald-600': isProfileDropdownOpen }" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7" />
+                            </svg>
+                        </button>
+
+                        <!-- Dropdown Menu -->
+                        <transition
+                            enter-active-class="transition ease-out duration-100"
+                            enter-from-class="transform opacity-0 scale-95"
+                            enter-to-class="transform opacity-100 scale-100"
+                            leave-active-class="transition ease-in duration-75"
+                            leave-from-class="transform opacity-100 scale-100"
+                            leave-to-class="transform opacity-0 scale-95"
+                        >
+                            <div v-show="isProfileDropdownOpen" 
+                                class="absolute right-0 mt-2 w-52 rounded-2xl bg-white border border-gray-100 shadow-xl py-2.5 z-50 origin-top-right animate-scaleUp">
+                                <!-- User info block -->
+                                <div class="px-4 py-2 border-b border-gray-50 mb-1">
+                                    <p class="text-[10px] text-gray-400 font-extrabold uppercase tracking-wider">Masuk sebagai</p>
+                                    <p class="text-sm font-bold text-gray-800 truncate">{{ $page.props.auth.user.name }}</p>
+                                    <p class="text-xs text-gray-400 truncate">{{ $page.props.auth.user.email || $page.props.auth.user.username || '' }}</p>
+                                </div>
+                                <!-- Edit Profil item -->
+                                <Link :href="route('profile.edit')" @click="isProfileDropdownOpen = false"
+                                    class="flex items-center gap-2.5 px-4 py-2 text-sm font-semibold text-gray-700 hover:text-emerald-600 hover:bg-emerald-50 transition-colors">
+                                    <svg class="w-4.5 h-4.5 text-gray-400 group-hover:text-emerald-600 transition-colors" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z" />
+                                        <path stroke-linecap="round" stroke-linejoin="round" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
+                                    </svg>
+                                    <span>Edit Profil</span>
+                                </Link>
+                            </div>
+                        </transition>
                     </div>
-
-                    <div class="h-5 w-px bg-gray-200"></div>
-
-                    <!-- Explicit Edit Profile Button -->
-                    <Link :href="route('profile.edit')" 
-                        class="group flex items-center gap-1.5 text-xs sm:text-sm font-bold text-emerald-600 hover:text-emerald-700 hover:bg-emerald-50 px-2.5 py-1.5 rounded-xl transition-all duration-200">
-                        <svg class="w-4 h-4 flex-shrink-0 group-hover:rotate-90 transition-transform duration-300" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z" />
-                            <path stroke-linecap="round" stroke-linejoin="round" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
-                        </svg>
-                        <span>Edit Profil</span>
-                    </Link>
 
                     <div class="h-5 w-px bg-gray-200"></div>
 
@@ -965,6 +988,15 @@ import Swal from 'sweetalert2';
 
 const page = usePage();
 
+const isProfileDropdownOpen = ref(false);
+const profileDropdownRef = ref(null);
+
+const closeProfileDropdown = (e) => {
+    if (profileDropdownRef.value && !profileDropdownRef.value.contains(e.target)) {
+        isProfileDropdownOpen.value = false;
+    }
+};
+
 // Watch for flash success/error messages from redirect sessions
 watch(() => page.props.flash?.error, (newVal) => {
     if (newVal) {
@@ -1226,12 +1258,14 @@ onMounted(() => {
                 });
             });
     }
+    document.addEventListener('click', closeProfileDropdown);
 });
 
 onUnmounted(() => {
     if (props.pendaftaran?.id) {
         window.Echo.leaveChannel(`pendaftaran.${props.pendaftaran.id}`);
     }
+    document.removeEventListener('click', closeProfileDropdown);
 });
 
 // Alur resmi penerimaan santri pondok
