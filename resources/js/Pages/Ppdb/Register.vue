@@ -800,17 +800,21 @@
                                     </span>
                                     <div class="flex-1 h-px bg-gradient-to-r from-red-100 to-transparent"></div>
                                 </div>
-
                                 <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5">
-                                    <div v-for="field in berkasWajib" :key="field.key">
-                                        <p class="text-sm font-bold text-gray-800 mb-3 flex items-center gap-1.5">
-                                            <svg class="w-4 h-4 text-red-400 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"/></svg>
-                                            {{ field.label }}
-                                        </p>
-                                        <label class="relative block cursor-pointer group">
+                                    <div v-for="field in berkasWajib" :key="field.key" class="flex flex-col">
+                                        <div class="mb-3">
+                                            <p class="text-sm font-bold text-gray-800 flex items-center gap-1.5">
+                                                <svg class="w-4 h-4 text-red-400 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"/></svg>
+                                                {{ field.label }}
+                                            </p>
+                                            <p class="text-[11px] text-gray-400 font-medium mt-1 min-h-[32px] leading-tight">
+                                                {{ field.desc }}
+                                            </p>
+                                        </div>
+                                        <label class="relative block cursor-pointer group flex-1 h-full flex flex-col">
                                             <!-- Empty State -->
                                             <div v-if="!form.berkas[field.key] && !existingBerkas[field.key]"
-                                                class="relative overflow-hidden rounded-2xl border-2 border-dashed border-gray-200 bg-gradient-to-b from-gray-50 to-white px-6 py-8 text-center transition-all duration-200 group-hover:border-emerald-400 group-hover:from-emerald-50/50 group-hover:to-white group-hover:shadow-lg group-hover:shadow-emerald-100">
+                                                class="relative overflow-hidden rounded-2xl border-2 border-dashed border-gray-200 bg-gradient-to-b from-gray-50 to-white px-6 py-8 text-center transition-all duration-200 group-hover:border-emerald-400 group-hover:from-emerald-50/50 group-hover:to-white group-hover:shadow-lg group-hover:shadow-emerald-100 flex-1 flex flex-col justify-center">
                                                 <div class="w-14 h-14 rounded-xl bg-emerald-100 flex items-center justify-center mx-auto mb-4 group-hover:bg-emerald-200 transition-colors">
                                                     <svg class="w-7 h-7 text-emerald-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M15 13l-3-3m0 0l-3 3m3-3v12"/>
@@ -821,7 +825,7 @@
                                             </div>
                                             <!-- Existing file (from server) -->
                                             <div v-else-if="!form.berkas[field.key] && existingBerkas[field.key]"
-                                                class="relative overflow-hidden rounded-2xl border-2 border-emerald-300 bg-gradient-to-b from-emerald-50 to-white px-6 py-8 text-center transition-all duration-200 group-hover:border-emerald-500 group-hover:shadow-lg group-hover:shadow-emerald-100">
+                                                class="relative overflow-hidden rounded-2xl border-2 border-emerald-300 bg-gradient-to-b from-emerald-50 to-white px-6 py-8 text-center transition-all duration-200 group-hover:border-emerald-500 group-hover:shadow-lg group-hover:shadow-emerald-100 flex-1 flex flex-col justify-center">
                                                 <div class="w-14 h-14 rounded-xl bg-emerald-100 flex items-center justify-center mx-auto mb-4 group-hover:bg-emerald-200 transition-colors">
                                                     <svg class="w-7 h-7 text-emerald-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/>
@@ -834,7 +838,7 @@
                                             </div>
                                             <!-- Filled State (new file selected) -->
                                             <div v-else
-                                                class="relative overflow-hidden rounded-2xl border-2 border-emerald-400 bg-gradient-to-b from-emerald-50 to-white px-6 py-8 text-center shadow-md shadow-emerald-100">
+                                                class="relative overflow-hidden rounded-2xl border-2 border-emerald-400 bg-gradient-to-b from-emerald-50 to-white px-6 py-8 text-center shadow-md shadow-emerald-100 flex-1 flex flex-col justify-center">
                                                 <div class="w-14 h-14 rounded-xl bg-emerald-500 flex items-center justify-center mx-auto mb-4 shadow-lg shadow-emerald-200">
                                                     <svg class="w-7 h-7 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M5 13l4 4L19 7"/>
@@ -859,16 +863,20 @@
                                     </span>
                                     <div class="flex-1 h-px bg-gradient-to-r from-blue-100 to-transparent"></div>
                                 </div>
-
                                 <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5">
-                                    <div v-for="field in berkasOpsional" :key="field.key">
-                                        <p class="text-sm font-bold text-gray-800 mb-3 flex items-center gap-1.5">
-                                            <svg class="w-4 h-4 text-blue-400 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/></svg>
-                                            {{ field.label }}
-                                        </p>
-                                        <label class="relative block cursor-pointer group">
+                                    <div v-for="field in berkasOpsional" :key="field.key" class="flex flex-col">
+                                        <div class="mb-3">
+                                            <p class="text-sm font-bold text-gray-800 flex items-center gap-1.5">
+                                                <svg class="w-4 h-4 text-blue-400 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/></svg>
+                                                {{ field.label }}
+                                            </p>
+                                            <p class="text-[11px] text-gray-400 font-medium mt-1 min-h-[32px] leading-tight">
+                                                {{ field.desc }}
+                                            </p>
+                                        </div>
+                                        <label class="relative block cursor-pointer group flex-1 h-full flex flex-col">
                                             <div v-if="!form.berkas[field.key] && !existingBerkas[field.key]"
-                                                class="relative overflow-hidden rounded-2xl border-2 border-dashed border-gray-200 bg-gradient-to-b from-gray-50 to-white px-6 py-8 text-center transition-all duration-200 group-hover:border-blue-400 group-hover:from-blue-50/50 group-hover:to-white group-hover:shadow-lg group-hover:shadow-blue-100">
+                                                class="relative overflow-hidden rounded-2xl border-2 border-dashed border-gray-200 bg-gradient-to-b from-gray-50 to-white px-6 py-8 text-center transition-all duration-200 group-hover:border-blue-400 group-hover:from-blue-50/50 group-hover:to-white group-hover:shadow-lg group-hover:shadow-blue-100 flex-1 flex flex-col justify-center">
                                                 <div class="w-14 h-14 rounded-xl bg-blue-100 flex items-center justify-center mx-auto mb-4 group-hover:bg-blue-200 transition-colors">
                                                     <svg class="w-7 h-7 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M15 13l-3-3m0 0l-3 3m3-3v12"/>
@@ -879,7 +887,7 @@
                                             </div>
                                             <!-- Existing file (from server) -->
                                             <div v-else-if="!form.berkas[field.key] && existingBerkas[field.key]"
-                                                class="relative overflow-hidden rounded-2xl border-2 border-blue-300 bg-gradient-to-b from-blue-50 to-white px-6 py-8 text-center transition-all duration-200 group-hover:border-blue-500 group-hover:shadow-lg">
+                                                class="relative overflow-hidden rounded-2xl border-2 border-blue-300 bg-gradient-to-b from-blue-50 to-white px-6 py-8 text-center transition-all duration-200 group-hover:border-blue-500 group-hover:shadow-lg flex-1 flex flex-col justify-center">
                                                 <div class="w-14 h-14 rounded-xl bg-blue-100 flex items-center justify-center mx-auto mb-4">
                                                     <svg class="w-7 h-7 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/>
@@ -891,7 +899,7 @@
                                                 <span class="absolute top-3 right-3 bg-blue-500 text-white text-xs font-bold px-2 py-0.5 rounded-full">✓</span>
                                             </div>
                                             <div v-else
-                                                class="relative overflow-hidden rounded-2xl border-2 border-blue-400 bg-gradient-to-b from-blue-50 to-white px-6 py-8 text-center shadow-md shadow-blue-100">
+                                                class="relative overflow-hidden rounded-2xl border-2 border-blue-400 bg-gradient-to-b from-blue-50 to-white px-6 py-8 text-center shadow-md shadow-blue-100 flex-1 flex flex-col justify-center">
                                                 <div class="w-14 h-14 rounded-xl bg-blue-500 flex items-center justify-center mx-auto mb-4 shadow-lg shadow-blue-200">
                                                     <svg class="w-7 h-7 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M5 13l4 4L19 7"/>
@@ -1345,26 +1353,27 @@ const handleFileUpload = (event, field) => {
 };
 
 const berkasWajib = computed(() => [
-    { key: 'ijazah_skhu',        label: 'Ijazah / SKHU (Dilegalisir)' },
+    { key: 'ijazah_skhu',        label: 'Ijazah / SKHU', desc: 'Legalisir' },
     {
         key: 'rapot_legalisir',
-        label: form.tingkat === 'smp'
-            ? 'Rapot Semester Terakhir SD/MI (Legalisir) + Data Siswa (1 Lembar)'
-            : 'Rapot Semester Terakhir SMP/MTs (Legalisir) + Data Siswa (1 Lembar)'
+        label: 'Rapot Semester Terakhir',
+        desc: form.tingkat === 'smp'
+            ? 'SD/MI (Legalisir) + Data Siswa (1 Lembar)'
+            : 'SMP/MTs (Legalisir) + Data Siswa (1 Lembar)'
     },
-    { key: 'akte_kelahiran',     label: 'Akte Kelahiran' },
-    { key: 'ktp_orang_tua',      label: 'KTP Orang Tua (Ayah/Ibu)' },
-    { key: 'kartu_keluarga',     label: 'Kartu Keluarga (KK)' },
-    { key: 'surat_sehat',        label: 'Surat Keterangan Sehat' },
-    { key: 'surat_kelakuan_baik',label: 'Surat Kelakuan Baik (Sekolah)' },
+    { key: 'akte_kelahiran',     label: 'Akte Kelahiran', desc: 'Fotokopi / Salinan Resmi' },
+    { key: 'ktp_orang_tua',      label: 'KTP Orang Tua', desc: 'KTP Ayah atau Ibu' },
+    { key: 'kartu_keluarga',     label: 'Kartu Keluarga (KK)', desc: 'Fotokopi / Salinan Resmi' },
+    { key: 'surat_sehat',        label: 'Surat Keterangan Sehat', desc: 'Asli dari Dokter / Puskesmas' },
+    { key: 'surat_kelakuan_baik',label: 'Surat Kelakuan Baik', desc: 'Asli dari Sekolah / Madrasah Asal' },
 ]);
 
 const berkasOpsional = [
-    { key: 'kartu_kks_pkh',  label: 'Kartu KKS / PKH' },
-    { key: 'kartu_kps',      label: 'Kartu KPS' },
-    { key: 'kartu_kip',      label: 'Kartu Indonesia Pintar (KIP)' },
-    { key: 'kartu_kis_bpjs', label: 'Kartu KIS / BPJS' },
-    { key: 'kartu_nisn',     label: 'Kartu / Bukti NISN' },
+    { key: 'kartu_kks_pkh',  label: 'Kartu KKS / PKH', desc: 'Keluarga Sejahtera / Harapan' },
+    { key: 'kartu_kps',      label: 'Kartu KPS', desc: 'Perlindungan Sosial' },
+    { key: 'kartu_kip',      label: 'Kartu KIP', desc: 'Indonesia Pintar' },
+    { key: 'kartu_kis_bpjs', label: 'Kartu KIS / BPJS', desc: 'Indonesia Sehat / BPJS Kesehatan' },
+    { key: 'kartu_nisn',     label: 'Kartu / Bukti NISN', desc: 'Cetak Lembar NISN Kemendikbud' },
 ];
 
 const submit = () => {
