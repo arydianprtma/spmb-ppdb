@@ -926,7 +926,7 @@
                                         </svg>
                                     </div>
                                     <p class="text-sm text-white/90 font-medium leading-relaxed">
-                                        Dengan menekan tombol <strong class="text-white">"Kirim Pendaftaran"</strong>, saya menyatakan bahwa seluruh data dan berkas yang saya unggah adalah <strong class="text-white">benar dan dapat dipertanggungjawabkan</strong> secara hukum. Data palsu dapat menyebabkan pembatalan pendaftaran.
+                                        Dengan menekan tombol <strong class="text-white">{{ isAccepted ? '"Simpan Perubahan"' : '"Kirim Pendaftaran"' }}</strong>, saya menyatakan bahwa seluruh data dan berkas yang saya unggah adalah <strong class="text-white">benar dan dapat dipertanggungjawabkan</strong> secara hukum. Data palsu dapat menyebabkan pembatalan pendaftaran.
                                     </p>
                                 </div>
                             </div>
@@ -973,7 +973,7 @@
                                 <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
                                 <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4z"></path>
                             </svg>
-                            {{ form.processing ? 'Mengirim...' : 'Kirim' }}
+                            {{ form.processing ? (isAccepted ? 'Menyimpan...' : 'Mengirim...') : (isAccepted ? 'Simpan Perubahan' : 'Kirim') }}
                         </button>
                     </div>
                 </form>
@@ -1049,6 +1049,10 @@ const STORAGE_KEY = computed(() => {
 const props = defineProps({
     existingData: Object,
     ppdbSetting: Object,
+});
+
+const isAccepted = computed(() => {
+    return ['diterima', 'diterima_ula', 'diterima_idadiyah', 'diterima_wustho', 'diterima_ulya'].includes(props.existingData?.status);
 });
 
 const step = ref(1);
@@ -1385,8 +1389,10 @@ const submit = () => {
             }
             Swal.fire({
                 icon: 'success',
-                title: 'Pendaftaran Berhasil! 🎉',
-                html: '<p class="text-gray-600">Data pendaftaran Anda telah berhasil dikirim dan sedang menunggu proses verifikasi dari panitia.</p><p class="text-sm text-gray-400 mt-2">Anda akan diarahkan ke halaman dashboard.</p>',
+                title: isAccepted.value ? 'Data Berhasil Disimpan! 💾' : 'Pendaftaran Berhasil! 🎉',
+                html: isAccepted.value 
+                    ? '<p class="text-gray-600">Perubahan data pendaftaran Anda telah berhasil disimpan.</p><p class="text-sm text-gray-400 mt-2">Anda akan diarahkan ke halaman dashboard.</p>'
+                    : '<p class="text-gray-600">Data pendaftaran Anda telah berhasil dikirim dan sedang menunggu proses verifikasi dari panitia.</p><p class="text-sm text-gray-400 mt-2">Anda akan diarahkan ke halaman dashboard.</p>',
                 confirmButtonText: 'Lihat Dashboard',
                 confirmButtonColor: '#059669',
                 allowOutsideClick: false,

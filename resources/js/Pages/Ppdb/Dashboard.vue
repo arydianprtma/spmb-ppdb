@@ -1397,7 +1397,7 @@ const klasifikasiLabel = computed(() => {
 
 // Nama orang tua/wali: prioritas ayah (jika ada), lalu ibu (jika ada), lalu wali
 const namaOrtuWali = computed(() => {
-    const ortu = props.pendaftaran?.orange_tua ?? props.pendaftaran?.orangTua ?? [];
+    const ortu = props.pendaftaran?.orang_tua ?? props.pendaftaran?.orangTua ?? props.pendaftaran?.orange_tua ?? [];
     const ayah = Array.isArray(ortu) ? ortu.find(o => o.jenis === 'ayah') : null;
     const ibu  = Array.isArray(ortu) ? ortu.find(o => o.jenis === 'ibu')  : null;
     const wali = props.pendaftaran?.wali;
@@ -1460,13 +1460,13 @@ const alamatLengkap = computed(() => {
 });
 
 const namaAyah = computed(() => {
-    const ortu = props.pendaftaran?.orange_tua ?? props.pendaftaran?.orangTua ?? [];
+    const ortu = props.pendaftaran?.orang_tua ?? props.pendaftaran?.orangTua ?? props.pendaftaran?.orange_tua ?? [];
     const ayah = Array.isArray(ortu) ? ortu.find(o => o.jenis === 'ayah') : null;
     return ayah?.nama ?? '-';
 });
 
 const namaIbu = computed(() => {
-    const ortu = props.pendaftaran?.orange_tua ?? props.pendaftaran?.orangTua ?? [];
+    const ortu = props.pendaftaran?.orang_tua ?? props.pendaftaran?.orangTua ?? props.pendaftaran?.orange_tua ?? [];
     const ibu = Array.isArray(ortu) ? ortu.find(o => o.jenis === 'ibu') : null;
     return ibu?.nama ?? '-';
 });
