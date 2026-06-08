@@ -1389,7 +1389,7 @@ const submit = () => {
             }
             Swal.fire({
                 icon: 'success',
-                title: isAccepted.value ? 'Data Berhasil Disimpan! 💾' : 'Pendaftaran Berhasil! 🎉',
+                title: isAccepted.value ? 'Data Berhasil Disimpan' : 'Pendaftaran Berhasil',
                 html: isAccepted.value 
                     ? '<p class="text-gray-600">Perubahan data pendaftaran Anda telah berhasil disimpan.</p><p class="text-sm text-gray-400 mt-2">Anda akan diarahkan ke halaman dashboard.</p>'
                     : '<p class="text-gray-600">Data pendaftaran Anda telah berhasil dikirim dan sedang menunggu proses verifikasi dari panitia.</p><p class="text-sm text-gray-400 mt-2">Anda akan diarahkan ke halaman dashboard.</p>',
