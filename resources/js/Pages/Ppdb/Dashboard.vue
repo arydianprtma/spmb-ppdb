@@ -526,6 +526,22 @@
                             </dd>
                         </div>
                     </dl>
+                    <div class="mt-4 pt-4 border-t border-gray-100 space-y-2.5">
+                        <p class="text-xs font-bold text-gray-700 flex items-center gap-1.5">
+                            <svg class="w-4 h-4 text-emerald-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+                            Ketentuan Penyerahan Berkas Fisik:
+                        </p>
+                        <ul class="text-[11px] text-gray-500 font-medium space-y-1.5 list-disc list-inside">
+                            <li>Masukkan semua berkas fisik ke dalam map dan beri nama calon santri.</li>
+                            <li>Warna map: 
+                                <span class="font-bold text-blue-600">SMP (Map Biru)</span> · 
+                                <span class="font-bold text-red-600">SMA (Map Snelheckter Merah)</span> · 
+                                <span class="font-bold text-emerald-600">Takhosus (Map Hijau)</span>.
+                            </li>
+                            <li>Fotokopi Ijazah/SKHU, Akte, KK, KTP diperbanyak masing-masing <span class="font-bold">3 lembar</span> (KTP orang tua diperbesar 200%).</li>
+                            <li>Pas foto latar merah berseragam ukuran 2x3 (<span class="font-bold">3 lembar</span>) & 3x4 (<span class="font-bold">3 lembar</span>). Santri Takhosus menggunakan foto hitam putih.</li>
+                        </ul>
+                    </div>
                 </div>
             </div>
 
