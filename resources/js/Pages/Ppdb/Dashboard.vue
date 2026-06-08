@@ -707,7 +707,7 @@
             <table class="w-full border-collapse border border-black text-[11pt]">
                 <thead>
                     <tr class="font-bold text-center">
-                        <th class="border border-black p-2 uppercase w-1/4">PENDAFTARAN</th>
+                        <th class="border border-black p-2 uppercase w-1/4">TANGGAL DAFTAR</th>
                         <th class="border border-black p-2 uppercase">PILIHAN SEKOLAH / TINGKAT</th>
                         <th class="border border-black p-2 uppercase w-1/4">STATUS</th>
                     </tr>
@@ -715,8 +715,7 @@
                 <tbody>
                     <tr class="text-center">
                         <td class="border border-black p-3 align-middle">
-                            <div class="font-bold uppercase">Gelombang I</div>
-                            <div class="text-[9pt] mt-0.5 italic">{{ formatTanggal(pendaftaran?.tanggal_daftar) }}</div>
+                            <div class="font-bold uppercase">{{ formatTanggal(pendaftaran?.tanggal_daftar) }}</div>
                         </td>
                         <td class="border border-black p-3 text-left align-middle">
                             <div class="font-bold uppercase">{{ ppdbSetting?.kartuHeader2 || 'PP. RIYADUSSALIKIN PADAHERANG' }}</div>
