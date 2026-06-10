@@ -7,6 +7,7 @@ const form = useForm({
     email: '',
     password: '',
     remember: false,
+    turnstile_token: '',
 });
 
 const showPassword = ref(false);
@@ -34,21 +35,74 @@ const refreshCsrf = async () => {
 };
 
 let refreshInterval;
+let turnstileWidgetId = null;
+const siteKey = import.meta.env.VITE_TURNSTILE_SITE_KEY || '1x00000000000000000000AA';
+
 onMounted(() => {
     refreshInterval = setInterval(refreshCsrf, 25 * 60 * 1000);
+
+    // Load Turnstile script dynamically
+    let script = document.getElementById('cloudflare-turnstile-script');
+    if (!script) {
+        script = document.createElement('script');
+        script.id = 'cloudflare-turnstile-script';
+        script.src = 'https://challenges.cloudflare.com/turnstile/v0/api.js?render=explicit';
+        script.async = true;
+        script.defer = true;
+        document.head.appendChild(script);
+    }
+
+    const renderTurnstile = () => {
+        if (window.turnstile && document.getElementById('turnstile-container')) {
+            turnstileWidgetId = window.turnstile.render('#turnstile-container', {
+                sitekey: siteKey,
+                callback: (token) => {
+                    form.turnstile_token = token;
+                    form.clearErrors('turnstile_token');
+                },
+                'expired-callback': () => {
+                    form.turnstile_token = '';
+                },
+                'error-callback': () => {
+                    form.turnstile_token = '';
+                }
+            });
+        }
+    };
+
+    if (window.turnstile) {
+        renderTurnstile();
+    } else {
+        script.onload = renderTurnstile;
+    }
 });
 
 onUnmounted(() => {
     clearInterval(refreshInterval);
+    if (window.turnstile && turnstileWidgetId !== null) {
+        window.turnstile.remove(turnstileWidgetId);
+    }
 });
 
 const submit = () => {
     errorMessage.value = '';
+    
+    if (!form.turnstile_token) {
+        form.errors.turnstile_token = 'Silakan selesaikan verifikasi keamanan Turnstile.';
+        return;
+    }
+
     if (form.processing || isRefreshing.value) return;
     
     refreshCsrf().finally(() => {
         form.post(route('login'), {
-            onFinish: () => form.reset('password'),
+            onFinish: () => {
+                form.reset('password');
+                if (window.turnstile && turnstileWidgetId !== null) {
+                    window.turnstile.reset(turnstileWidgetId);
+                    form.turnstile_token = '';
+                }
+            },
             onError: (errors) => {
                 if (errors.status === 419) {
                     errorMessage.value = 'Sesi Anda telah berakhir. Halaman akan diperbarui otomatis...';
@@ -127,7 +181,7 @@ const submit = () => {
                     <div style="margin-bottom:20px;">
                         <label style="display:block;font-size:10px;font-weight:700;color:#4b5563;letter-spacing:0.12em;text-transform:uppercase;margin-bottom:6px;">Alamat Email</label>
                         <input
-                            type="email"
+                             type="email"
                             v-model="form.email"
                             placeholder="email@contoh.com"
                             style="display:block;width:100%;padding:10px 14px;border:1px solid #e5e7eb;border-radius:8px;font-size:0.88rem;color:#111;background:#fff;outline:none;transition:border-color 0.15s;box-sizing:border-box;"
@@ -162,6 +216,14 @@ const submit = () => {
                             <label for="remember" style="font-size:0.8rem;color:#6b7280;cursor:pointer;">Ingat Saya</label>
                         </div>
                         <Link :href="route('password.request')" style="font-size:0.8rem;color:#059669;font-weight:600;text-decoration:none;">Lupa Kata Sandi?</Link>
+                    </div>
+
+                    <!-- Cloudflare Turnstile -->
+                    <div style="margin-bottom:20px; display:flex; justify-content:center;">
+                        <div id="turnstile-container"></div>
+                    </div>
+                    <div v-if="form.errors.turnstile_token" style="margin-top:-12px; margin-bottom:16px; font-size:0.78rem; color:#ef4444; text-align:center;">
+                        {{ form.errors.turnstile_token }}
                     </div>
 
                     <!-- Submit Button with glow -->

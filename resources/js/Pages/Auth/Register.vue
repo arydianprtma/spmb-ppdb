@@ -1,6 +1,6 @@
 <script setup>
 import { Head, Link, useForm } from '@inertiajs/vue3';
-import { ref } from 'vue';
+import { ref, onMounted, onUnmounted } from 'vue';
 import logoUrl from '../../../assets/logo/logo_pondok.png';
 
 const form = useForm({
@@ -9,14 +9,72 @@ const form = useForm({
     whatsapp: '',
     password: '',
     password_confirmation: '',
+    turnstile_token: '',
 });
 
 const showPassword = ref(false);
 const showConfirmPassword = ref(false);
 
+let turnstileWidgetId = null;
+const siteKey = import.meta.env.VITE_TURNSTILE_SITE_KEY || '1x00000000000000000000AA';
+
+onMounted(() => {
+    // Load Turnstile script dynamically
+    let script = document.getElementById('cloudflare-turnstile-script');
+    if (!script) {
+        script = document.createElement('script');
+        script.id = 'cloudflare-turnstile-script';
+        script.src = 'https://challenges.cloudflare.com/turnstile/v0/api.js?render=explicit';
+        script.async = true;
+        script.defer = true;
+        document.head.appendChild(script);
+    }
+
+    const renderTurnstile = () => {
+        if (window.turnstile && document.getElementById('turnstile-container')) {
+            turnstileWidgetId = window.turnstile.render('#turnstile-container', {
+                sitekey: siteKey,
+                callback: (token) => {
+                    form.turnstile_token = token;
+                    form.clearErrors('turnstile_token');
+                },
+                'expired-callback': () => {
+                    form.turnstile_token = '';
+                },
+                'error-callback': () => {
+                    form.turnstile_token = '';
+                }
+            });
+        }
+    };
+
+    if (window.turnstile) {
+        renderTurnstile();
+    } else {
+        script.onload = renderTurnstile;
+    }
+});
+
+onUnmounted(() => {
+    if (window.turnstile && turnstileWidgetId !== null) {
+        window.turnstile.remove(turnstileWidgetId);
+    }
+});
+
 const submit = () => {
+    if (!form.turnstile_token) {
+        form.errors.turnstile_token = 'Silakan selesaikan verifikasi keamanan Turnstile.';
+        return;
+    }
+
     form.post(route('register'), {
-        onFinish: () => form.reset('password', 'password_confirmation'),
+        onFinish: () => {
+            form.reset('password', 'password_confirmation');
+            if (window.turnstile && turnstileWidgetId !== null) {
+                window.turnstile.reset(turnstileWidgetId);
+                form.turnstile_token = '';
+            }
+        },
     });
 };
 </script>
@@ -150,6 +208,14 @@ const submit = () => {
                                 </button>
                             </div>
                         </div>
+                    </div>
+
+                    <!-- Cloudflare Turnstile -->
+                    <div style="margin-bottom:20px; display:flex; justify-content:center;">
+                        <div id="turnstile-container"></div>
+                    </div>
+                    <div v-if="form.errors.turnstile_token" style="margin-top:-12px; margin-bottom:16px; font-size:0.78rem; color:#ef4444; text-align:center;">
+                        {{ form.errors.turnstile_token }}
                     </div>
 
                     <!-- Submit Button with glow -->
