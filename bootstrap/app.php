@@ -32,7 +32,7 @@ return Application::configure(basePath: dirname(__DIR__))
         ]);
 
         $middleware->redirectGuestsTo(fn ($request) => $request->is('verifikasi/*')
-            ? 'http://192.168.1.9:8000/portal/login'
+            ? rtrim(env('PPDB_ADMIN_URL', 'https://www.riyadussalikin.ponpes.id'), '/') . '/portal/login'
             : route('login')
         );
 

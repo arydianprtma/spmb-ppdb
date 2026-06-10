@@ -804,7 +804,7 @@
                 </div>
                 <div class="flex items-start">
                     <span class="w-5 flex-shrink-0">3.</span>
-                    <span>Membawa Seluruh Berkas Dokumen Fisik Yang Diunggah Di <a href="https://ppdb.riyadussalikin.my.id/" target="_blank" class="text-blue-600 underline">https://ppdb.riyadussalikin.my.id/</a></span>
+                    <span>Membawa Seluruh Berkas Dokumen Fisik Yang Diunggah Di <a :href="ppdbOrigin + '/'" target="_blank" class="text-blue-600 underline">{{ ppdbOrigin }}/</a></span>
                 </div>
                 <div class="flex items-start">
                     <span class="w-5 flex-shrink-0">4.</span>
@@ -812,7 +812,7 @@
                 </div>
                 <div class="flex items-start">
                     <span class="w-5 flex-shrink-0">5.</span>
-                    <span>Pantau Terus Status Pendaftaran Anda Melalui <a href="https://ppdb.riyadussalikin.my.id/dashboard" target="_blank" class="text-blue-600 underline">https://ppdb.riyadussalikin.my.id/dashboard</a></span>
+                    <span>Pantau Terus Status Pendaftaran Anda Melalui <a :href="ppdbOrigin + '/dashboard'" target="_blank" class="text-blue-600 underline">{{ ppdbOrigin }}/dashboard</a></span>
                 </div>
                 <div class="flex items-start">
                     <span class="w-5 flex-shrink-0">6.</span>
@@ -1043,6 +1043,13 @@ import { computed, ref, onMounted, onUnmounted, watch } from 'vue';
 import { Head, Link, router, usePage } from '@inertiajs/vue3';
 import html2pdf from 'html2pdf.js';
 import Swal from 'sweetalert2';
+
+const ppdbOrigin = computed(() => {
+    if (typeof window !== 'undefined') {
+        return window.location.origin;
+    }
+    return 'https://ppdb.riyadussalikin.ponpes.id';
+});
 
 const page = usePage();
 
