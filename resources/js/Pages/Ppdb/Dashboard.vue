@@ -143,6 +143,24 @@
 
         <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-10 space-y-8">
 
+            <!-- Registration Closed Banner (When already registered) -->
+            <div v-if="pendaftaran && !ppdbSetting?.isOpen" class="bg-red-50 border border-red-200 rounded-3xl p-5 shadow-sm flex items-start gap-4">
+                <div class="w-10 h-10 rounded-xl bg-red-100 flex items-center justify-center flex-shrink-0 text-red-600">
+                    <svg class="w-5.5 h-5.5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M10 14l2-2m0 0l2-2m-2 2l-2-2m2 2l2 2m7-2a9 9 0 11-18 0 9 9 0 0118 0z" />
+                    </svg>
+                </div>
+                <div class="flex-1">
+                    <h4 class="font-bold text-sm text-red-800">Masa Pendaftaran Telah Ditutup</h4>
+                    <p class="text-xs text-red-600 font-medium mt-1 leading-relaxed">
+                        Pendaftaran santri baru untuk tahun ajaran {{ ppdbSetting?.tahunAjaran }} saat ini telah resmi ditutup. Pendaftaran Anda yang masuk akan tetap diproses. Pantau terus status dan jadwal seleksi Anda di bawah.
+                    </p>
+                    <div v-if="ppdbSetting?.pesanTutup" class="mt-2 text-xs text-red-700 font-bold bg-white/50 px-3 py-1.5 rounded-lg border border-red-100 inline-block">
+                        {{ ppdbSetting.pesanTutup }}
+                    </div>
+                </div>
+            </div>
+
             <!-- Welcome Card -->
             <div class="relative overflow-hidden rounded-3xl bg-gradient-to-r from-emerald-600 to-teal-600 p-8 shadow-xl shadow-emerald-200">
                 <div class="absolute top-0 right-0 w-56 h-56 bg-white/10 rounded-full -translate-y-1/2 translate-x-1/2"></div>
@@ -469,17 +487,38 @@
             </div>
 
             <!-- No Registration Yet -->
-            <div v-else class="bg-white rounded-3xl shadow-lg border border-orange-100 p-8 text-center">
-                <div class="w-20 h-20 bg-orange-100 rounded-full flex items-center justify-center mx-auto mb-4">
-                    <svg class="w-10 h-10 text-orange-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/></svg>
+            <template v-else>
+                <!-- If PPDB is open -->
+                <div v-if="ppdbSetting?.isOpen" class="bg-white rounded-3xl shadow-lg border border-orange-100 p-8 text-center animate-fadeIn">
+                    <div class="w-20 h-20 bg-orange-100 rounded-full flex items-center justify-center mx-auto mb-4">
+                        <svg class="w-10 h-10 text-orange-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/></svg>
+                    </div>
+                    <h3 class="text-xl font-bold text-gray-800 mb-2">Belum Ada Pendaftaran</h3>
+                    <p class="text-gray-500 mb-6">Anda belum mengisi formulir pendaftaran. Silakan lengkapi data Anda sekarang.</p>
+                    <Link :href="route('ppdb.register')" class="inline-flex items-center gap-2 bg-emerald-600 text-white px-8 py-3 rounded-2xl font-bold hover:bg-emerald-700 transition-all shadow-lg shadow-emerald-200">
+                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"/></svg>
+                        Isi Formulir Sekarang
+                    </Link>
                 </div>
-                <h3 class="text-xl font-bold text-gray-800 mb-2">Belum Ada Pendaftaran</h3>
-                <p class="text-gray-500 mb-6">Anda belum mengisi formulir pendaftaran. Silakan lengkapi data Anda sekarang.</p>
-                <Link :href="route('ppdb.register')" class="inline-flex items-center gap-2 bg-emerald-600 text-white px-8 py-3 rounded-2xl font-bold hover:bg-emerald-700 transition-all shadow-lg shadow-emerald-200">
-                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"/></svg>
-                    Isi Formulir Sekarang
-                </Link>
-            </div>
+                <!-- If PPDB is closed -->
+                <div v-else class="bg-white rounded-3xl shadow-lg border border-red-100 p-8 text-center animate-fadeIn">
+                    <div class="w-20 h-20 bg-red-50 rounded-full flex items-center justify-center mx-auto mb-4 text-red-500">
+                        <svg class="w-10 h-10" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M10 14l2-2m0 0l2-2m-2 2l-2-2m2 2l2 2m7-2a9 9 0 11-18 0 9 9 0 0118 0z" />
+                        </svg>
+                    </div>
+                    <h3 class="text-xl font-bold text-gray-800 mb-2">Pendaftaran Ditutup</h3>
+                    <p class="text-gray-500 mb-4 max-w-md mx-auto">
+                        Mohon maaf, pendaftaran santri baru untuk tahun ajaran {{ ppdbSetting?.tahunAjaran }} saat ini telah ditutup.
+                    </p>
+                    <div v-if="ppdbSetting?.pesanTutup" class="bg-red-50/50 rounded-2xl p-4 border border-red-100 max-w-lg mx-auto text-sm text-red-700 font-medium mb-6">
+                        {{ ppdbSetting.pesanTutup }}
+                    </div>
+                    <div class="text-xs text-gray-400 font-semibold">
+                        Silakan hubungi pihak panitia jika Anda membutuhkan bantuan lebih lanjut.
+                    </div>
+                </div>
+            </template>
 
             <!-- Data Ringkasan -->
             <div v-if="pendaftaran" class="grid grid-cols-1 md:grid-cols-2 gap-6">

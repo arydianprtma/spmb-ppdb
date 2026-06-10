@@ -47,6 +47,7 @@ class DashboardController extends Controller
                 'isOpen' => PpdbSetting::isOpen(),
                 'tahunAjaran' => $setting?->tahun_ajaran,
                 'tglTutup' => $setting?->tgl_tutup?->format('Y-m-d H:i:s'),
+                'pesanTutup' => $setting?->pesan_tutup,
                 'kartuHeader1' => $setting?->kartu_header_1,
                 'kartuHeader2' => $setting?->kartu_header_2,
                 'kartuAlamat' => $setting?->kartu_alamat,
