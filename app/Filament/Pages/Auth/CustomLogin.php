@@ -3,7 +3,8 @@
 namespace App\Filament\Pages\Auth;
 
 use Filament\Auth\Pages\Login as BaseLogin;
-use Filament\Forms\Components\Placeholder;
+use Filament\Schemas\Components\Html;
+use Filament\Schemas\Schema;
 use Illuminate\Support\HtmlString;
 use Illuminate\Validation\ValidationException;
 use Illuminate\Support\Facades\Http;
@@ -12,15 +13,14 @@ class CustomLogin extends BaseLogin
 {
     public ?string $turnstile_token = null;
 
-    protected function getFormSchema(): array
+    public function form(Schema $schema): Schema
     {
-        return [
-            $this->getEmailFormComponent(),
-            $this->getPasswordFormComponent(),
-            $this->getRememberFormComponent(),
-            Placeholder::make('turnstile')
-                ->label('')
-                ->content(new HtmlString('
+        return $schema
+            ->components([
+                $this->getEmailFormComponent(),
+                $this->getPasswordFormComponent(),
+                $this->getRememberFormComponent(),
+                Html::make(new HtmlString('
                     <div style="margin: 10px 0; display: flex; justify-content: center;">
                         <div id="turnstile-container"></div>
                     </div>
@@ -59,7 +59,7 @@ class CustomLogin extends BaseLogin
                         })();
                     </script>
                 ')),
-        ];
+            ]);
     }
 
     public function authenticate(): ?\Filament\Auth\Http\Responses\Contracts\LoginResponse
