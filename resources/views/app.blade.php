@@ -8,6 +8,7 @@
 
     <title inertia>{{ config('app.name', 'Portal PPDB - Pesantren Riyadussalikin') }}</title>
     <meta name="description" content="Portal Pendaftaran Peserta Didik Baru (PPDB) Pondok Pesantren Riyadussalikin Padaherang. Daftar sekarang dan bergabunglah menjadi bagian dari generasi Qurani.">
+    <link rel="canonical" href="{{ url()->current() }}">
     <meta name="keywords" content="ppdb pesantren, pendaftaran peserta didik baru, ppdb pesantren, riyadussalikin padaherang">
     <link rel="icon" href="/favicon.ico" type="image/x-icon">
     <link rel="shortcut icon" href="/favicon.ico" type="image/x-icon">
