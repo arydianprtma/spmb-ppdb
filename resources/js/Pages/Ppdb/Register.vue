@@ -107,7 +107,7 @@
                 </div>
 
                 <!-- Form Content -->
-                <form @submit.prevent="submit" class="bg-white shadow-2xl rounded-2xl md:rounded-3xl mb-8 border border-gray-100">
+                <form v-if="ppdbSetting?.isOpen" @submit.prevent="submit" class="bg-white shadow-2xl rounded-2xl md:rounded-3xl mb-8 border border-gray-100">
                     <div class="p-5 sm:p-8 md:p-12">
                         
                         <!-- STEP 1: Registrasi & Identitas Siswa -->
