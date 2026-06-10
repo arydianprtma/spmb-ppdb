@@ -246,11 +246,17 @@ class PpdbController extends Controller
             $pendaftaran = PpdbPendaftaran::with('siswa')->where('user_id', $user_id)->latest()->first();
             $isNew = !$pendaftaran || ($pendaftaran->siswa && $pendaftaran->siswa->status === 'lulus');
 
+            // Set default agama if empty
+            $siswaData = $request->siswa;
+            if (empty($siswaData['agama'])) {
+                $siswaData['agama'] = 'Islam';
+            }
+
             if ($pendaftaran && (!$pendaftaran->siswa || $pendaftaran->siswa->status !== 'lulus')) {
                 // --- UPDATE EXISTING ---
                 $pendaftaran->update(['tingkat' => $request->tingkat]);
 
-                $pendaftaran->siswa()->updateOrCreate(['pendaftaran_id' => $pendaftaran->id], $request->siswa);
+                $pendaftaran->siswa()->updateOrCreate(['pendaftaran_id' => $pendaftaran->id], $siswaData);
                 $pendaftaran->orangTua()->updateOrCreate(['pendaftaran_id' => $pendaftaran->id, 'jenis' => 'ayah'], $request->ayah);
                 $pendaftaran->orangTua()->updateOrCreate(['pendaftaran_id' => $pendaftaran->id, 'jenis' => 'ibu'], $request->ibu);
 
@@ -276,7 +282,7 @@ class PpdbController extends Controller
                     'status' => 'pending',
                 ]);
 
-                $pendaftaran->siswa()->create($request->siswa);
+                $pendaftaran->siswa()->create($siswaData);
                 $pendaftaran->orangTua()->create(array_merge($request->ayah, ['jenis' => 'ayah']));
                 $pendaftaran->orangTua()->create(array_merge($request->ibu, ['jenis' => 'ibu']));
 
