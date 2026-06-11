@@ -1242,8 +1242,8 @@ onMounted(async () => {
     try {
         const res = await fetch(`${apiUrl}/provinsi.json`);
         const data = await res.json();
-        // Hanya tampilkan Jawa Barat (32) dan Jawa Tengah (33)
-        provinces.value = data.filter(p => p.id === '32' || p.id === '33');
+        // Tampilkan seluruh provinsi di Indonesia
+        provinces.value = data;
 
         // Jika ada data (edit mode atau draft)
         if (form.siswa.provinsi) {
