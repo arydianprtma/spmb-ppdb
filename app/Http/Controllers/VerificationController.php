@@ -14,10 +14,16 @@ class VerificationController extends Controller
      */
     public function verify(Request $request, string $no_reg)
     {
-        // Cek apakah user sudah login dan memiliki role admin atau super_admin
         $user = \Illuminate\Support\Facades\Auth::user();
-        if (!$user || !$user->hasAnyRole(['admin', 'super_admin'])) {
-            abort(404);
+
+        // Jika belum login, arahkan ke halaman login admin
+        if (!$user) {
+            return redirect()->guest('/portal/login');
+        }
+
+        // Cek apakah user memiliki role admin atau super_admin
+        if (!$user->hasAnyRole(['admin', 'super_admin']) && ($user->role ?? null) !== 'admin' && ($user->role ?? null) !== 'super_admin') {
+            abort(403, 'Akses ditolak. Halaman ini hanya dapat diakses oleh Administrator.');
         }
 
         $token = $request->query('token');
