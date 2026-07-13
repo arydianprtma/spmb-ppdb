@@ -62,7 +62,8 @@ onUnmounted(() => {
 });
 
 const submit = () => {
-    if (!form.turnstile_token) {
+    const isLocal = window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1';
+    if (!isLocal && !form.turnstile_token) {
         form.errors.turnstile_token = 'Silakan selesaikan verifikasi keamanan Turnstile.';
         return;
     }

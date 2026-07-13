@@ -19,13 +19,15 @@ class AuthController extends Controller
 
     public function register(Request $request)
     {
-        $request->validate([
+        $rules = [
             'name' => 'required|string|max:255',
             'email' => 'required|string|email|max:255|unique:users',
             'whatsapp' => 'required|string|min:10|max:15|unique:users',
             'password' => 'required|string|min:8|confirmed',
-            'turnstile_token' => 'required|string',
-        ], [
+            'turnstile_token' => app()->environment('local') ? 'nullable|string' : 'required|string',
+        ];
+
+        $request->validate($rules, [
             'name.required' => 'Nama lengkap wajib diisi.',
             'email.required' => 'Email wajib diisi.',
             'email.email' => 'Format email tidak valid.',
@@ -40,17 +42,19 @@ class AuthController extends Controller
             'turnstile_token.required' => 'Verifikasi Turnstile wajib diisi.',
         ]);
 
-        // Verifikasi Turnstile ke API Cloudflare
-        $response = \Illuminate\Support\Facades\Http::asForm()->post('https://challenges.cloudflare.com/turnstile/v0/siteverify', [
-            'secret' => config('services.cloudflare.turnstile_secret_key') ?? env('TURNSTILE_SECRET_KEY'),
-            'response' => $request->input('turnstile_token'),
-            'remoteip' => $request->ip(),
-        ]);
+        if (!app()->environment('local')) {
+            // Verifikasi Turnstile ke API Cloudflare
+            $response = \Illuminate\Support\Facades\Http::asForm()->post('https://challenges.cloudflare.com/turnstile/v0/siteverify', [
+                'secret' => config('services.cloudflare.turnstile_secret_key') ?? env('TURNSTILE_SECRET_KEY'),
+                'response' => $request->input('turnstile_token'),
+                'remoteip' => $request->ip(),
+            ]);
 
-        if (!$response->successful() || !$response->json('success')) {
-            return back()->withErrors([
-                'turnstile_token' => 'Verifikasi keamanan Turnstile gagal. Silakan coba lagi.',
-            ])->withInput($request->except('password', 'password_confirmation'));
+            if (!$response->successful() || !$response->json('success')) {
+                return back()->withErrors([
+                    'turnstile_token' => 'Verifikasi keamanan Turnstile gagal. Silakan coba lagi.',
+                ])->withInput($request->except('password', 'password_confirmation'));
+            }
         }
 
         $user = User::create([
