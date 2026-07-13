@@ -87,6 +87,14 @@ onUnmounted(() => {
 const submit = () => {
     errorMessage.value = '';
     
+    const isLocal = window.location.hostname === 'localhost' || 
+                    window.location.hostname === '127.0.0.1' || 
+                    window.location.hostname.startsWith('192.168.');
+                    
+    if (isLocal && !form.turnstile_token) {
+        form.turnstile_token = 'local-bypass-token';
+    }
+    
     if (!form.turnstile_token) {
         form.errors.turnstile_token = 'Silakan selesaikan verifikasi keamanan Turnstile.';
         return;

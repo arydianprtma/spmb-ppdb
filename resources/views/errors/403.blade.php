@@ -37,7 +37,7 @@
             </p>
 
             <div class="grid grid-cols-1 gap-3">
-                <a href="{{ rtrim(env('PPDB_ADMIN_URL', 'https://www.riyadussalikin.ponpes.id'), '/') . '/portal/login' }}" class="flex items-center justify-center px-6 py-3 bg-slate-900 text-white rounded-xl font-bold text-xs uppercase tracking-widest hover:bg-slate-800 transition-all shadow-lg shadow-slate-200">
+                <a href="{{ rtrim(env('SPMB_ADMIN_URL', 'https://www.riyadussalikin.ponpes.id'), '/') . '/portal/login' }}" class="flex items-center justify-center px-6 py-3 bg-slate-900 text-white rounded-xl font-bold text-xs uppercase tracking-widest hover:bg-slate-800 transition-all shadow-lg shadow-slate-200">
                     Masuk Portal Admin
                 </a>
                 <a href="javascript:history.back()" class="flex items-center justify-center px-6 py-3 bg-white text-slate-500 border border-slate-200 rounded-xl font-bold text-xs uppercase tracking-widest hover:bg-slate-800 transition-all">

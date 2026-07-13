@@ -74,25 +74,34 @@ class AuthController extends Controller
 
     public function login(Request $request)
     {
-        $request->validate([
+        $isLocal = app()->environment('local');
+
+        $rules = [
             'email' => 'required|email',
             'password' => 'required',
-            'turnstile_token' => 'required|string',
-        ], [
+        ];
+
+        if (!$isLocal) {
+            $rules['turnstile_token'] = 'required|string';
+        }
+
+        $request->validate($rules, [
             'turnstile_token.required' => 'Verifikasi Turnstile wajib diisi.',
         ]);
 
-        // Verifikasi Turnstile ke API Cloudflare
-        $response = \Illuminate\Support\Facades\Http::asForm()->post('https://challenges.cloudflare.com/turnstile/v0/siteverify', [
-            'secret' => config('services.cloudflare.turnstile_secret_key') ?? env('TURNSTILE_SECRET_KEY'),
-            'response' => $request->input('turnstile_token'),
-            'remoteip' => $request->ip(),
-        ]);
+        if (!$isLocal) {
+            // Verifikasi Turnstile ke API Cloudflare
+            $response = \Illuminate\Support\Facades\Http::asForm()->post('https://challenges.cloudflare.com/turnstile/v0/siteverify', [
+                'secret' => config('services.cloudflare.turnstile_secret_key') ?? env('TURNSTILE_SECRET_KEY'),
+                'response' => $request->input('turnstile_token'),
+                'remoteip' => $request->ip(),
+            ]);
 
-        if (!$response->successful() || !$response->json('success')) {
-            return back()->withErrors([
-                'turnstile_token' => 'Verifikasi keamanan Turnstile gagal. Silakan coba lagi.',
-            ])->onlyInput('email');
+            if (!$response->successful() || !$response->json('success')) {
+                return back()->withErrors([
+                    'turnstile_token' => 'Verifikasi keamanan Turnstile gagal. Silakan coba lagi.',
+                ])->onlyInput('email');
+            }
         }
 
         $credentials = $request->only('email', 'password');

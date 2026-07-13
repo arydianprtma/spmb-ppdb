@@ -42,12 +42,14 @@ class PpdbController extends Controller
 
     public function store(Request $request)
     {
-        if (!PpdbSetting::isOpen()) {
+        $user_id = Auth::id();
+        $pendaftaran = PpdbPendaftaran::with('siswa')->where('user_id', $user_id)->latest()->first();
+        $isNew = !$pendaftaran || !$pendaftaran->siswa || $pendaftaran->siswa->status === 'lulus';
+
+        if (!PpdbSetting::isOpen() && $isNew) {
             return back()->withErrors(['message' => 'Mohon maaf, pendaftaran saat ini sedang ditutup.']);
         }
 
-        $user_id = Auth::id();
-        $pendaftaran = PpdbPendaftaran::with('siswa')->where('user_id', $user_id)->latest()->first();
         $siswaId = $pendaftaran?->siswa?->id;
 
         $request->validate([

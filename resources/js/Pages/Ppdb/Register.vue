@@ -56,7 +56,7 @@
                 </div>
 
                 <!-- Registration Closed Alert -->
-                <div v-if="!ppdbSetting?.isOpen" class="mb-8 bg-red-50 border-2 border-red-200 rounded-2xl p-6 text-center shadow-lg shadow-red-100 animate-fadeIn">
+                <div v-if="!ppdbSetting?.isOpen && !existingData" class="mb-8 bg-red-50 border-2 border-red-200 rounded-2xl p-6 text-center shadow-lg shadow-red-100 animate-fadeIn">
                     <div class="w-16 h-16 bg-red-100 rounded-full flex items-center justify-center mx-auto mb-4 text-red-600">
                         <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
                     </div>
@@ -70,7 +70,7 @@
                 </div>
 
                 <!-- Multi-step Progress Bar -->
-                <div v-else class="mb-8 md:mb-10 overflow-x-auto pb-4">
+                <div v-if="ppdbSetting?.isOpen || existingData" class="mb-8 md:mb-10 overflow-x-auto pb-4">
                     <div class="flex items-start min-w-[500px] md:min-w-0 justify-between px-2">
                         <template v-for="s in totalSteps" :key="s">
                             <!-- Step circle + label -->
@@ -106,8 +106,19 @@
                     </div>
                 </div>
 
+                <!-- Warning Banner for closed registration but existing registration updates -->
+                <div v-if="!ppdbSetting?.isOpen && existingData" class="mb-6 bg-amber-50 border border-amber-200 rounded-2xl p-5 text-amber-800 shadow-sm animate-fadeIn">
+                    <div class="flex items-start gap-3">
+                        <svg class="w-5 h-5 text-amber-600 flex-shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"/></svg>
+                        <div>
+                            <p class="font-bold text-sm">Pendaftaran Telah Ditutup</p>
+                            <p class="text-xs text-amber-700 mt-1">Saat ini pendaftaran santri baru telah ditutup. Anda masih diperbolehkan untuk melihat dan memperbarui data atau dokumen pendaftaran yang sudah Anda unggah sebelumnya.</p>
+                        </div>
+                    </div>
+                </div>
+
                 <!-- Form Content -->
-                <form v-if="ppdbSetting?.isOpen" @submit.prevent="submit" class="bg-white shadow-2xl rounded-2xl md:rounded-3xl mb-8 border border-gray-100">
+                <form v-if="ppdbSetting?.isOpen || existingData" @submit.prevent="submit" class="bg-white shadow-2xl rounded-2xl md:rounded-3xl mb-8 border border-gray-100">
                     <div class="p-5 sm:p-8 md:p-12">
                         
                         <!-- STEP 1: Registrasi & Identitas Siswa -->

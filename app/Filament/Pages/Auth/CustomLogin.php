@@ -64,26 +64,30 @@ class CustomLogin extends BaseLogin
 
     public function authenticate(): ?\Filament\Auth\Http\Responses\Contracts\LoginResponse
     {
-        if (!$this->turnstile_token) {
-            throw ValidationException::withMessages([
-                'email' => 'Silakan selesaikan verifikasi keamanan Turnstile.',
+        $isLocal = app()->environment('local');
+
+        if (!$isLocal) {
+            if (!$this->turnstile_token) {
+                throw ValidationException::withMessages([
+                    'email' => 'Silakan selesaikan verifikasi keamanan Turnstile.',
+                ]);
+            }
+
+            // Verify with Cloudflare API
+            $response = Http::asForm()->post('https://challenges.cloudflare.com/turnstile/v0/siteverify', [
+                'secret' => config('services.cloudflare.turnstile_secret_key') ?? env('TURNSTILE_SECRET_KEY'),
+                'response' => $this->turnstile_token,
+                'remoteip' => request()->ip(),
             ]);
-        }
 
-        // Verify with Cloudflare API
-        $response = Http::asForm()->post('https://challenges.cloudflare.com/turnstile/v0/siteverify', [
-            'secret' => config('services.cloudflare.turnstile_secret_key') ?? env('TURNSTILE_SECRET_KEY'),
-            'response' => $this->turnstile_token,
-            'remoteip' => request()->ip(),
-        ]);
+            if (!$response->successful() || !$response->json('success')) {
+                $this->turnstile_token = null;
+                $this->js('if (window.turnstile) { window.turnstile.reset(); }');
 
-        if (!$response->successful() || !$response->json('success')) {
-            $this->turnstile_token = null;
-            $this->js('if (window.turnstile) { window.turnstile.reset(); }');
-
-            throw ValidationException::withMessages([
-                'email' => 'Verifikasi keamanan Turnstile gagal. Silakan coba lagi.',
-            ]);
+                throw ValidationException::withMessages([
+                    'email' => 'Verifikasi keamanan Turnstile gagal. Silakan coba lagi.',
+                ]);
+            }
         }
 
         try {

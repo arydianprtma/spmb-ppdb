@@ -20,7 +20,7 @@
                     </p>
                     <div class="flex flex-col sm:flex-row gap-4 justify-center">
                         <Link :href="route('ppdb.register')" class="btn-primary inline-block text-center">
-                            PPDB
+                            SPMB
                         </Link>
                         <Link :href="route('kontak')" class="btn-secondary inline-block">
                             Hubungi Kami

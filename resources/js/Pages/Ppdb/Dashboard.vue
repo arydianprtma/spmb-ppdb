@@ -186,19 +186,90 @@
             </div>
 
             <!-- Pas Foto Warning Banner -->
-            <div v-if="!$page.props.auth.user.avatar" class="bg-amber-50 border border-amber-200 rounded-3xl p-5 shadow-sm flex items-start gap-4">
-                <div class="w-10 h-10 rounded-xl bg-amber-100 flex items-center justify-center flex-shrink-0 text-amber-600">
-                    <svg class="w-5.5 h-5.5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+            <div v-if="!$page.props.auth.user.avatar" class="bg-red-50 border-2 border-red-200 rounded-3xl p-6 shadow-sm flex items-start gap-4 animate-fadeIn">
+                <div class="w-12 h-12 rounded-2xl bg-red-100 flex items-center justify-center flex-shrink-0 text-red-600">
+                    <svg class="w-6 h-6" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" />
                     </svg>
                 </div>
                 <div class="flex-1">
-                    <h4 class="font-bold text-sm text-amber-800">Pas Foto Belum Diunggah</h4>
-                    <p class="text-xs text-amber-600 font-medium mt-1 leading-relaxed">
+                    <h4 class="font-bold text-base text-red-900">Pas Foto Wajib Diunggah</h4>
+                    <p class="text-sm text-red-700 font-semibold mt-1 leading-relaxed">
                         Anda belum mengunggah pas foto profil. Harap mengunggah pas foto berseragam sekolah dengan latar belakang merah melalui menu 
-                        <Link :href="route('profile.edit')" class="underline hover:text-amber-800 font-bold transition-colors">Edit Profil</Link> 
+                        <Link :href="route('profile.edit')" class="underline hover:text-red-900 font-bold transition-colors">Edit Profil</Link> 
                         untuk kelengkapan kartu bukti pendaftaran Anda.
                     </p>
+                </div>
+            </div>
+
+            <!-- Flowchart Alur Pendaftaran -->
+            <div class="bg-white rounded-3xl p-6 sm:p-8 border border-emerald-100 shadow-sm">
+                <div class="flex items-center gap-3 mb-6">
+                    <div class="w-9 h-9 rounded-xl bg-emerald-100 flex items-center justify-center flex-shrink-0">
+                        <svg class="w-5 h-5 text-emerald-600" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M9 20l-5.447-2.724A1 1 0 013 16.382V5.618a1 1 0 011.447-.894L9 7m0 13l6-3m-6 3V7m6 10l4.553 2.276A1 1 0 0021 18.382V7.618a1 1 0 00-.553-.894L15 4m0 13V4m0 0L9 7" />
+                        </svg>
+                    </div>
+                    <div>
+                        <h2 class="text-lg font-bold text-gray-800">Alur Pengisian Pendaftaran (SPMB)</h2>
+                        <p class="text-xs text-gray-400">Ikuti urutan langkah di bawah ini untuk menyelesaikan pendaftaran Anda</p>
+                    </div>
+                </div>
+
+                <!-- Steps grid layout -->
+                <div class="grid grid-cols-1 md:grid-cols-5 gap-6 relative">
+                    <!-- Step 1 -->
+                    <div class="flex flex-col items-center text-center relative group">
+                        <div class="w-12 h-12 rounded-full bg-emerald-50 text-emerald-600 flex items-center justify-center font-bold text-lg border-2 border-emerald-200 shadow-sm mb-3 group-hover:scale-105 transition-transform duration-300">
+                            1
+                        </div>
+                        <h4 class="font-bold text-sm text-gray-800 mb-1">Isi Formulir</h4>
+                        <p class="text-xs text-gray-400 leading-normal">Lengkapi biodata lengkap dan data orang tua.</p>
+                        <!-- Connector for md+ -->
+                        <div class="hidden md:block absolute top-6 -right-4 w-8 h-0.5 bg-gray-200 z-0"></div>
+                    </div>
+
+                    <!-- Step 2 -->
+                    <div class="flex flex-col items-center text-center relative group">
+                        <div class="w-12 h-12 rounded-full bg-emerald-50 text-emerald-600 flex items-center justify-center font-bold text-lg border-2 border-emerald-200 shadow-sm mb-3 group-hover:scale-105 transition-transform duration-300">
+                            2
+                        </div>
+                        <h4 class="font-bold text-sm text-gray-800 mb-1">Pas Foto Merah</h4>
+                        <p class="text-xs text-gray-400 leading-normal">Unggah pas foto berseragam latar merah di Edit Profil.</p>
+                        <!-- Connector for md+ -->
+                        <div class="hidden md:block absolute top-6 -right-4 w-8 h-0.5 bg-gray-200 z-0"></div>
+                    </div>
+
+                    <!-- Step 3 -->
+                    <div class="flex flex-col items-center text-center relative group">
+                        <div class="w-12 h-12 rounded-full bg-emerald-50 text-emerald-600 flex items-center justify-center font-bold text-lg border-2 border-emerald-200 shadow-sm mb-3 group-hover:scale-105 transition-transform duration-300">
+                            3
+                        </div>
+                        <h4 class="font-bold text-sm text-gray-800 mb-1">Unggah Berkas</h4>
+                        <p class="text-xs text-gray-400 leading-normal">Unggah scan KK, Akta Lahir, dan dokumen lainnya.</p>
+                        <!-- Connector for md+ -->
+                        <div class="hidden md:block absolute top-6 -right-4 w-8 h-0.5 bg-gray-200 z-0"></div>
+                    </div>
+
+                    <!-- Step 4 -->
+                    <div class="flex flex-col items-center text-center relative group">
+                        <div class="w-12 h-12 rounded-full bg-emerald-50 text-emerald-600 flex items-center justify-center font-bold text-lg border-2 border-emerald-200 shadow-sm mb-3 group-hover:scale-105 transition-transform duration-300">
+                            4
+                        </div>
+                        <h4 class="font-bold text-sm text-gray-800 mb-1">Verifikasi Data</h4>
+                        <p class="text-xs text-gray-400 leading-normal">Tunggu tim panitia memvalidasi data dan berkas Anda.</p>
+                        <!-- Connector for md+ -->
+                        <div class="hidden md:block absolute top-6 -right-4 w-8 h-0.5 bg-gray-200 z-0"></div>
+                    </div>
+
+                    <!-- Step 5 -->
+                    <div class="flex flex-col items-center text-center relative group">
+                        <div class="w-12 h-12 rounded-full bg-emerald-600 text-white flex items-center justify-center font-bold text-lg shadow-md shadow-emerald-200 mb-3 group-hover:scale-105 transition-transform duration-300">
+                            5
+                        </div>
+                        <h4 class="font-bold text-sm text-gray-800 mb-1">Cetak Bukti</h4>
+                        <p class="text-xs text-gray-400 leading-normal">Unduh kartu bukti pendaftaran untuk daftar ulang.</p>
+                    </div>
                 </div>
             </div>
 
@@ -488,7 +559,7 @@
 
             <!-- No Registration Yet -->
             <template v-else>
-                <!-- If PPDB is open -->
+                <!-- If SPMB is open -->
                 <div v-if="ppdbSetting?.isOpen" class="bg-white rounded-3xl shadow-lg border border-orange-100 p-8 text-center animate-fadeIn">
                     <div class="w-20 h-20 bg-orange-100 rounded-full flex items-center justify-center mx-auto mb-4">
                         <svg class="w-10 h-10 text-orange-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/></svg>
@@ -500,7 +571,7 @@
                         Isi Formulir Sekarang
                     </Link>
                 </div>
-                <!-- If PPDB is closed -->
+                <!-- If SPMB is closed -->
                 <div v-else class="bg-white rounded-3xl shadow-lg border border-red-100 p-8 text-center animate-fadeIn">
                     <div class="w-20 h-20 bg-red-50 rounded-full flex items-center justify-center mx-auto mb-4 text-red-500">
                         <svg class="w-10 h-10" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
@@ -913,7 +984,7 @@
         <!-- 7. WATERMARK FOOTER -->
         <div class="absolute text-center text-gray-400 uppercase font-bold" style="left: 15mm; right: 15mm; bottom: 8mm; font-size: 9pt; line-height: 1.3;">
             <div>SIMPANLAH LEMBAR PENDAFTARAN INI SEBAGAI BUKTI PENDAFTARAN ANDA</div>
-            <div>SISTEM PPDB ONLINE PP. RIYADUSSALIKIN</div>
+            <div>SISTEM SPMB ONLINE PP. RIYADUSSALIKIN</div>
         </div>
     </div>
 
@@ -1173,7 +1244,7 @@ const printCard = async () => {
         
         const opt = {
             margin:       0,
-            filename:     `Bukti_Pendaftaran_${props.pendaftaran?.no_reg || 'PPDB'}.pdf`,
+            filename:     `Bukti_Pendaftaran_${props.pendaftaran?.no_reg || 'SPMB'}.pdf`,
             image:        { type: 'jpeg', quality: 0.98 },
             html2canvas:  { scale: 2, useCORS: true, logging: false },
             jsPDF:        { unit: 'mm', format: 'a4', orientation: 'portrait' }
@@ -1424,7 +1495,7 @@ const stageDesc = (stage) => {
     if (stage.key === 'wawancara' && s === 'wawancara') return 'Anda dijadwalkan untuk sesi wawancara. Hadir bersama orang tua/wali sesuai jadwal panitia.';
     if (stage.key === 'hasil') {
         if (s === 'ditolak') return 'Mohon maaf, Anda belum berhasil dalam seleksi ini. Silakan hubungi panitia untuk informasi lebih lanjut.';
-        if (s === 'mengundurkan_diri') return 'Anda telah mengundurkan diri dari proses pendaftaran PPDB.';
+        if (s === 'mengundurkan_diri') return 'Anda telah mengundurkan diri dari proses pendaftaran SPMB.';
     }
     return stage.desc;
 };
