@@ -31,7 +31,7 @@ class PortalPanelProvider extends PanelProvider
             ->passwordReset()
             ->emailVerification()
             ->profile()
-            ->spa()
+            // ->spa()
             ->databaseNotifications()
             ->colors([
                 'primary' => Color::Emerald,
