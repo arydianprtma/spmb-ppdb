@@ -32,15 +32,15 @@ Route::get('/visi-misi', function() { return redirect(env('APP_URL', 'http://loc
 // Auth Routes
 Route::middleware('guest')->group(function () {
     Route::get('/register', [AuthController::class, 'showRegister'])->name('register');
-    Route::post('/register', [AuthController::class, 'register']);
+    Route::post('/register', [AuthController::class, 'register'])->middleware('throttle:10,1');
     Route::get('/login', [AuthController::class, 'showLogin'])->name('login');
-    Route::post('/login', [AuthController::class, 'login']);
+    Route::post('/login', [AuthController::class, 'login'])->middleware('throttle:10,1');
     
-    // Lupa Password & OTP Routes
+    // Lupa Password & OTP Routes (Diproteksi Throttle dari spam & brute force)
     Route::get('/forgot-password', [AuthController::class, 'showForgotPassword'])->name('password.request');
-    Route::post('/forgot-password/send-otp', [AuthController::class, 'sendOtp'])->name('password.send-otp');
-    Route::post('/forgot-password/verify-otp', [AuthController::class, 'verifyOtp'])->name('password.verify-otp');
-    Route::post('/forgot-password/reset-password', [AuthController::class, 'resetPassword'])->name('password.reset-submit');
+    Route::post('/forgot-password/send-otp', [AuthController::class, 'sendOtp'])->middleware('throttle:3,1')->name('password.send-otp');
+    Route::post('/forgot-password/verify-otp', [AuthController::class, 'verifyOtp'])->middleware('throttle:5,1')->name('password.verify-otp');
+    Route::post('/forgot-password/reset-password', [AuthController::class, 'resetPassword'])->middleware('throttle:5,1')->name('password.reset-submit');
 });
 
 // Refresh CSRF Token

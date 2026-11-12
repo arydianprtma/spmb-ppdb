@@ -151,8 +151,8 @@ class AuthController extends Controller
             ]);
         }
 
-        // Generate 6-digit OTP
-        $otp = (string) rand(100000, 999999);
+        // Generate 6-digit cryptographically secure OTP
+        $otp = (string) random_int(100000, 999999);
         $user->otp_code = $otp;
         $user->otp_expires_at = Carbon::now()->addMinutes(10);
         $user->save();
