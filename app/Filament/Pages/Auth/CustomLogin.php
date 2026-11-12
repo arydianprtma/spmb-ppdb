@@ -30,20 +30,32 @@ class CustomLogin extends BaseLogin
                     <script src="https://challenges.cloudflare.com/turnstile/v0/api.js?render=explicit" async defer></script>
                     <script>
                         (function() {
+                            const setLivewireToken = (val) => {
+                                const el = document.getElementById("turnstile-container");
+                                const wireEl = el ? el.closest("[wire\\:id]") : null;
+                                const wireId = wireEl ? wireEl.getAttribute("wire:id") : null;
+                                if (wireEl && wireEl.__livewire) {
+                                    wireEl.__livewire.set("turnstile_token", val);
+                                } else if (wireId && window.Livewire) {
+                                    window.Livewire.find(wireId).set("turnstile_token", val);
+                                }
+                            };
+
                             const renderTurnstile = () => {
                                 if (window.turnstile && document.getElementById("turnstile-container")) {
                                     window.turnstile.render("#turnstile-container", {
                                         sitekey: "' . (config('services.cloudflare.turnstile_site_key') ?? env('VITE_TURNSTILE_SITE_KEY', '0x4AAAAAADiJFNnVjj_xSKi_')) . '",
                                         action: "filament-login",
                                         callback: function (token) {
-                                            @this.set(\'turnstile_token\', token);
-                                            document.getElementById("turnstile-error").style.display = "none";
+                                            setLivewireToken(token);
+                                            const err = document.getElementById("turnstile-error");
+                                            if (err) err.style.display = "none";
                                         },
                                         "expired-callback": function () {
-                                            @this.set(\'turnstile_token\', null);
+                                            setLivewireToken(null);
                                         },
                                         "error-callback": function () {
-                                            @this.set(\'turnstile_token\', null);
+                                            setLivewireToken(null);
                                         }
                                     });
                                 }

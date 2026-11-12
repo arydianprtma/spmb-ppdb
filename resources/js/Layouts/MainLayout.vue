@@ -6,7 +6,7 @@
                 <div class="flex justify-between items-center h-20">
                     <!-- Logo & Name -->
                     <Link :href="route('home')" class="flex items-center space-x-3 flex-shrink-0">
-                        <img src="/Logo Riyad.png" alt="Logo Riyadussalikin" class="h-12 w-12" />
+                        <img src="/logo_pondok.png" alt="Logo Riyadussalikin" class="h-12 w-12" />
                         <!-- Mobile: Nama Pondok -->
                         <div class="block lg:hidden">
                             <div class="text-emerald-700 font-bold text-base leading-tight">Riyadussalikin</div>

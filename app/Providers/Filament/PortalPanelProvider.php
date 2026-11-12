@@ -39,7 +39,7 @@ class PortalPanelProvider extends PanelProvider
             ])
             ->font('Poppins')
             ->brandName('Portal Pesantren')
-            ->brandLogo(asset('Logo Riyad.png'))
+            ->brandLogo(asset('logo_pondok.png'))
             ->brandLogoHeight('3.5rem')
             ->favicon(asset('logo.png'))
             ->sidebarCollapsibleOnDesktop()

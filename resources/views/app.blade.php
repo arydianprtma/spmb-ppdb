@@ -18,14 +18,14 @@
     <meta property="og:url" content="{{ config('app.url') }}">
     <meta property="og:title" content="Portal SPMB - Pesantren Riyadussalikin">
     <meta property="og:description" content="Pendaftaran Peserta Didik Baru Pondok Pesantren Riyadussalikin Padaherang.">
-    <meta property="og:image" content="{{ asset('Logo Riyad.png') }}">
+    <meta property="og:image" content="{{ asset('logo_pondok.png') }}">
 
     <!-- Twitter -->
     <meta property="twitter:card" content="summary_large_image">
     <meta property="twitter:url" content="{{ config('app.url') }}">
     <meta property="twitter:title" content="Portal SPMB - Pesantren Riyadussalikin">
     <meta property="twitter:description" content="Pendaftaran Peserta Didik Baru Pondok Pesantren Riyadussalikin Padaherang.">
-    <meta property="twitter:image" content="{{ asset('Logo Riyad.png') }}">
+    <meta property="twitter:image" content="{{ asset('logo_pondok.png') }}">
 
     <!-- Fonts -->
     <link rel="preconnect" href="https://fonts.bunny.net">

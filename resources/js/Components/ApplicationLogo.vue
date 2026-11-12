@@ -1,3 +1,3 @@
 <template>
-    <img src="/Logo Riyad.png" alt="Logo Riyadussalikin" />
+    <img src="/logo_pondok.png" alt="Logo Riyadussalikin" />
 </template>
