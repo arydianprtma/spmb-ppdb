@@ -69,6 +69,7 @@ class HandleInertiaRequests extends Middleware
                 'otp_verified' => fn () => $request->session()->get('otp_verified'),
                 'otp_code' => fn () => $request->session()->get('otp_code'),
             ],
+            'turnstile_site_key' => config('services.cloudflare.turnstile_site_key') ?? env('VITE_TURNSTILE_SITE_KEY', '0x4AAAAAADiJFNnVjj_xSKi_'),
         ];
     }
 }

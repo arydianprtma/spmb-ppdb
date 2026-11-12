@@ -1,7 +1,9 @@
 <script setup>
-import { Head, Link, useForm } from '@inertiajs/vue3';
+import { Head, Link, useForm, usePage } from '@inertiajs/vue3';
 import { ref, onMounted, onUnmounted } from 'vue';
 import logoUrl from '../../../assets/logo/logo_pondok.png';
+
+const page = usePage();
 
 const form = useForm({
     name: '',
@@ -10,13 +12,14 @@ const form = useForm({
     password: '',
     password_confirmation: '',
     turnstile_token: '',
+    'cf-turnstile-response': '',
 });
 
 const showPassword = ref(false);
 const showConfirmPassword = ref(false);
 
 let turnstileWidgetId = null;
-const siteKey = import.meta.env.VITE_TURNSTILE_SITE_KEY || '1x00000000000000000000AA';
+const siteKey = page.props.turnstile_site_key || import.meta.env.VITE_TURNSTILE_SITE_KEY || '0x4AAAAAADiJFNnVjj_xSKi_';
 
 onMounted(() => {
     // Load Turnstile script dynamically
@@ -34,15 +37,20 @@ onMounted(() => {
         if (window.turnstile && document.getElementById('turnstile-container')) {
             turnstileWidgetId = window.turnstile.render('#turnstile-container', {
                 sitekey: siteKey,
+                action: 'register',
                 callback: (token) => {
                     form.turnstile_token = token;
+                    form['cf-turnstile-response'] = token;
                     form.clearErrors('turnstile_token');
+                    form.clearErrors('cf-turnstile-response');
                 },
                 'expired-callback': () => {
                     form.turnstile_token = '';
+                    form['cf-turnstile-response'] = '';
                 },
                 'error-callback': () => {
                     form.turnstile_token = '';
+                    form['cf-turnstile-response'] = '';
                 }
             });
         }
@@ -63,7 +71,7 @@ onUnmounted(() => {
 
 const submit = () => {
     const isLocal = window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1';
-    if (!isLocal && !form.turnstile_token) {
+    if (!isLocal && !form.turnstile_token && !form['cf-turnstile-response']) {
         form.errors.turnstile_token = 'Silakan selesaikan verifikasi keamanan Turnstile.';
         return;
     }
@@ -74,6 +82,7 @@ const submit = () => {
             if (window.turnstile && turnstileWidgetId !== null) {
                 window.turnstile.reset(turnstileWidgetId);
                 form.turnstile_token = '';
+                form['cf-turnstile-response'] = '';
             }
         },
     });
@@ -215,8 +224,8 @@ const submit = () => {
                     <div style="margin-bottom:20px; display:flex; justify-content:center;">
                         <div id="turnstile-container"></div>
                     </div>
-                    <div v-if="form.errors.turnstile_token" style="margin-top:-12px; margin-bottom:16px; font-size:0.78rem; color:#ef4444; text-align:center;">
-                        {{ form.errors.turnstile_token }}
+                    <div v-if="form.errors.turnstile_token || form.errors['cf-turnstile-response']" style="margin-top:-12px; margin-bottom:16px; font-size:0.78rem; color:#ef4444; text-align:center;">
+                        {{ form.errors.turnstile_token || form.errors['cf-turnstile-response'] }}
                     </div>
 
                     <!-- Submit Button with glow -->

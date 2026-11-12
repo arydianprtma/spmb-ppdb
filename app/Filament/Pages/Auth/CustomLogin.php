@@ -33,7 +33,8 @@ class CustomLogin extends BaseLogin
                             const renderTurnstile = () => {
                                 if (window.turnstile && document.getElementById("turnstile-container")) {
                                     window.turnstile.render("#turnstile-container", {
-                                        sitekey: "' . (config('services.cloudflare.turnstile_site_key') ?? env('VITE_TURNSTILE_SITE_KEY', '1x00000000000000000000AA')) . '",
+                                        sitekey: "' . (config('services.cloudflare.turnstile_site_key') ?? env('VITE_TURNSTILE_SITE_KEY', '0x4AAAAAADiJFNnVjj_xSKi_')) . '",
+                                        action: "filament-login",
                                         callback: function (token) {
                                             @this.set(\'turnstile_token\', token);
                                             document.getElementById("turnstile-error").style.display = "none";
@@ -74,13 +75,27 @@ class CustomLogin extends BaseLogin
             }
 
             // Verify with Cloudflare API
-            $response = Http::asForm()->post('https://challenges.cloudflare.com/turnstile/v0/siteverify', [
+            $response = Http::asForm()->timeout(10)->post('https://challenges.cloudflare.com/turnstile/v0/siteverify', [
                 'secret' => config('services.cloudflare.turnstile_secret_key') ?? env('TURNSTILE_SECRET_KEY'),
                 'response' => $this->turnstile_token,
                 'remoteip' => request()->ip(),
             ]);
 
-            if (!$response->successful() || !$response->json('success')) {
+            $data = $response->json();
+            $allowedHostnames = [
+                'ppdb.riyadussalikin.ponpes.id',
+                'riyadussalikin.ponpes.id',
+                'www.riyadussalikin.ponpes.id',
+                'localhost',
+                '127.0.0.1',
+            ];
+
+            if (
+                !$response->successful() ||
+                !($data['success'] ?? false) ||
+                (!empty($data['action']) && $data['action'] !== 'filament-login') ||
+                (!empty($data['hostname']) && !in_array($data['hostname'], $allowedHostnames, true))
+            ) {
                 $this->turnstile_token = null;
                 $this->js('if (window.turnstile) { window.turnstile.reset(); }');
 

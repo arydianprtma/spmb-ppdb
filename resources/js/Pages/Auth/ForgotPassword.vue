@@ -1,14 +1,18 @@
 <script setup>
 import { Head, Link, useForm, usePage } from '@inertiajs/vue3';
-import { ref, computed } from 'vue';
+import { ref, computed, onMounted, onUnmounted } from 'vue';
 import logoUrl from '../../../assets/logo/logo_pondok.png';
 
 const page = usePage();
 const step = ref(1);
+const siteKey = page.props.turnstile_site_key || import.meta.env.VITE_TURNSTILE_SITE_KEY || '0x4AAAAAADiJFNnVjj_xSKi_';
+let turnstileWidgetId = null;
 
 // Step 1: Email Form
 const emailForm = useForm({
     email: '',
+    turnstile_token: '',
+    'cf-turnstile-response': '',
 });
 
 // Step 2: OTP Form
@@ -30,7 +34,59 @@ const showConfirmPassword = ref(false);
 
 const maskedWhatsapp = computed(() => page.props.flash?.whatsapp_masked || '');
 
+const renderTurnstile = () => {
+    if (window.turnstile && document.getElementById('turnstile-container-forgot')) {
+        turnstileWidgetId = window.turnstile.render('#turnstile-container-forgot', {
+            sitekey: siteKey,
+            action: 'forgot-password',
+            callback: (token) => {
+                emailForm.turnstile_token = token;
+                emailForm['cf-turnstile-response'] = token;
+                emailForm.clearErrors('turnstile_token');
+                emailForm.clearErrors('cf-turnstile-response');
+            },
+            'expired-callback': () => {
+                emailForm.turnstile_token = '';
+                emailForm['cf-turnstile-response'] = '';
+            },
+            'error-callback': () => {
+                emailForm.turnstile_token = '';
+                emailForm['cf-turnstile-response'] = '';
+            }
+        });
+    }
+};
+
+onMounted(() => {
+    let script = document.getElementById('cloudflare-turnstile-script');
+    if (!script) {
+        script = document.createElement('script');
+        script.id = 'cloudflare-turnstile-script';
+        script.src = 'https://challenges.cloudflare.com/turnstile/v0/api.js?render=explicit';
+        script.async = true;
+        script.defer = true;
+        document.head.appendChild(script);
+    }
+    if (window.turnstile) {
+        renderTurnstile();
+    } else {
+        script.onload = renderTurnstile;
+    }
+});
+
+onUnmounted(() => {
+    if (window.turnstile && turnstileWidgetId !== null) {
+        window.turnstile.remove(turnstileWidgetId);
+    }
+});
+
 const submitEmail = () => {
+    const isLocal = window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1';
+    if (!isLocal && !emailForm.turnstile_token && !emailForm['cf-turnstile-response']) {
+        emailForm.errors.turnstile_token = 'Silakan selesaikan verifikasi keamanan Turnstile.';
+        return;
+    }
+
     emailForm.post(route('password.send-otp'), {
         onSuccess: () => {
             if (page.props.flash?.status === 'otp_sent') {
@@ -38,6 +94,13 @@ const submitEmail = () => {
                 step.value = 2;
             }
         },
+        onFinish: () => {
+            if (window.turnstile && turnstileWidgetId !== null) {
+                window.turnstile.reset(turnstileWidgetId);
+                emailForm.turnstile_token = '';
+                emailForm['cf-turnstile-response'] = '';
+            }
+        }
     });
 };
 
@@ -131,6 +194,14 @@ const goBackToEmail = () => {
                                 required autofocus
                             />
                             <div v-if="emailForm.errors.email" style="margin-top:4px;font-size:0.78rem;color:#ef4444;">{{ emailForm.errors.email }}</div>
+                        </div>
+
+                        <!-- Turnstile Widget -->
+                        <div style="margin-bottom:16px; display:flex; justify-content:center;">
+                            <div id="turnstile-container-forgot"></div>
+                        </div>
+                        <div v-if="emailForm.errors.turnstile_token || emailForm.errors['cf-turnstile-response']" style="margin-top:-8px; margin-bottom:16px; font-size:0.78rem; color:#ef4444; text-align:center;">
+                            {{ emailForm.errors.turnstile_token || emailForm.errors['cf-turnstile-response'] }}
                         </div>
 
                         <!-- Submit Button -->

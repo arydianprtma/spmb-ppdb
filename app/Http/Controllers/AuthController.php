@@ -24,7 +24,6 @@ class AuthController extends Controller
             'email' => 'required|string|email|max:255|unique:users',
             'whatsapp' => 'required|string|min:10|max:15|unique:users',
             'password' => 'required|string|min:8|confirmed',
-            'turnstile_token' => app()->environment('local') ? 'nullable|string' : 'required|string',
         ];
 
         $request->validate($rules, [
@@ -39,22 +38,13 @@ class AuthController extends Controller
             'password.required' => 'Kata sandi wajib diisi.',
             'password.min' => 'Kata sandi minimal 8 karakter.',
             'password.confirmed' => 'Konfirmasi kata sandi tidak cocok.',
-            'turnstile_token.required' => 'Verifikasi Turnstile wajib diisi.',
         ]);
 
-        if (!app()->environment('local')) {
-            // Verifikasi Turnstile ke API Cloudflare
-            $response = \Illuminate\Support\Facades\Http::asForm()->post('https://challenges.cloudflare.com/turnstile/v0/siteverify', [
-                'secret' => config('services.cloudflare.turnstile_secret_key') ?? env('TURNSTILE_SECRET_KEY'),
-                'response' => $request->input('turnstile_token'),
-                'remoteip' => $request->ip(),
-            ]);
-
-            if (!$response->successful() || !$response->json('success')) {
-                return back()->withErrors([
-                    'turnstile_token' => 'Verifikasi keamanan Turnstile gagal. Silakan coba lagi.',
-                ])->withInput($request->except('password', 'password_confirmation'));
-            }
+        if (!$this->verifyTurnstile($request, 'register')) {
+            return back()->withErrors([
+                'turnstile_token' => 'Verifikasi keamanan Turnstile gagal. Silakan coba lagi.',
+                'cf-turnstile-response' => 'Verifikasi keamanan Turnstile gagal. Silakan coba lagi.',
+            ])->withInput($request->except('password', 'password_confirmation'));
         }
 
         $user = User::create([
@@ -78,34 +68,22 @@ class AuthController extends Controller
 
     public function login(Request $request)
     {
-        $isLocal = app()->environment('local');
-
         $rules = [
             'email' => 'required|email',
             'password' => 'required',
         ];
 
-        if (!$isLocal) {
-            $rules['turnstile_token'] = 'required|string';
-        }
-
         $request->validate($rules, [
-            'turnstile_token.required' => 'Verifikasi Turnstile wajib diisi.',
+            'email.required' => 'Email wajib diisi.',
+            'email.email' => 'Format email tidak valid.',
+            'password.required' => 'Kata sandi wajib diisi.',
         ]);
 
-        if (!$isLocal) {
-            // Verifikasi Turnstile ke API Cloudflare
-            $response = \Illuminate\Support\Facades\Http::asForm()->post('https://challenges.cloudflare.com/turnstile/v0/siteverify', [
-                'secret' => config('services.cloudflare.turnstile_secret_key') ?? env('TURNSTILE_SECRET_KEY'),
-                'response' => $request->input('turnstile_token'),
-                'remoteip' => $request->ip(),
-            ]);
-
-            if (!$response->successful() || !$response->json('success')) {
-                return back()->withErrors([
-                    'turnstile_token' => 'Verifikasi keamanan Turnstile gagal. Silakan coba lagi.',
-                ])->onlyInput('email');
-            }
+        if (!$this->verifyTurnstile($request, 'login')) {
+            return back()->withErrors([
+                'turnstile_token' => 'Verifikasi keamanan Turnstile gagal. Silakan coba lagi.',
+                'cf-turnstile-response' => 'Verifikasi keamanan Turnstile gagal. Silakan coba lagi.',
+            ])->onlyInput('email');
         }
 
         $credentials = $request->only('email', 'password');
@@ -142,6 +120,13 @@ class AuthController extends Controller
             'email.email' => 'Format email tidak valid.',
             'email.exists' => 'Alamat email tidak terdaftar di sistem.',
         ]);
+
+        if (!$this->verifyTurnstile($request, 'forgot-password')) {
+            return back()->withErrors([
+                'turnstile_token' => 'Verifikasi keamanan Turnstile gagal. Silakan coba lagi.',
+                'cf-turnstile-response' => 'Verifikasi keamanan Turnstile gagal. Silakan coba lagi.',
+            ])->onlyInput('email');
+        }
 
         $user = User::where('email', $request->email)->first();
 
@@ -233,5 +218,65 @@ class AuthController extends Controller
         $user->save();
 
         return redirect()->route('login')->with('success', 'Kata sandi berhasil diubah. Silakan masuk kembali.');
+    }
+
+    /**
+     * Verifikasi token Cloudflare Turnstile canonical (gate, don't replace).
+     */
+    private function verifyTurnstile(Request $request, string $expectedAction): bool
+    {
+        if (app()->environment('local')) {
+            return true;
+        }
+
+        $token = $request->input('cf-turnstile-response') ?? $request->input('turnstile_token');
+        if (!$token) {
+            return false;
+        }
+
+        $secret = config('services.cloudflare.turnstile_secret_key') ?? env('TURNSTILE_SECRET_KEY');
+        if (!$secret) {
+            return true;
+        }
+
+        try {
+            $response = \Illuminate\Support\Facades\Http::asForm()->timeout(10)->post('https://challenges.cloudflare.com/turnstile/v0/siteverify', [
+                'secret' => $secret,
+                'response' => $token,
+                'remoteip' => $request->ip(),
+            ]);
+
+            if (!$response->successful()) {
+                return false;
+            }
+
+            $data = $response->json();
+            if (!($data['success'] ?? false)) {
+                return false;
+            }
+
+            // Validasi action jika ada
+            if (!empty($data['action']) && $data['action'] !== $expectedAction) {
+                return false;
+            }
+
+            // Validasi hostname terhadap allowlist domain aplikasi
+            $allowedHostnames = [
+                'ppdb.riyadussalikin.ponpes.id',
+                'riyadussalikin.ponpes.id',
+                'www.riyadussalikin.ponpes.id',
+                'localhost',
+                '127.0.0.1',
+            ];
+
+            if (!empty($data['hostname']) && !in_array($data['hostname'], $allowedHostnames, true)) {
+                return false;
+            }
+
+            return true;
+        } catch (\Throwable $e) {
+            \Illuminate\Support\Facades\Log::error('Turnstile verification exception: ' . $e->getMessage());
+            return false;
+        }
     }
 }
